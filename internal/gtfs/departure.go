@@ -12,11 +12,11 @@ type Departure struct {
 	Times         []int64
 }
 
-func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedule) []Departure {
+func FindDepartures(stopIds []string, realtime []*pb.FeedMessage, schedule *Schedule) []Departure {
 	tripToTimes := map[[3]string][]int64{}
 	for _, stopId := range stopIds {
-		for _, feed := range feeds {
-			for _, feedEntity := range feed.GetEntity() {
+		for _, feedMsg := range realtime {
+			for _, feedEntity := range feedMsg.GetEntity() {
 				tripUpdate := feedEntity.GetTripUpdate()
 				stopTimes := tripUpdate.GetStopTimeUpdate()
 				routeId := tripUpdate.GetTrip().GetRouteId()
