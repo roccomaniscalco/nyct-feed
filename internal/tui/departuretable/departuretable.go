@@ -38,8 +38,6 @@ func (m *Model) Init() tea.Cmd { return nil }
 func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	var cmd tea.Cmd
 	switch msg := msg.(type) {
-	case tea.WindowSizeMsg:
-		m.SetHeight(msg.Height)
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "esc":

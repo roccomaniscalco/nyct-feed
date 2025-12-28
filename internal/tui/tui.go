@@ -30,6 +30,7 @@ func NewModel() model {
 	return model{
 		scheduleChannel: make(chan query.Query[*gtfs.Schedule]),
 		realtimeChannel: make(chan query.Query[[]*pb.FeedMessage]),
+		stationList:     stationlist.NewModel(),
 		departureTable:  departuretable.NewModel(),
 	}
 }
@@ -52,7 +53,9 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.WindowSizeMsg:
 		m.width, m.height = msg.Width, msg.Height
+		m.stationList.SetHeight(m.height)
 		m.departureTable.SetHeight(m.height)
+		return m, nil
 
 	case gotScheduleQueryMsg:
 		m.scheduleQuery = query.Query[*gtfs.Schedule](msg)
@@ -72,23 +75,21 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	}
 
-	// Update both components and batch their commands
 	var cmds []tea.Cmd
-
-	if m.scheduleQuery.Status == query.Success {
+	if m.scheduleQuery.Data != nil {
 		updatedModel, cmd := m.stationList.Update(msg)
 		m.stationList = *updatedModel.(*stationlist.Model)
 		if cmd != nil {
 			cmds = append(cmds, cmd)
 		}
 	}
-
-	updatedModel, cmd := m.departureTable.Update(msg)
-	m.departureTable = *updatedModel.(*departuretable.Model)
-	if cmd != nil {
-		cmds = append(cmds, cmd)
+	if m.realtimeQuery.Data != nil {
+		updatedModel, cmd := m.departureTable.Update(msg)
+		m.departureTable = *updatedModel.(*departuretable.Model)
+		if cmd != nil {
+			cmds = append(cmds, cmd)
+		}
 	}
-
 	return m, tea.Batch(cmds...)
 }
 
@@ -116,8 +117,7 @@ func (m *model) syncStationList() {
 	if m.scheduleQuery.Data != nil {
 		stations := m.scheduleQuery.Data.Stations
 		m.selectedStationId = stations[0].StopId
-		m.stationList = stationlist.NewModel(stations)
-		m.stationList.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
+		m.stationList.SetStations(stations)
 	}
 }
 
