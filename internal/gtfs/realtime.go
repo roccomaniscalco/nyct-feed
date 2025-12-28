@@ -25,21 +25,21 @@ var feedUrls = [8]string{
 	"https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-si",
 }
 
-// Fetch realtime GTFS feeds for all lines concurrently
-func FetchFeeds() ([]*pb.FeedMessage, error) {
-	feeds := make([]*pb.FeedMessage, len(feedUrls))
+// GetRealtime fetches GTFS updates for all realtime feeds concurrently
+func GetRealtime() ([]*pb.FeedMessage, error) {
+	msgs := make([]*pb.FeedMessage, len(feedUrls))
 	var g errgroup.Group
 
 	for i, feedUrl := range feedUrls {
 		g.Go(func() error {
 			i, feedUrl := i, feedUrl // capture loop variables
 
-			feed, err := fetchFeed(feedUrl)
+			msg, err := fetchFeedMessage(feedUrl)
 			if err != nil {
 				return err
 			}
 
-			feeds[i] = feed
+			msgs[i] = msg
 			return nil
 		})
 	}
@@ -47,10 +47,10 @@ func FetchFeeds() ([]*pb.FeedMessage, error) {
 	if err := g.Wait(); err != nil {
 		return nil, fmt.Errorf("failed to fetch feeds: %v", err)
 	}
-	return feeds, nil
+	return msgs, nil
 }
 
-func fetchFeed(feedUrl string) (*pb.FeedMessage, error) {
+func fetchFeedMessage(feedUrl string) (*pb.FeedMessage, error) {
 	resp, err := http.Get(feedUrl)
 	if err != nil {
 		return nil, err
@@ -62,16 +62,16 @@ func fetchFeed(feedUrl string) (*pb.FeedMessage, error) {
 		return nil, err
 	}
 
-	feed := &pb.FeedMessage{}
-	if err := proto.Unmarshal(body, feed); err != nil {
+	msg := &pb.FeedMessage{}
+	if err := proto.Unmarshal(body, msg); err != nil {
 		return nil, err
 	}
 
-	return feed, nil
+	return msg, nil
 }
 
 // Write feed messages to /out. Helpful for debugging
-func writeFeed(msg *pb.FeedMessage) {
+func writeFeedMessage(msg *pb.FeedMessage) {
 	marshallOptions := protojson.MarshalOptions{
 		Indent: "  ",
 	}

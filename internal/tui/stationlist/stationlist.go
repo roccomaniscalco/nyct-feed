@@ -15,7 +15,7 @@ const width = 40
 type StationSelectedMsg string
 
 type item struct {
-	station     gtfs.Stop
+	station     gtfs.Station
 	routeBadges string
 }
 
@@ -85,17 +85,14 @@ func renderKbd(key string) string {
 	return style.Render(key)
 }
 
-func NewModel(stations []gtfs.Stop, routes []gtfs.Route) Model {
+func NewModel(stations []gtfs.Station) Model {
 	items := []list.Item{}
 	for _, station := range stations {
 		routeBadges := strings.Builder{}
-		for _, route := range routes {
-			if _, exists := station.RouteIds[route.RouteId]; exists {
-				routeBadges.WriteString(routebadge.Render(route))
-				routeBadges.WriteString(" ")
-			}
+		for _, route := range station.Routes {
+			routeBadges.WriteString(routebadge.Render(route))
+			routeBadges.WriteString(" ")
 		}
-
 		items = append(items, item{station: station, routeBadges: routeBadges.String()})
 	}
 

@@ -13,8 +13,8 @@ type Departure struct {
 }
 
 func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedule) []Departure {
-	stopIdToName := schedule.GetStopIdToName()
-	routeIdToRoute := schedule.GetRouteIdToRoute()
+	stopIdToName := schedule.StopIdToName
+	routeIdToRoute := schedule.RouteIdToRoute
 
 	tripToTimes := map[[2]string][]int64{}
 

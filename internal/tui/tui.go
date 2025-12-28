@@ -1,41 +1,46 @@
 package tui
 
 import (
+	"time"
+
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
 	"nyct-feed/internal/gtfs"
 	"nyct-feed/internal/pb"
+	"nyct-feed/internal/query"
 	"nyct-feed/internal/tui/departuretable"
 	"nyct-feed/internal/tui/splash"
 	"nyct-feed/internal/tui/stationlist"
 )
 
 type model struct {
-	schedule          *gtfs.Schedule
-	scheduleLoading   bool
-	stations          []gtfs.Stop
-	selectedStationId string
-	realtime          []*pb.FeedMessage
-	realtimeLoading   bool
-	departures        []gtfs.Departure
+	scheduleChannel   chan query.Query[*gtfs.Schedule]
+	realtimeChannel   chan query.Query[[]*pb.FeedMessage]
+	scheduleQuery     query.Query[*gtfs.Schedule]
+	realtimeQuery     query.Query[[]*pb.FeedMessage]
 	stationList       stationlist.Model
 	departureTable    departuretable.Model
-
-	width  int
-	height int
+	selectedStationId string
+	width             int
+	height            int
 }
 
 func NewModel() model {
 	return model{
-		scheduleLoading: true,
-		realtimeLoading: true,
+		scheduleChannel: make(chan query.Query[*gtfs.Schedule]),
+		realtimeChannel: make(chan query.Query[[]*pb.FeedMessage]),
 		departureTable:  departuretable.NewModel(),
 	}
 }
 
 func (m *model) Init() tea.Cmd {
-	return tea.Batch(getSchedule(), getRealtime())
+	return tea.Batch(
+		createScheduleQuery(m.scheduleChannel),
+		createRealtimeQuery(m.realtimeChannel),
+		getScheduleQuery(m.scheduleChannel),
+		getRealtimeQuery(m.realtimeChannel),
+	)
 }
 
 func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
@@ -44,31 +49,33 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if msg.String() == "ctrl+c" {
 			return m, tea.Quit
 		}
+
 	case tea.WindowSizeMsg:
 		m.width, m.height = msg.Width, msg.Height
 		m.departureTable.SetHeight(m.height)
-	case gotScheduleMsg:
-		m.schedule = msg
-		m.stations = m.schedule.GetStations()
-		m.selectedStationId = m.stations[0].StopId
-		m.stationList = stationlist.NewModel(m.stations, m.schedule.Routes)
-		m.stationList.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
-		m.scheduleLoading = false
+
+	case gotScheduleQueryMsg:
+		m.scheduleQuery = query.Query[*gtfs.Schedule](msg)
+		m.syncStationsList()
 		m.syncDeparturesTable()
-	case gotRealtimeMsg:
-		m.realtime = msg
-		m.realtimeLoading = false
+		return m, getScheduleQuery(m.scheduleChannel)
+
+	case gotRealtimeQueryMsg:
+		m.realtimeQuery = query.Query[[]*pb.FeedMessage](msg)
 		m.syncDeparturesTable()
+		return m, getRealtimeQuery(m.realtimeChannel)
+
 	case stationlist.StationSelectedMsg:
 		stationId := string(msg)
 		m.selectedStationId = stationId
 		m.syncDeparturesTable()
+		return m, nil
 	}
 
 	// Update both components and batch their commands
 	var cmds []tea.Cmd
 
-	if !m.scheduleLoading {
+	if m.scheduleQuery.Status == query.Success {
 		updatedModel, cmd := m.stationList.Update(msg)
 		m.stationList = *updatedModel.(*stationlist.Model)
 		if cmd != nil {
@@ -76,19 +83,17 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 	}
 
-	if !m.realtimeLoading {
-		updatedModel, cmd := m.departureTable.Update(msg)
-		m.departureTable = *updatedModel.(*departuretable.Model)
-		if cmd != nil {
-			cmds = append(cmds, cmd)
-		}
+	updatedModel, cmd := m.departureTable.Update(msg)
+	m.departureTable = *updatedModel.(*departuretable.Model)
+	if cmd != nil {
+		cmds = append(cmds, cmd)
 	}
 
 	return m, tea.Batch(cmds...)
 }
 
 func (m *model) View() string {
-	if m.scheduleLoading || m.realtimeLoading {
+	if m.scheduleQuery.Status == query.Pending || m.realtimeQuery.Status == query.Pending {
 		return lipgloss.NewStyle().
 			Width(m.width).
 			Height(m.height).
@@ -99,28 +104,57 @@ func (m *model) View() string {
 }
 
 func (m *model) syncDeparturesTable() {
-	if !m.realtimeLoading && !m.scheduleLoading {
+	if m.scheduleQuery.Data != nil && m.scheduleQuery.Data != nil {
 		stationId := m.selectedStationId
 		stopIds := []string{stationId + "N", stationId + "S"}
-		m.departures = gtfs.FindDepartures(stopIds, m.realtime, m.schedule)
-		m.departureTable.SetDepartures(m.departures)
+		departures := gtfs.FindDepartures(stopIds, m.realtimeQuery.Data, m.scheduleQuery.Data)
+		m.departureTable.SetDepartures(departures)
 	}
 }
 
-type gotScheduleMsg *gtfs.Schedule
-
-func getSchedule() tea.Cmd {
-	return func() tea.Msg {
-		schedule, _ := gtfs.GetSchedule()
-		return gotScheduleMsg(schedule)
+func (m *model) syncStationsList() {
+	if m.scheduleQuery.Data != nil {
+		stations := m.scheduleQuery.Data.Stations
+		m.selectedStationId = stations[0].StopId
+		m.stationList = stationlist.NewModel(stations)
+		m.stationList.Update(tea.WindowSizeMsg{Width: m.width, Height: m.height})
 	}
 }
 
-type gotRealtimeMsg []*pb.FeedMessage
+type gotScheduleQueryMsg query.Query[*gtfs.Schedule]
 
-func getRealtime() tea.Cmd {
+func getScheduleQuery(scheduleChannel chan query.Query[*gtfs.Schedule]) tea.Cmd {
 	return func() tea.Msg {
-		feeds, _ := gtfs.FetchFeeds()
-		return gotRealtimeMsg(feeds)
+		return gotScheduleQueryMsg(<-scheduleChannel)
+	}
+}
+
+type gotRealtimeQueryMsg query.Query[[]*pb.FeedMessage]
+
+func getRealtimeQuery(realtimeChannel chan query.Query[[]*pb.FeedMessage]) tea.Cmd {
+	return func() tea.Msg {
+		return gotRealtimeQueryMsg(<-realtimeChannel)
+	}
+}
+
+func createScheduleQuery(scheduleChannel chan query.Query[*gtfs.Schedule]) tea.Cmd {
+	return func() tea.Msg {
+		query.CreateQuery[*gtfs.Schedule](query.QueryOptions[*gtfs.Schedule]{
+			QueryChannel:    scheduleChannel,
+			QueryFn:         gtfs.GetSchedule,
+			RefetchInterval: time.Hour,
+		})
+		return nil
+	}
+}
+
+func createRealtimeQuery(realtimeChannel chan query.Query[[]*pb.FeedMessage]) tea.Cmd {
+	return func() tea.Msg {
+		query.CreateQuery[[]*pb.FeedMessage](query.QueryOptions[[]*pb.FeedMessage]{
+			QueryChannel:    realtimeChannel,
+			QueryFn:         gtfs.GetRealtime,
+			RefetchInterval: time.Second * 15,
+		})
+		return nil
 	}
 }

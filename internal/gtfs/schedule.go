@@ -20,6 +20,16 @@ type Schedule struct {
 	StopTimes []StopTime `file:"stop_times.txt"`
 	Trips     []Trip     `file:"trips.txt"`
 	Routes    []Route    `file:"routes.txt"`
+
+	// Derived values 
+	RouteIdToRoute map[string]Route
+	StopIdToName   map[string]string
+	Stations       []Station
+}
+
+type Station struct {
+	Stop
+	Routes []Route
 }
 
 type Stop struct {
@@ -29,7 +39,6 @@ type Stop struct {
 	StopLon       float64 `csv:"stop_lon"`
 	LocationType  int     `csv:"location_type"` // 0 = Platform, 1 = Station
 	ParentStation string  `csv:"parent_station"`
-	RouteIds      map[string]bool
 }
 
 type StopTime struct {
@@ -64,7 +73,7 @@ type Route struct {
 
 // GetStations returns a subset of Stops that are considered to be stations.
 // Each Stop returned includes a set of RouteIds that pass through the station.
-func (s *Schedule) GetStations() []Stop {
+func (s *Schedule) CreateStations() {
 	// Build trip ID to route ID map
 	tripIdToRouteId := make(map[string]string)
 	for _, trip := range s.Trips {
@@ -85,34 +94,38 @@ func (s *Schedule) GetStations() []Stop {
 	}
 
 	// Filter and populate stations
-	var stations []Stop
+	var stations []Station
 	for _, stop := range s.Stops {
 		if stop.LocationType == 1 {
-			stop.RouteIds = stationIdToRouteIds[stop.StopId]
-			stations = append(stations, stop)
+			routeIds := stationIdToRouteIds[stop.StopId]
+			routes := []Route{}
+			for routeId := range routeIds {
+				routes = append(routes, s.RouteIdToRoute[routeId])
+			}
+			stations = append(stations, Station{Stop: stop, Routes: routes})
 		}
 	}
 
-	return stations
+	s.Stations = stations
 }
 
-func (s *Schedule) GetStopIdToName() map[string]string {
+func (s *Schedule) CreateStopIdToName() {
 	stopIdToName := make(map[string]string)
 	for _, stop := range s.Stops {
 		stopIdToName[stop.StopId] = stop.StopName
 	}
-	return stopIdToName
+	s.StopIdToName = stopIdToName
 }
 
-func (s *Schedule) GetRouteIdToRoute() map[string]Route {
+func (s *Schedule) CreateRouteIdToRoute() {
 	routeIdToRoute := make(map[string]Route)
 	for _, route := range s.Routes {
 		routeIdToRoute[route.RouteId] = route
 	}
-	return routeIdToRoute
+	s.RouteIdToRoute = routeIdToRoute
 }
 
-// GetSchedule returns a GTFS schedule containing all schedule files.
+// GetSchedule fetches a GTFS schedule containing all schedule files.
 func GetSchedule() (*Schedule, error) {
 	schedule := Schedule{}
 	scheduleType := reflect.TypeOf(schedule)
@@ -152,9 +165,13 @@ func GetSchedule() (*Schedule, error) {
 					schedule.Routes = parseCSV(bytes, Route{})
 				}
 			}
-
 		}
 	}
+
+	// Create and store expensive derived values
+	schedule.CreateRouteIdToRoute()
+	schedule.CreateStopIdToName()
+	schedule.CreateStations()
 
 	return &schedule, nil
 }
