@@ -10,22 +10,20 @@ import (
 	"nyct-feed/internal/pb"
 	"nyct-feed/internal/query"
 	"nyct-feed/internal/tui/departurecards"
-	"nyct-feed/internal/tui/departuretable"
 	"nyct-feed/internal/tui/splash"
 	"nyct-feed/internal/tui/stationlist"
 )
 
 type model struct {
-	scheduleChannel   chan query.Query[*gtfs.Schedule]
-	realtimeChannel   chan query.Query[[]*pb.FeedMessage]
-	scheduleQuery     query.Query[*gtfs.Schedule]
-	realtimeQuery     query.Query[[]*pb.FeedMessage]
-	stationList       stationlist.Model
-	departureTable    departuretable.Model
-	departureCards    departurecards.Model
-	selectedStationId string
-	width             int
-	height            int
+	scheduleChannel chan query.Query[*gtfs.Schedule]
+	realtimeChannel chan query.Query[[]*pb.FeedMessage]
+	scheduleQuery   query.Query[*gtfs.Schedule]
+	realtimeQuery   query.Query[[]*pb.FeedMessage]
+	stationList     stationlist.Model
+	departureCards  departurecards.Model
+	selectedStation *gtfs.Station
+	width           int
+	height          int
 }
 
 func NewModel() model {
@@ -33,7 +31,7 @@ func NewModel() model {
 		scheduleChannel: make(chan query.Query[*gtfs.Schedule]),
 		realtimeChannel: make(chan query.Query[[]*pb.FeedMessage]),
 		stationList:     stationlist.NewModel(),
-		departureTable:  departuretable.NewModel(),
+		departureCards:  departurecards.NewModel(),
 	}
 }
 
@@ -56,25 +54,26 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width, m.height = msg.Width, msg.Height
 		m.stationList.SetHeight(m.height)
-		m.departureTable.SetHeight(m.height)
 		m.departureCards.SetHeight(m.height)
 		return m, nil
 
 	case gotScheduleQueryMsg:
 		m.scheduleQuery = query.Query[*gtfs.Schedule](msg)
+		if m.scheduleQuery.Data != nil {
+			m.selectedStation = &m.scheduleQuery.Data.Stations[0]
+		}
 		m.syncStationList()
-		m.syncDepartureTable()
+		m.syncDepartureCards()
 		return m, getScheduleQuery(m.scheduleChannel)
 
 	case gotRealtimeQueryMsg:
 		m.realtimeQuery = query.Query[[]*pb.FeedMessage](msg)
-		m.syncDepartureTable()
+		m.syncDepartureCards()
 		return m, getRealtimeQuery(m.realtimeChannel)
 
 	case stationlist.StationSelectedMsg:
-		stationId := string(msg)
-		m.selectedStationId = stationId
-		m.syncDepartureTable()
+		m.selectedStation = msg
+		m.syncDepartureCards()
 		return m, nil
 	}
 
@@ -82,13 +81,6 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if m.scheduleQuery.Data != nil {
 		updatedModel, cmd := m.stationList.Update(msg)
 		m.stationList = *updatedModel.(*stationlist.Model)
-		if cmd != nil {
-			cmds = append(cmds, cmd)
-		}
-	}
-	if m.realtimeQuery.Data != nil {
-		updatedModel, cmd := m.departureTable.Update(msg)
-		m.departureTable = *updatedModel.(*departuretable.Model)
 		if cmd != nil {
 			cmds = append(cmds, cmd)
 		}
@@ -104,27 +96,22 @@ func (m *model) View() string {
 			Align(lipgloss.Center, lipgloss.Center).
 			Render(splash.Model{}.View())
 	}
-	return lipgloss.JoinHorizontal(
-		lipgloss.Left,
-		m.stationList.View(),
-		m.departureTable.View(),
-		m.departureCards.View(),
-	)
+	return lipgloss.JoinHorizontal(lipgloss.Left, m.stationList.View(), m.departureCards.View())
 }
 
-func (m *model) syncDepartureTable() {
-	if m.scheduleQuery.Data != nil && m.scheduleQuery.Data != nil {
-		stationId := m.selectedStationId
+func (m *model) syncDepartureCards() {
+	if m.scheduleQuery.Data != nil && m.realtimeQuery.Data != nil {
+		stationId := m.selectedStation.StopId
 		stopIds := []string{stationId + "N", stationId + "S"}
 		departures := gtfs.FindDepartures(stopIds, m.realtimeQuery.Data, m.scheduleQuery.Data)
-		m.departureTable.SetDepartures(departures)
+		m.departureCards.SetDepartures(departures)
+		m.departureCards.SetStation(*m.selectedStation)
 	}
 }
 
 func (m *model) syncStationList() {
 	if m.scheduleQuery.Data != nil {
 		stations := m.scheduleQuery.Data.Stations
-		m.selectedStationId = stations[0].StopId
 		m.stationList.SetStations(stations)
 	}
 }

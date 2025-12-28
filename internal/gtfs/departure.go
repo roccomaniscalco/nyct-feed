@@ -6,7 +6,7 @@ import (
 )
 
 type Departure struct {
-	Route         Route
+	RouteId       string
 	StopId        string
 	FinalStopId   string
 	FinalStopName string
@@ -14,11 +14,7 @@ type Departure struct {
 }
 
 func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedule) []Departure {
-	stopIdToName := schedule.StopIdToName
-	routeIdToRoute := schedule.RouteIdToRoute
-
 	tripToTimes := map[[3]string][]int64{}
-
 	for _, stopId := range stopIds {
 		for _, feed := range feeds {
 			for _, feedEntity := range feed.GetEntity() {
@@ -37,6 +33,7 @@ func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedul
 		}
 	}
 
+	stopIdToName := schedule.StopIdToName
 	departures := []Departure{}
 	for _, route := range schedule.Routes {
 		for tripKey, times := range tripToTimes {
@@ -44,7 +41,7 @@ func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedul
 			if route.RouteId == routeId {
 				slices.Sort(times)
 				departures = append(departures, Departure{
-					Route:         routeIdToRoute[routeId],
+					RouteId:       routeId,
 					StopId:        stopId,
 					FinalStopId:   finalStopId,
 					FinalStopName: stopIdToName[finalStopId],

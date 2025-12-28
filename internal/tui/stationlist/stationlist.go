@@ -12,7 +12,7 @@ import (
 
 const width = 40
 
-type StationSelectedMsg string
+type StationSelectedMsg *gtfs.Station
 
 type item struct {
 	station     gtfs.Station
@@ -94,7 +94,7 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			if item.station.StopId != m.selectedStationId {
 				m.selectedStationId = item.station.StopId
 				stationSelectedCmd := func() tea.Msg {
-					return StationSelectedMsg(item.station.StopId)
+					return StationSelectedMsg(&item.station)
 				}
 				cmds = append(cmds, stationSelectedCmd)
 			}
