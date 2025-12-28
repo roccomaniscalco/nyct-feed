@@ -1,20 +1,17 @@
 package main
 
+import (
+	"log"
+	"nyct-feed/internal/tui"
+
+	tea "github.com/charmbracelet/bubbletea"
+)
+
 // import (
 // 	"fmt"
 // 	"nyct-feed/internal/gtfs"
-// 	"nyct-feed/internal/pb"
-// 	"nyct-feed/internal/query"
-// 	"time"
 // )
 
-import (
-	"log"
-
-	tea "github.com/charmbracelet/bubbletea"
-
-	"nyct-feed/internal/tui"
-)
 
 var stopIds = []string{
 	"A46N",
@@ -32,17 +29,9 @@ func main() {
 }
 
 // func main() {
-// 	feedMessageQueryChannel := make(chan query.Query[[]*pb.FeedMessage])
-// 	query.CreateQuery[[]*pb.FeedMessage](query.QueryOptions[[]*pb.FeedMessage]{
-// 		QueryFn:         gtfs.FetchFeeds,
-// 		QueryChannel:    feedMessageQueryChannel,
-// 		RefetchInterval: time.Second * 15,
-// 	})
+// 	realtime, _ := gtfs.GetRealtime()
+// 	schedule, _ := gtfs.GetSchedule()
 
-// 	for feedMessageQuery := range feedMessageQueryChannel {
-// 		fmt.Printf("Status: %v\n", feedMessageQuery.Status)
-// 		fmt.Printf("Fetch Status: %v\n", feedMessageQuery.FetchStatus)
-// 		fmt.Printf("Data Updated At: %v\n", feedMessageQuery.DataUpdatedAt)
-// 		fmt.Printf("Data Length: %v\n", len(feedMessageQuery.Data))
-// 	}
+// 	departures := gtfs.FindDepartures(stopIds, realtime, schedule)
+// 	fmt.Println(departures)
 // }
