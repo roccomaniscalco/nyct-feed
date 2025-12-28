@@ -7,6 +7,7 @@ import (
 
 type Departure struct {
 	Route         Route
+	StopId        string
 	FinalStopId   string
 	FinalStopName string
 	Times         []int64
@@ -16,7 +17,7 @@ func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedul
 	stopIdToName := schedule.StopIdToName
 	routeIdToRoute := schedule.RouteIdToRoute
 
-	tripToTimes := map[[2]string][]int64{}
+	tripToTimes := map[[3]string][]int64{}
 
 	for _, stopId := range stopIds {
 		for _, feed := range feeds {
@@ -26,7 +27,7 @@ func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedul
 				routeId := tripUpdate.GetTrip().GetRouteId()
 				for _, stopTime := range stopTimes {
 					finalStopId := stopTimes[len(stopTimes)-1].GetStopId()
-					tripKey := [2]string{routeId, finalStopId}
+					tripKey := [3]string{routeId, stopId, finalStopId}
 					// Exclude trips terminating at the target stop
 					if stopTime.GetStopId() == stopId && finalStopId != stopId {
 						tripToTimes[tripKey] = append(tripToTimes[tripKey], stopTime.GetDeparture().GetTime())
@@ -37,15 +38,20 @@ func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedul
 	}
 
 	departures := []Departure{}
-	for tripKey, times := range tripToTimes {
-		routeId, finalStopId := tripKey[0], tripKey[1]
-		slices.Sort(times)
-		departures = append(departures, Departure{
-			Route:         routeIdToRoute[routeId],
-			FinalStopId:   finalStopId,
-			FinalStopName: stopIdToName[finalStopId],
-			Times:         times,
-		})
+	for _, route := range schedule.Routes {
+		for tripKey, times := range tripToTimes {
+			routeId, stopId, finalStopId := tripKey[0], tripKey[1], tripKey[2]
+			if route.RouteId == routeId {
+				slices.Sort(times)
+				departures = append(departures, Departure{
+					Route:         routeIdToRoute[routeId],
+					StopId:        stopId,
+					FinalStopId:   finalStopId,
+					FinalStopName: stopIdToName[finalStopId],
+					Times:         times,
+				})
+			}
+		}
 	}
 
 	return departures
