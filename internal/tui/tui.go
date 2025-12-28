@@ -9,7 +9,7 @@ import (
 	"nyct-feed/internal/gtfs"
 	"nyct-feed/internal/pb"
 	"nyct-feed/internal/query"
-	"nyct-feed/internal/tui/departurecards"
+	"nyct-feed/internal/tui/departurecard"
 	"nyct-feed/internal/tui/splash"
 	"nyct-feed/internal/tui/stationlist"
 )
@@ -20,7 +20,7 @@ type model struct {
 	scheduleQuery   query.Query[*gtfs.Schedule]
 	realtimeQuery   query.Query[[]*pb.FeedMessage]
 	stationList     stationlist.Model
-	departureCards  departurecards.Model
+	departureCard  departurecard.Model
 	selectedStation *gtfs.Station
 	width           int
 	height          int
@@ -31,7 +31,7 @@ func NewModel() model {
 		scheduleChannel: make(chan query.Query[*gtfs.Schedule]),
 		realtimeChannel: make(chan query.Query[[]*pb.FeedMessage]),
 		stationList:     stationlist.NewModel(),
-		departureCards:  departurecards.NewModel(),
+		departureCard:  departurecard.NewModel(),
 	}
 }
 
@@ -54,7 +54,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width, m.height = msg.Width, msg.Height
 		m.stationList.SetHeight(m.height)
-		m.departureCards.SetHeight(m.height)
+		m.departureCard.SetHeight(m.height)
 		return m, nil
 
 	case gotScheduleQueryMsg:
@@ -96,7 +96,7 @@ func (m *model) View() string {
 			Align(lipgloss.Center, lipgloss.Center).
 			Render(splash.Model{}.View())
 	}
-	return lipgloss.JoinHorizontal(lipgloss.Left, m.stationList.View(), m.departureCards.View())
+	return lipgloss.JoinHorizontal(lipgloss.Left, m.stationList.View(), m.departureCard.View())
 }
 
 func (m *model) syncDepartureCards() {
@@ -104,8 +104,8 @@ func (m *model) syncDepartureCards() {
 		stationId := m.selectedStation.StopId
 		stopIds := []string{stationId + "N", stationId + "S"}
 		departures := gtfs.FindDepartures(stopIds, m.realtimeQuery.Data, m.scheduleQuery.Data)
-		m.departureCards.SetDepartures(departures)
-		m.departureCards.SetStation(*m.selectedStation)
+		m.departureCard.SetDepartures(departures)
+		m.departureCard.SetStation(*m.selectedStation)
 	}
 }
 

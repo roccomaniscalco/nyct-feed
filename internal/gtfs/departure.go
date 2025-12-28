@@ -2,7 +2,6 @@ package gtfs
 
 import (
 	"nyct-feed/internal/pb"
-	"slices"
 )
 
 type Departure struct {
