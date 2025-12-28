@@ -26,7 +26,7 @@ var feedUrls = [8]string{
 }
 
 // Fetch realtime GTFS feeds for all lines concurrently
-func FetchFeeds() []*pb.FeedMessage {
+func FetchFeeds() ([]*pb.FeedMessage, error) {
 	feeds := make([]*pb.FeedMessage, len(feedUrls))
 	var g errgroup.Group
 
@@ -45,9 +45,9 @@ func FetchFeeds() []*pb.FeedMessage {
 	}
 
 	if err := g.Wait(); err != nil {
-		log.Panicf("failed to fetch feeds: %v", err)
+		return nil, fmt.Errorf("failed to fetch feeds: %v", err)
 	}
-	return feeds
+	return feeds, nil
 }
 
 func fetchFeed(feedUrl string) (*pb.FeedMessage, error) {
