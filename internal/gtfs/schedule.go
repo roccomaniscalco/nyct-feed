@@ -21,7 +21,7 @@ type Schedule struct {
 	Trips     []Trip     `file:"trips.txt"`
 	Routes    []Route    `file:"routes.txt"`
 
-	// Derived values 
+	// Derived values
 	RouteIdToRoute map[string]Route
 	StopIdToName   map[string]string
 	Stations       []Station
@@ -99,8 +99,10 @@ func (s *Schedule) CreateStations() {
 		if stop.LocationType == 1 {
 			routeIds := stationIdToRouteIds[stop.StopId]
 			routes := []Route{}
-			for routeId := range routeIds {
-				routes = append(routes, s.RouteIdToRoute[routeId])
+			for _, route := range s.Routes {
+				if _, exists := routeIds[route.RouteId]; exists {
+					routes = append(routes, route)
+				}
 			}
 			stations = append(stations, Station{Stop: stop, Routes: routes})
 		}
