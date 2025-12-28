@@ -6,10 +6,11 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"nyct-feed/pkg/gtfs"
-	"nyct-feed/pkg/tui/departuretable"
-	"nyct-feed/pkg/tui/splash"
-	"nyct-feed/pkg/tui/stationlist"
+	"nyct-feed/internal/pb"
+	"nyct-feed/internal/gtfs"
+	"nyct-feed/internal/tui/departuretable"
+	"nyct-feed/internal/tui/splash"
+	"nyct-feed/internal/tui/stationlist"
 )
 
 type model struct {
@@ -17,7 +18,7 @@ type model struct {
 	scheduleLoading   bool
 	stations          []gtfs.Stop
 	selectedStationId string
-	realtime          []gtfs.FeedMessage
+	realtime          []*pb.FeedMessage
 	realtimeLoading   bool
 	departures        []gtfs.Departure
 	stationList       stationlist.Model
@@ -57,7 +58,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.scheduleLoading = false
 		m.syncDeparturesTable()
 	case gotRealtimeMsg:
-		m.realtime = []gtfs.FeedMessage(msg)
+		m.realtime = []*pb.FeedMessage(msg)
 		m.realtimeLoading = false
 		m.syncDeparturesTable()
 	case stationlist.StationSelectedMsg:
@@ -118,7 +119,7 @@ func getSchedule() tea.Cmd {
 	}
 }
 
-type gotRealtimeMsg []gtfs.FeedMessage
+type gotRealtimeMsg []*pb.FeedMessage
 
 func getRealtime() tea.Cmd {
 	return func() tea.Msg {

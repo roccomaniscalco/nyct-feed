@@ -26,9 +26,9 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v6.33.2
-// source: proto/gtfs/gtfs_realtime.proto
+// source: internal/pb/gtfs_realtime.proto
 
-package gtfs
+package pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -80,11 +80,11 @@ func (x FeedHeader_Incrementality) String() string {
 }
 
 func (FeedHeader_Incrementality) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[0].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[0].Descriptor()
 }
 
 func (FeedHeader_Incrementality) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[0]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[0]
 }
 
 func (x FeedHeader_Incrementality) Number() protoreflect.EnumNumber {
@@ -103,7 +103,7 @@ func (x *FeedHeader_Incrementality) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use FeedHeader_Incrementality.Descriptor instead.
 func (FeedHeader_Incrementality) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{1, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{1, 0}
 }
 
 // The relation between the StopTimeEvents and the static schedule.
@@ -163,11 +163,11 @@ func (x TripUpdate_StopTimeUpdate_ScheduleRelationship) String() string {
 }
 
 func (TripUpdate_StopTimeUpdate_ScheduleRelationship) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[1].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[1].Descriptor()
 }
 
 func (TripUpdate_StopTimeUpdate_ScheduleRelationship) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[1]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[1]
 }
 
 func (x TripUpdate_StopTimeUpdate_ScheduleRelationship) Number() protoreflect.EnumNumber {
@@ -186,7 +186,7 @@ func (x *TripUpdate_StopTimeUpdate_ScheduleRelationship) UnmarshalJSON(b []byte)
 
 // Deprecated: Use TripUpdate_StopTimeUpdate_ScheduleRelationship.Descriptor instead.
 func (TripUpdate_StopTimeUpdate_ScheduleRelationship) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{3, 1, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{3, 1, 0}
 }
 
 type VehiclePosition_VehicleStopStatus int32
@@ -226,11 +226,11 @@ func (x VehiclePosition_VehicleStopStatus) String() string {
 }
 
 func (VehiclePosition_VehicleStopStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[2].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[2].Descriptor()
 }
 
 func (VehiclePosition_VehicleStopStatus) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[2]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[2]
 }
 
 func (x VehiclePosition_VehicleStopStatus) Number() protoreflect.EnumNumber {
@@ -249,7 +249,7 @@ func (x *VehiclePosition_VehicleStopStatus) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use VehiclePosition_VehicleStopStatus.Descriptor instead.
 func (VehiclePosition_VehicleStopStatus) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{4, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{4, 0}
 }
 
 // Congestion level that is affecting this vehicle.
@@ -292,11 +292,11 @@ func (x VehiclePosition_CongestionLevel) String() string {
 }
 
 func (VehiclePosition_CongestionLevel) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[3].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[3].Descriptor()
 }
 
 func (VehiclePosition_CongestionLevel) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[3]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[3]
 }
 
 func (x VehiclePosition_CongestionLevel) Number() protoreflect.EnumNumber {
@@ -315,7 +315,7 @@ func (x *VehiclePosition_CongestionLevel) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use VehiclePosition_CongestionLevel.Descriptor instead.
 func (VehiclePosition_CongestionLevel) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{4, 1}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{4, 1}
 }
 
 // The state of passenger occupancy for the vehicle or carriage.
@@ -396,11 +396,11 @@ func (x VehiclePosition_OccupancyStatus) String() string {
 }
 
 func (VehiclePosition_OccupancyStatus) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[4].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[4].Descriptor()
 }
 
 func (VehiclePosition_OccupancyStatus) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[4]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[4]
 }
 
 func (x VehiclePosition_OccupancyStatus) Number() protoreflect.EnumNumber {
@@ -419,7 +419,7 @@ func (x *VehiclePosition_OccupancyStatus) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use VehiclePosition_OccupancyStatus.Descriptor instead.
 func (VehiclePosition_OccupancyStatus) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{4, 2}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{4, 2}
 }
 
 // Cause of this alert. If cause_detail is included, then Cause must also be included.
@@ -483,11 +483,11 @@ func (x Alert_Cause) String() string {
 }
 
 func (Alert_Cause) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[5].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[5].Descriptor()
 }
 
 func (Alert_Cause) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[5]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[5]
 }
 
 func (x Alert_Cause) Number() protoreflect.EnumNumber {
@@ -506,7 +506,7 @@ func (x *Alert_Cause) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use Alert_Cause.Descriptor instead.
 func (Alert_Cause) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{5, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{5, 0}
 }
 
 // What is the effect of this problem on the affected entity. If effect_detail is included, then Effect must also be included.
@@ -570,11 +570,11 @@ func (x Alert_Effect) String() string {
 }
 
 func (Alert_Effect) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[6].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[6].Descriptor()
 }
 
 func (Alert_Effect) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[6]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[6]
 }
 
 func (x Alert_Effect) Number() protoreflect.EnumNumber {
@@ -593,7 +593,7 @@ func (x *Alert_Effect) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use Alert_Effect.Descriptor instead.
 func (Alert_Effect) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{5, 1}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{5, 1}
 }
 
 // Severity of this alert.
@@ -633,11 +633,11 @@ func (x Alert_SeverityLevel) String() string {
 }
 
 func (Alert_SeverityLevel) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[7].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[7].Descriptor()
 }
 
 func (Alert_SeverityLevel) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[7]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[7]
 }
 
 func (x Alert_SeverityLevel) Number() protoreflect.EnumNumber {
@@ -656,7 +656,7 @@ func (x *Alert_SeverityLevel) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use Alert_SeverityLevel.Descriptor instead.
 func (Alert_SeverityLevel) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{5, 2}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{5, 2}
 }
 
 // The relation between this trip and the static schedule. If a trip is done
@@ -683,7 +683,7 @@ const (
 	TripDescriptor_CANCELED TripDescriptor_ScheduleRelationship = 3
 	// Should not be used - for backwards-compatibility only.
 	//
-	// Deprecated: Marked as deprecated in proto/gtfs/gtfs_realtime.proto.
+	// Deprecated: Marked as deprecated in internal/pb/gtfs_realtime.proto.
 	TripDescriptor_REPLACEMENT TripDescriptor_ScheduleRelationship = 5
 	// An extra trip that was added in addition to a running schedule, for example, to replace a broken vehicle or to
 	// respond to sudden passenger load. Used with TripUpdate.TripProperties.trip_id, TripUpdate.TripProperties.start_date,
@@ -745,11 +745,11 @@ func (x TripDescriptor_ScheduleRelationship) String() string {
 }
 
 func (TripDescriptor_ScheduleRelationship) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[8].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[8].Descriptor()
 }
 
 func (TripDescriptor_ScheduleRelationship) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[8]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[8]
 }
 
 func (x TripDescriptor_ScheduleRelationship) Number() protoreflect.EnumNumber {
@@ -768,7 +768,7 @@ func (x *TripDescriptor_ScheduleRelationship) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use TripDescriptor_ScheduleRelationship.Descriptor instead.
 func (TripDescriptor_ScheduleRelationship) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{8, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{8, 0}
 }
 
 type VehicleDescriptor_WheelchairAccessible int32
@@ -816,11 +816,11 @@ func (x VehicleDescriptor_WheelchairAccessible) String() string {
 }
 
 func (VehicleDescriptor_WheelchairAccessible) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[9].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[9].Descriptor()
 }
 
 func (VehicleDescriptor_WheelchairAccessible) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[9]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[9]
 }
 
 func (x VehicleDescriptor_WheelchairAccessible) Number() protoreflect.EnumNumber {
@@ -839,7 +839,7 @@ func (x *VehicleDescriptor_WheelchairAccessible) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use VehicleDescriptor_WheelchairAccessible.Descriptor instead.
 func (VehicleDescriptor_WheelchairAccessible) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{9, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{9, 0}
 }
 
 type Stop_WheelchairBoarding int32
@@ -875,11 +875,11 @@ func (x Stop_WheelchairBoarding) String() string {
 }
 
 func (Stop_WheelchairBoarding) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_gtfs_gtfs_realtime_proto_enumTypes[10].Descriptor()
+	return file_internal_pb_gtfs_realtime_proto_enumTypes[10].Descriptor()
 }
 
 func (Stop_WheelchairBoarding) Type() protoreflect.EnumType {
-	return &file_proto_gtfs_gtfs_realtime_proto_enumTypes[10]
+	return &file_internal_pb_gtfs_realtime_proto_enumTypes[10]
 }
 
 func (x Stop_WheelchairBoarding) Number() protoreflect.EnumNumber {
@@ -898,7 +898,7 @@ func (x *Stop_WheelchairBoarding) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use Stop_WheelchairBoarding.Descriptor instead.
 func (Stop_WheelchairBoarding) EnumDescriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{14, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{14, 0}
 }
 
 // The contents of a feed message.
@@ -923,7 +923,7 @@ type FeedMessage struct {
 
 func (x *FeedMessage) Reset() {
 	*x = FeedMessage{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[0]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -935,7 +935,7 @@ func (x *FeedMessage) String() string {
 func (*FeedMessage) ProtoMessage() {}
 
 func (x *FeedMessage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[0]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -948,7 +948,7 @@ func (x *FeedMessage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeedMessage.ProtoReflect.Descriptor instead.
 func (*FeedMessage) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *FeedMessage) GetHeader() *FeedHeader {
@@ -971,7 +971,7 @@ type FeedHeader struct {
 	// Version of the feed specification.
 	// The current version is 2.0.  Valid versions are "2.0", "1.0".
 	GtfsRealtimeVersion *string                    `protobuf:"bytes,1,req,name=gtfs_realtime_version,json=gtfsRealtimeVersion" json:"gtfs_realtime_version,omitempty"`
-	Incrementality      *FeedHeader_Incrementality `protobuf:"varint,2,opt,name=incrementality,enum=gtfs_realtime.FeedHeader_Incrementality,def=0" json:"incrementality,omitempty"`
+	Incrementality      *FeedHeader_Incrementality `protobuf:"varint,2,opt,name=incrementality,enum=pb.FeedHeader_Incrementality,def=0" json:"incrementality,omitempty"`
 	// This timestamp identifies the moment when the content of this feed has been
 	// created (in server time). In POSIX time (i.e., number of seconds since
 	// January 1st 1970 00:00:00 UTC).
@@ -988,7 +988,7 @@ const (
 
 func (x *FeedHeader) Reset() {
 	*x = FeedHeader{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[1]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1000,7 +1000,7 @@ func (x *FeedHeader) String() string {
 func (*FeedHeader) ProtoMessage() {}
 
 func (x *FeedHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[1]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1013,7 +1013,7 @@ func (x *FeedHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeedHeader.ProtoReflect.Descriptor instead.
 func (*FeedHeader) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{1}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *FeedHeader) GetGtfsRealtimeVersion() string {
@@ -1073,7 +1073,7 @@ const (
 
 func (x *FeedEntity) Reset() {
 	*x = FeedEntity{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[2]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1085,7 +1085,7 @@ func (x *FeedEntity) String() string {
 func (*FeedEntity) ProtoMessage() {}
 
 func (x *FeedEntity) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[2]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1098,7 +1098,7 @@ func (x *FeedEntity) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use FeedEntity.ProtoReflect.Descriptor instead.
 func (*FeedEntity) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{2}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *FeedEntity) GetId() string {
@@ -1244,7 +1244,7 @@ type TripUpdate struct {
 
 func (x *TripUpdate) Reset() {
 	*x = TripUpdate{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[3]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1256,7 +1256,7 @@ func (x *TripUpdate) String() string {
 func (*TripUpdate) ProtoMessage() {}
 
 func (x *TripUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[3]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1269,7 +1269,7 @@ func (x *TripUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripUpdate.ProtoReflect.Descriptor instead.
 func (*TripUpdate) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{3}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *TripUpdate) GetTrip() *TripDescriptor {
@@ -1335,14 +1335,14 @@ type VehiclePosition struct {
 	StopId *string `protobuf:"bytes,7,opt,name=stop_id,json=stopId" json:"stop_id,omitempty"`
 	// The exact status of the vehicle with respect to the current stop.
 	// Ignored if current_stop_sequence is missing.
-	CurrentStatus *VehiclePosition_VehicleStopStatus `protobuf:"varint,4,opt,name=current_status,json=currentStatus,enum=gtfs_realtime.VehiclePosition_VehicleStopStatus,def=2" json:"current_status,omitempty"`
+	CurrentStatus *VehiclePosition_VehicleStopStatus `protobuf:"varint,4,opt,name=current_status,json=currentStatus,enum=pb.VehiclePosition_VehicleStopStatus,def=2" json:"current_status,omitempty"`
 	// Moment at which the vehicle's position was measured. In POSIX time
 	// (i.e., number of seconds since January 1st 1970 00:00:00 UTC).
 	Timestamp       *uint64                          `protobuf:"varint,5,opt,name=timestamp" json:"timestamp,omitempty"`
-	CongestionLevel *VehiclePosition_CongestionLevel `protobuf:"varint,6,opt,name=congestion_level,json=congestionLevel,enum=gtfs_realtime.VehiclePosition_CongestionLevel" json:"congestion_level,omitempty"`
+	CongestionLevel *VehiclePosition_CongestionLevel `protobuf:"varint,6,opt,name=congestion_level,json=congestionLevel,enum=pb.VehiclePosition_CongestionLevel" json:"congestion_level,omitempty"`
 	// If multi_carriage_status is populated with per-carriage OccupancyStatus,
 	// then this field should describe the entire vehicle with all carriages accepting passengers considered.
-	OccupancyStatus *VehiclePosition_OccupancyStatus `protobuf:"varint,9,opt,name=occupancy_status,json=occupancyStatus,enum=gtfs_realtime.VehiclePosition_OccupancyStatus" json:"occupancy_status,omitempty"`
+	OccupancyStatus *VehiclePosition_OccupancyStatus `protobuf:"varint,9,opt,name=occupancy_status,json=occupancyStatus,enum=pb.VehiclePosition_OccupancyStatus" json:"occupancy_status,omitempty"`
 	// A percentage value indicating the degree of passenger occupancy in the vehicle.
 	// The values are represented as an integer without decimals. 0 means 0% and 100 means 100%.
 	// The value 100 should represent the total maximum occupancy the vehicle was designed for,
@@ -1375,7 +1375,7 @@ const (
 
 func (x *VehiclePosition) Reset() {
 	*x = VehiclePosition{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[4]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1387,7 +1387,7 @@ func (x *VehiclePosition) String() string {
 func (*VehiclePosition) ProtoMessage() {}
 
 func (x *VehiclePosition) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[4]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1400,7 +1400,7 @@ func (x *VehiclePosition) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VehiclePosition.ProtoReflect.Descriptor instead.
 func (*VehiclePosition) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{4}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *VehiclePosition) GetTrip() *TripDescriptor {
@@ -1489,8 +1489,8 @@ type Alert struct {
 	ActivePeriod []*TimeRange `protobuf:"bytes,1,rep,name=active_period,json=activePeriod" json:"active_period,omitempty"`
 	// Entities whose users we should notify of this alert.
 	InformedEntity []*EntitySelector `protobuf:"bytes,5,rep,name=informed_entity,json=informedEntity" json:"informed_entity,omitempty"`
-	Cause          *Alert_Cause      `protobuf:"varint,6,opt,name=cause,enum=gtfs_realtime.Alert_Cause,def=1" json:"cause,omitempty"`
-	Effect         *Alert_Effect     `protobuf:"varint,7,opt,name=effect,enum=gtfs_realtime.Alert_Effect,def=8" json:"effect,omitempty"`
+	Cause          *Alert_Cause      `protobuf:"varint,6,opt,name=cause,enum=pb.Alert_Cause,def=1" json:"cause,omitempty"`
+	Effect         *Alert_Effect     `protobuf:"varint,7,opt,name=effect,enum=pb.Alert_Effect,def=8" json:"effect,omitempty"`
 	// The URL which provides additional information about the alert.
 	Url *TranslatedString `protobuf:"bytes,8,opt,name=url" json:"url,omitempty"`
 	// Alert header. Contains a short summary of the alert text as plain-text.
@@ -1502,7 +1502,7 @@ type Alert struct {
 	TtsHeaderText *TranslatedString `protobuf:"bytes,12,opt,name=tts_header_text,json=ttsHeaderText" json:"tts_header_text,omitempty"`
 	// Text for full description for the alert to be used in text-to-speech implementations. This field is the text-to-speech version of description_text.
 	TtsDescriptionText *TranslatedString    `protobuf:"bytes,13,opt,name=tts_description_text,json=ttsDescriptionText" json:"tts_description_text,omitempty"`
-	SeverityLevel      *Alert_SeverityLevel `protobuf:"varint,14,opt,name=severity_level,json=severityLevel,enum=gtfs_realtime.Alert_SeverityLevel,def=1" json:"severity_level,omitempty"`
+	SeverityLevel      *Alert_SeverityLevel `protobuf:"varint,14,opt,name=severity_level,json=severityLevel,enum=pb.Alert_SeverityLevel,def=1" json:"severity_level,omitempty"`
 	// TranslatedImage to be displayed along the alert text. Used to explain visually the alert effect of a detour, station closure, etc. The image must enhance the understanding of the alert. Any essential information communicated within the image must also be contained in the alert text.
 	// The following types of images are discouraged : image containing mainly text, marketing or branded images that add no additional information.
 	// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
@@ -1531,7 +1531,7 @@ const (
 
 func (x *Alert) Reset() {
 	*x = Alert{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[5]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1543,7 +1543,7 @@ func (x *Alert) String() string {
 func (*Alert) ProtoMessage() {}
 
 func (x *Alert) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[5]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1556,7 +1556,7 @@ func (x *Alert) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Alert.ProtoReflect.Descriptor instead.
 func (*Alert) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{5}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{5}
 }
 
 func (x *Alert) GetActivePeriod() []*TimeRange {
@@ -1676,7 +1676,7 @@ type TimeRange struct {
 
 func (x *TimeRange) Reset() {
 	*x = TimeRange{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[6]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1688,7 +1688,7 @@ func (x *TimeRange) String() string {
 func (*TimeRange) ProtoMessage() {}
 
 func (x *TimeRange) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[6]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1701,7 +1701,7 @@ func (x *TimeRange) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TimeRange.ProtoReflect.Descriptor instead.
 func (*TimeRange) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{6}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *TimeRange) GetStart() uint64 {
@@ -1742,7 +1742,7 @@ type Position struct {
 
 func (x *Position) Reset() {
 	*x = Position{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[7]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1754,7 +1754,7 @@ func (x *Position) String() string {
 func (*Position) ProtoMessage() {}
 
 func (x *Position) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[7]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1767,7 +1767,7 @@ func (x *Position) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Position.ProtoReflect.Descriptor instead.
 func (*Position) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{7}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *Position) GetLatitude() float32 {
@@ -1855,7 +1855,7 @@ type TripDescriptor struct {
 	// related to schedule anymore.
 	// In YYYYMMDD format.
 	StartDate            *string                              `protobuf:"bytes,3,opt,name=start_date,json=startDate" json:"start_date,omitempty"`
-	ScheduleRelationship *TripDescriptor_ScheduleRelationship `protobuf:"varint,4,opt,name=schedule_relationship,json=scheduleRelationship,enum=gtfs_realtime.TripDescriptor_ScheduleRelationship" json:"schedule_relationship,omitempty"`
+	ScheduleRelationship *TripDescriptor_ScheduleRelationship `protobuf:"varint,4,opt,name=schedule_relationship,json=scheduleRelationship,enum=pb.TripDescriptor_ScheduleRelationship" json:"schedule_relationship,omitempty"`
 	// Linkage to any modifications done to this trip (shape changes, removal or addition of stops).
 	// If this field is provided, the `trip_id`, `route_id`, `direction_id`, `start_time`, `start_date` fields of the `TripDescriptor` MUST be left empty, to avoid confusion by consumers that aren't looking for the `ModifiedTripSelector` value.
 	ModifiedTrip    *TripDescriptor_ModifiedTripSelector `protobuf:"bytes,7,opt,name=modified_trip,json=modifiedTrip" json:"modified_trip,omitempty"`
@@ -1866,7 +1866,7 @@ type TripDescriptor struct {
 
 func (x *TripDescriptor) Reset() {
 	*x = TripDescriptor{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[8]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1878,7 +1878,7 @@ func (x *TripDescriptor) String() string {
 func (*TripDescriptor) ProtoMessage() {}
 
 func (x *TripDescriptor) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[8]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1891,7 +1891,7 @@ func (x *TripDescriptor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripDescriptor.ProtoReflect.Descriptor instead.
 func (*TripDescriptor) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{8}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *TripDescriptor) GetTripId() string {
@@ -1955,7 +1955,7 @@ type VehicleDescriptor struct {
 	Label *string `protobuf:"bytes,2,opt,name=label" json:"label,omitempty"`
 	// The license plate of the vehicle.
 	LicensePlate         *string                                 `protobuf:"bytes,3,opt,name=license_plate,json=licensePlate" json:"license_plate,omitempty"`
-	WheelchairAccessible *VehicleDescriptor_WheelchairAccessible `protobuf:"varint,4,opt,name=wheelchair_accessible,json=wheelchairAccessible,enum=gtfs_realtime.VehicleDescriptor_WheelchairAccessible,def=0" json:"wheelchair_accessible,omitempty"`
+	WheelchairAccessible *VehicleDescriptor_WheelchairAccessible `protobuf:"varint,4,opt,name=wheelchair_accessible,json=wheelchairAccessible,enum=pb.VehicleDescriptor_WheelchairAccessible,def=0" json:"wheelchair_accessible,omitempty"`
 	extensionFields      protoimpl.ExtensionFields
 	unknownFields        protoimpl.UnknownFields
 	sizeCache            protoimpl.SizeCache
@@ -1968,7 +1968,7 @@ const (
 
 func (x *VehicleDescriptor) Reset() {
 	*x = VehicleDescriptor{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[9]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1980,7 +1980,7 @@ func (x *VehicleDescriptor) String() string {
 func (*VehicleDescriptor) ProtoMessage() {}
 
 func (x *VehicleDescriptor) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[9]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1993,7 +1993,7 @@ func (x *VehicleDescriptor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VehicleDescriptor.ProtoReflect.Descriptor instead.
 func (*VehicleDescriptor) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{9}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *VehicleDescriptor) GetId() string {
@@ -2047,7 +2047,7 @@ type EntitySelector struct {
 
 func (x *EntitySelector) Reset() {
 	*x = EntitySelector{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[10]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2059,7 +2059,7 @@ func (x *EntitySelector) String() string {
 func (*EntitySelector) ProtoMessage() {}
 
 func (x *EntitySelector) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[10]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2072,7 +2072,7 @@ func (x *EntitySelector) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use EntitySelector.ProtoReflect.Descriptor instead.
 func (*EntitySelector) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{10}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *EntitySelector) GetAgencyId() string {
@@ -2138,7 +2138,7 @@ type TranslatedString struct {
 
 func (x *TranslatedString) Reset() {
 	*x = TranslatedString{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[11]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2150,7 +2150,7 @@ func (x *TranslatedString) String() string {
 func (*TranslatedString) ProtoMessage() {}
 
 func (x *TranslatedString) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[11]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2163,7 +2163,7 @@ func (x *TranslatedString) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranslatedString.ProtoReflect.Descriptor instead.
 func (*TranslatedString) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{11}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *TranslatedString) GetTranslation() []*TranslatedString_Translation {
@@ -2196,7 +2196,7 @@ type TranslatedImage struct {
 
 func (x *TranslatedImage) Reset() {
 	*x = TranslatedImage{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[12]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2208,7 +2208,7 @@ func (x *TranslatedImage) String() string {
 func (*TranslatedImage) ProtoMessage() {}
 
 func (x *TranslatedImage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[12]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2221,7 +2221,7 @@ func (x *TranslatedImage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranslatedImage.ProtoReflect.Descriptor instead.
 func (*TranslatedImage) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{12}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *TranslatedImage) GetLocalizedImage() []*TranslatedImage_LocalizedImage {
@@ -2257,7 +2257,7 @@ type Shape struct {
 
 func (x *Shape) Reset() {
 	*x = Shape{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[13]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2269,7 +2269,7 @@ func (x *Shape) String() string {
 func (*Shape) ProtoMessage() {}
 
 func (x *Shape) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[13]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2282,7 +2282,7 @@ func (x *Shape) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Shape.ProtoReflect.Descriptor instead.
 func (*Shape) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{13}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *Shape) GetShapeId() string {
@@ -2314,7 +2314,7 @@ type Stop struct {
 	StopUrl            *TranslatedString        `protobuf:"bytes,9,opt,name=stop_url,json=stopUrl" json:"stop_url,omitempty"`
 	ParentStation      *string                  `protobuf:"bytes,11,opt,name=parent_station,json=parentStation" json:"parent_station,omitempty"`
 	StopTimezone       *string                  `protobuf:"bytes,12,opt,name=stop_timezone,json=stopTimezone" json:"stop_timezone,omitempty"`
-	WheelchairBoarding *Stop_WheelchairBoarding `protobuf:"varint,13,opt,name=wheelchair_boarding,json=wheelchairBoarding,enum=gtfs_realtime.Stop_WheelchairBoarding,def=0" json:"wheelchair_boarding,omitempty"`
+	WheelchairBoarding *Stop_WheelchairBoarding `protobuf:"varint,13,opt,name=wheelchair_boarding,json=wheelchairBoarding,enum=pb.Stop_WheelchairBoarding,def=0" json:"wheelchair_boarding,omitempty"`
 	LevelId            *string                  `protobuf:"bytes,14,opt,name=level_id,json=levelId" json:"level_id,omitempty"`
 	PlatformCode       *TranslatedString        `protobuf:"bytes,15,opt,name=platform_code,json=platformCode" json:"platform_code,omitempty"`
 	extensionFields    protoimpl.ExtensionFields
@@ -2329,7 +2329,7 @@ const (
 
 func (x *Stop) Reset() {
 	*x = Stop{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[14]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2341,7 +2341,7 @@ func (x *Stop) String() string {
 func (*Stop) ProtoMessage() {}
 
 func (x *Stop) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[14]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2354,7 +2354,7 @@ func (x *Stop) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Stop.ProtoReflect.Descriptor instead.
 func (*Stop) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{14}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *Stop) GetStopId() string {
@@ -2475,7 +2475,7 @@ type TripModifications struct {
 
 func (x *TripModifications) Reset() {
 	*x = TripModifications{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[15]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2487,7 +2487,7 @@ func (x *TripModifications) String() string {
 func (*TripModifications) ProtoMessage() {}
 
 func (x *TripModifications) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[15]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2500,7 +2500,7 @@ func (x *TripModifications) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripModifications.ProtoReflect.Descriptor instead.
 func (*TripModifications) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{15}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *TripModifications) GetSelectedTrips() []*TripModifications_SelectedTrips {
@@ -2546,7 +2546,7 @@ type StopSelector struct {
 
 func (x *StopSelector) Reset() {
 	*x = StopSelector{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[16]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2558,7 +2558,7 @@ func (x *StopSelector) String() string {
 func (*StopSelector) ProtoMessage() {}
 
 func (x *StopSelector) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[16]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2571,7 +2571,7 @@ func (x *StopSelector) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StopSelector.ProtoReflect.Descriptor instead.
 func (*StopSelector) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{16}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *StopSelector) GetStopSequence() uint32 {
@@ -2603,7 +2603,7 @@ type ReplacementStop struct {
 
 func (x *ReplacementStop) Reset() {
 	*x = ReplacementStop{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[17]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2615,7 +2615,7 @@ func (x *ReplacementStop) String() string {
 func (*ReplacementStop) ProtoMessage() {}
 
 func (x *ReplacementStop) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[17]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2628,7 +2628,7 @@ func (x *ReplacementStop) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ReplacementStop.ProtoReflect.Descriptor instead.
 func (*ReplacementStop) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{17}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *ReplacementStop) GetTravelTimeToStop() int32 {
@@ -2682,7 +2682,7 @@ type TripUpdate_StopTimeEvent struct {
 
 func (x *TripUpdate_StopTimeEvent) Reset() {
 	*x = TripUpdate_StopTimeEvent{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[18]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2694,7 +2694,7 @@ func (x *TripUpdate_StopTimeEvent) String() string {
 func (*TripUpdate_StopTimeEvent) ProtoMessage() {}
 
 func (x *TripUpdate_StopTimeEvent) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[18]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2707,7 +2707,7 @@ func (x *TripUpdate_StopTimeEvent) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripUpdate_StopTimeEvent.ProtoReflect.Descriptor instead.
 func (*TripUpdate_StopTimeEvent) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{3, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{3, 0}
 }
 
 func (x *TripUpdate_StopTimeEvent) GetDelay() int32 {
@@ -2746,8 +2746,8 @@ type TripUpdate_StopTimeUpdate struct {
 	// Should be provided only for future stops.
 	// In order to provide departure_occupancy_status without either arrival or
 	// departure StopTimeEvents, ScheduleRelationship should be set to NO_DATA.
-	DepartureOccupancyStatus *VehiclePosition_OccupancyStatus                `protobuf:"varint,7,opt,name=departure_occupancy_status,json=departureOccupancyStatus,enum=gtfs_realtime.VehiclePosition_OccupancyStatus" json:"departure_occupancy_status,omitempty"`
-	ScheduleRelationship     *TripUpdate_StopTimeUpdate_ScheduleRelationship `protobuf:"varint,5,opt,name=schedule_relationship,json=scheduleRelationship,enum=gtfs_realtime.TripUpdate_StopTimeUpdate_ScheduleRelationship,def=0" json:"schedule_relationship,omitempty"`
+	DepartureOccupancyStatus *VehiclePosition_OccupancyStatus                `protobuf:"varint,7,opt,name=departure_occupancy_status,json=departureOccupancyStatus,enum=pb.VehiclePosition_OccupancyStatus" json:"departure_occupancy_status,omitempty"`
+	ScheduleRelationship     *TripUpdate_StopTimeUpdate_ScheduleRelationship `protobuf:"varint,5,opt,name=schedule_relationship,json=scheduleRelationship,enum=pb.TripUpdate_StopTimeUpdate_ScheduleRelationship,def=0" json:"schedule_relationship,omitempty"`
 	// Realtime updates for certain properties defined within GTFS stop_times.txt
 	// NOTE: This field is still experimental, and subject to change. It may be formally adopted in the future.
 	StopTimeProperties *TripUpdate_StopTimeUpdate_StopTimeProperties `protobuf:"bytes,6,opt,name=stop_time_properties,json=stopTimeProperties" json:"stop_time_properties,omitempty"`
@@ -2763,7 +2763,7 @@ const (
 
 func (x *TripUpdate_StopTimeUpdate) Reset() {
 	*x = TripUpdate_StopTimeUpdate{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[19]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2775,7 +2775,7 @@ func (x *TripUpdate_StopTimeUpdate) String() string {
 func (*TripUpdate_StopTimeUpdate) ProtoMessage() {}
 
 func (x *TripUpdate_StopTimeUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[19]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2788,7 +2788,7 @@ func (x *TripUpdate_StopTimeUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripUpdate_StopTimeUpdate.ProtoReflect.Descriptor instead.
 func (*TripUpdate_StopTimeUpdate) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{3, 1}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{3, 1}
 }
 
 func (x *TripUpdate_StopTimeUpdate) GetStopSequence() uint32 {
@@ -2885,7 +2885,7 @@ type TripUpdate_TripProperties struct {
 
 func (x *TripUpdate_TripProperties) Reset() {
 	*x = TripUpdate_TripProperties{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[20]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2897,7 +2897,7 @@ func (x *TripUpdate_TripProperties) String() string {
 func (*TripUpdate_TripProperties) ProtoMessage() {}
 
 func (x *TripUpdate_TripProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[20]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2910,7 +2910,7 @@ func (x *TripUpdate_TripProperties) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripUpdate_TripProperties.ProtoReflect.Descriptor instead.
 func (*TripUpdate_TripProperties) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{3, 2}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{3, 2}
 }
 
 func (x *TripUpdate_TripProperties) GetTripId() string {
@@ -2966,7 +2966,7 @@ type TripUpdate_StopTimeUpdate_StopTimeProperties struct {
 
 func (x *TripUpdate_StopTimeUpdate_StopTimeProperties) Reset() {
 	*x = TripUpdate_StopTimeUpdate_StopTimeProperties{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[21]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -2978,7 +2978,7 @@ func (x *TripUpdate_StopTimeUpdate_StopTimeProperties) String() string {
 func (*TripUpdate_StopTimeUpdate_StopTimeProperties) ProtoMessage() {}
 
 func (x *TripUpdate_StopTimeUpdate_StopTimeProperties) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[21]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -2991,7 +2991,7 @@ func (x *TripUpdate_StopTimeUpdate_StopTimeProperties) ProtoReflect() protorefle
 
 // Deprecated: Use TripUpdate_StopTimeUpdate_StopTimeProperties.ProtoReflect.Descriptor instead.
 func (*TripUpdate_StopTimeUpdate_StopTimeProperties) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{3, 1, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{3, 1, 0}
 }
 
 func (x *TripUpdate_StopTimeUpdate_StopTimeProperties) GetAssignedStopId() string {
@@ -3013,7 +3013,7 @@ type VehiclePosition_CarriageDetails struct {
 	Label *string `protobuf:"bytes,2,opt,name=label" json:"label,omitempty"`
 	// Occupancy status for this given carriage, in this vehicle
 	// This message/field is still experimental, and subject to change. It may be formally adopted in the future.
-	OccupancyStatus *VehiclePosition_OccupancyStatus `protobuf:"varint,3,opt,name=occupancy_status,json=occupancyStatus,enum=gtfs_realtime.VehiclePosition_OccupancyStatus,def=7" json:"occupancy_status,omitempty"`
+	OccupancyStatus *VehiclePosition_OccupancyStatus `protobuf:"varint,3,opt,name=occupancy_status,json=occupancyStatus,enum=pb.VehiclePosition_OccupancyStatus,def=7" json:"occupancy_status,omitempty"`
 	// Occupancy percentage for this given carriage, in this vehicle.
 	// Follows the same rules as "VehiclePosition.occupancy_percentage"
 	// -1 in case data is not available for this given carriage (as protobuf defaults to 0 otherwise)
@@ -3044,7 +3044,7 @@ const (
 
 func (x *VehiclePosition_CarriageDetails) Reset() {
 	*x = VehiclePosition_CarriageDetails{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[22]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3056,7 +3056,7 @@ func (x *VehiclePosition_CarriageDetails) String() string {
 func (*VehiclePosition_CarriageDetails) ProtoMessage() {}
 
 func (x *VehiclePosition_CarriageDetails) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[22]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3069,7 +3069,7 @@ func (x *VehiclePosition_CarriageDetails) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use VehiclePosition_CarriageDetails.ProtoReflect.Descriptor instead.
 func (*VehiclePosition_CarriageDetails) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{4, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{4, 0}
 }
 
 func (x *VehiclePosition_CarriageDetails) GetId() string {
@@ -3124,7 +3124,7 @@ type TripDescriptor_ModifiedTripSelector struct {
 
 func (x *TripDescriptor_ModifiedTripSelector) Reset() {
 	*x = TripDescriptor_ModifiedTripSelector{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[23]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3136,7 +3136,7 @@ func (x *TripDescriptor_ModifiedTripSelector) String() string {
 func (*TripDescriptor_ModifiedTripSelector) ProtoMessage() {}
 
 func (x *TripDescriptor_ModifiedTripSelector) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[23]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3149,7 +3149,7 @@ func (x *TripDescriptor_ModifiedTripSelector) ProtoReflect() protoreflect.Messag
 
 // Deprecated: Use TripDescriptor_ModifiedTripSelector.ProtoReflect.Descriptor instead.
 func (*TripDescriptor_ModifiedTripSelector) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{8, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{8, 0}
 }
 
 func (x *TripDescriptor_ModifiedTripSelector) GetModificationsId() string {
@@ -3195,7 +3195,7 @@ type TranslatedString_Translation struct {
 
 func (x *TranslatedString_Translation) Reset() {
 	*x = TranslatedString_Translation{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[24]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3207,7 +3207,7 @@ func (x *TranslatedString_Translation) String() string {
 func (*TranslatedString_Translation) ProtoMessage() {}
 
 func (x *TranslatedString_Translation) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[24]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3220,7 +3220,7 @@ func (x *TranslatedString_Translation) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranslatedString_Translation.ProtoReflect.Descriptor instead.
 func (*TranslatedString_Translation) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{11, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{11, 0}
 }
 
 func (x *TranslatedString_Translation) GetText() string {
@@ -3258,7 +3258,7 @@ type TranslatedImage_LocalizedImage struct {
 
 func (x *TranslatedImage_LocalizedImage) Reset() {
 	*x = TranslatedImage_LocalizedImage{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[25]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3270,7 +3270,7 @@ func (x *TranslatedImage_LocalizedImage) String() string {
 func (*TranslatedImage_LocalizedImage) ProtoMessage() {}
 
 func (x *TranslatedImage_LocalizedImage) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[25]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3283,7 +3283,7 @@ func (x *TranslatedImage_LocalizedImage) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TranslatedImage_LocalizedImage.ProtoReflect.Descriptor instead.
 func (*TranslatedImage_LocalizedImage) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{12, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{12, 0}
 }
 
 func (x *TranslatedImage_LocalizedImage) GetUrl() string {
@@ -3341,7 +3341,7 @@ const (
 
 func (x *TripModifications_Modification) Reset() {
 	*x = TripModifications_Modification{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[26]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3353,7 +3353,7 @@ func (x *TripModifications_Modification) String() string {
 func (*TripModifications_Modification) ProtoMessage() {}
 
 func (x *TripModifications_Modification) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[26]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3366,7 +3366,7 @@ func (x *TripModifications_Modification) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripModifications_Modification.ProtoReflect.Descriptor instead.
 func (*TripModifications_Modification) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{15, 0}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{15, 0}
 }
 
 func (x *TripModifications_Modification) GetStartStopSelector() *StopSelector {
@@ -3425,7 +3425,7 @@ type TripModifications_SelectedTrips struct {
 
 func (x *TripModifications_SelectedTrips) Reset() {
 	*x = TripModifications_SelectedTrips{}
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[27]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[27]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -3437,7 +3437,7 @@ func (x *TripModifications_SelectedTrips) String() string {
 func (*TripModifications_SelectedTrips) ProtoMessage() {}
 
 func (x *TripModifications_SelectedTrips) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_gtfs_gtfs_realtime_proto_msgTypes[27]
+	mi := &file_internal_pb_gtfs_realtime_proto_msgTypes[27]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -3450,7 +3450,7 @@ func (x *TripModifications_SelectedTrips) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripModifications_SelectedTrips.ProtoReflect.Descriptor instead.
 func (*TripModifications_SelectedTrips) Descriptor() ([]byte, []int) {
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP(), []int{15, 1}
+	return file_internal_pb_gtfs_realtime_proto_rawDescGZIP(), []int{15, 1}
 }
 
 func (x *TripModifications_SelectedTrips) GetTripIds() []string {
@@ -3467,55 +3467,54 @@ func (x *TripModifications_SelectedTrips) GetShapeId() string {
 	return ""
 }
 
-var File_proto_gtfs_gtfs_realtime_proto protoreflect.FileDescriptor
+var File_internal_pb_gtfs_realtime_proto protoreflect.FileDescriptor
 
-const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
+const file_internal_pb_gtfs_realtime_proto_rawDesc = "" +
 	"\n" +
-	"\x1eproto/gtfs/gtfs_realtime.proto\x12\rgtfs_realtime\"\x83\x01\n" +
-	"\vFeedMessage\x121\n" +
-	"\x06header\x18\x01 \x02(\v2\x19.gtfs_realtime.FeedHeaderR\x06header\x121\n" +
-	"\x06entity\x18\x02 \x03(\v2\x19.gtfs_realtime.FeedEntityR\x06entity*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\x84\x02\n" +
+	"\x1finternal/pb/gtfs_realtime.proto\x12\x02pb\"m\n" +
+	"\vFeedMessage\x12&\n" +
+	"\x06header\x18\x01 \x02(\v2\x0e.pb.FeedHeaderR\x06header\x12&\n" +
+	"\x06entity\x18\x02 \x03(\v2\x0e.pb.FeedEntityR\x06entity*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xf9\x01\n" +
 	"\n" +
 	"FeedHeader\x122\n" +
-	"\x15gtfs_realtime_version\x18\x01 \x02(\tR\x13gtfsRealtimeVersion\x12^\n" +
-	"\x0eincrementality\x18\x02 \x01(\x0e2(.gtfs_realtime.FeedHeader.Incrementality:\fFULL_DATASETR\x0eincrementality\x12\x1c\n" +
+	"\x15gtfs_realtime_version\x18\x01 \x02(\tR\x13gtfsRealtimeVersion\x12S\n" +
+	"\x0eincrementality\x18\x02 \x01(\x0e2\x1d.pb.FeedHeader.Incrementality:\fFULL_DATASETR\x0eincrementality\x12\x1c\n" +
 	"\ttimestamp\x18\x03 \x01(\x04R\ttimestamp\"4\n" +
 	"\x0eIncrementality\x12\x10\n" +
 	"\fFULL_DATASET\x10\x00\x12\x10\n" +
-	"\fDIFFERENTIAL\x10\x01*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\x9a\x03\n" +
+	"\fDIFFERENTIAL\x10\x01*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xd8\x02\n" +
 	"\n" +
 	"FeedEntity\x12\x0e\n" +
 	"\x02id\x18\x01 \x02(\tR\x02id\x12$\n" +
 	"\n" +
-	"is_deleted\x18\x02 \x01(\b:\x05falseR\tisDeleted\x12:\n" +
-	"\vtrip_update\x18\x03 \x01(\v2\x19.gtfs_realtime.TripUpdateR\n" +
-	"tripUpdate\x128\n" +
-	"\avehicle\x18\x04 \x01(\v2\x1e.gtfs_realtime.VehiclePositionR\avehicle\x12*\n" +
-	"\x05alert\x18\x05 \x01(\v2\x14.gtfs_realtime.AlertR\x05alert\x12*\n" +
-	"\x05shape\x18\x06 \x01(\v2\x14.gtfs_realtime.ShapeR\x05shape\x12'\n" +
-	"\x04stop\x18\a \x01(\v2\x13.gtfs_realtime.StopR\x04stop\x12O\n" +
-	"\x12trip_modifications\x18\b \x01(\v2 .gtfs_realtime.TripModificationsR\x11tripModifications*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xd1\n" +
+	"is_deleted\x18\x02 \x01(\b:\x05falseR\tisDeleted\x12/\n" +
+	"\vtrip_update\x18\x03 \x01(\v2\x0e.pb.TripUpdateR\n" +
+	"tripUpdate\x12-\n" +
+	"\avehicle\x18\x04 \x01(\v2\x13.pb.VehiclePositionR\avehicle\x12\x1f\n" +
+	"\x05alert\x18\x05 \x01(\v2\t.pb.AlertR\x05alert\x12\x1f\n" +
+	"\x05shape\x18\x06 \x01(\v2\t.pb.ShapeR\x05shape\x12\x1c\n" +
+	"\x04stop\x18\a \x01(\v2\b.pb.StopR\x04stop\x12D\n" +
+	"\x12trip_modifications\x18\b \x01(\v2\x15.pb.TripModificationsR\x11tripModifications*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xee\t\n" +
 	"\n" +
-	"\n" +
-	"TripUpdate\x121\n" +
-	"\x04trip\x18\x01 \x02(\v2\x1d.gtfs_realtime.TripDescriptorR\x04trip\x12:\n" +
-	"\avehicle\x18\x03 \x01(\v2 .gtfs_realtime.VehicleDescriptorR\avehicle\x12R\n" +
-	"\x10stop_time_update\x18\x02 \x03(\v2(.gtfs_realtime.TripUpdate.StopTimeUpdateR\x0estopTimeUpdate\x12\x1c\n" +
+	"TripUpdate\x12&\n" +
+	"\x04trip\x18\x01 \x02(\v2\x12.pb.TripDescriptorR\x04trip\x12/\n" +
+	"\avehicle\x18\x03 \x01(\v2\x15.pb.VehicleDescriptorR\avehicle\x12G\n" +
+	"\x10stop_time_update\x18\x02 \x03(\v2\x1d.pb.TripUpdate.StopTimeUpdateR\x0estopTimeUpdate\x12\x1c\n" +
 	"\ttimestamp\x18\x04 \x01(\x04R\ttimestamp\x12\x14\n" +
-	"\x05delay\x18\x05 \x01(\x05R\x05delay\x12Q\n" +
-	"\x0ftrip_properties\x18\x06 \x01(\v2(.gtfs_realtime.TripUpdate.TripPropertiesR\x0etripProperties\x1ak\n" +
+	"\x05delay\x18\x05 \x01(\x05R\x05delay\x12F\n" +
+	"\x0ftrip_properties\x18\x06 \x01(\v2\x1d.pb.TripUpdate.TripPropertiesR\x0etripProperties\x1ak\n" +
 	"\rStopTimeEvent\x12\x14\n" +
 	"\x05delay\x18\x01 \x01(\x05R\x05delay\x12\x12\n" +
 	"\x04time\x18\x02 \x01(\x03R\x04time\x12 \n" +
-	"\vuncertainty\x18\x03 \x01(\x05R\vuncertainty*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\x1a\xe6\x05\n" +
+	"\vuncertainty\x18\x03 \x01(\x05R\vuncertainty*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\x1a\xaf\x05\n" +
 	"\x0eStopTimeUpdate\x12#\n" +
 	"\rstop_sequence\x18\x01 \x01(\rR\fstopSequence\x12\x17\n" +
-	"\astop_id\x18\x04 \x01(\tR\x06stopId\x12A\n" +
-	"\aarrival\x18\x02 \x01(\v2'.gtfs_realtime.TripUpdate.StopTimeEventR\aarrival\x12E\n" +
-	"\tdeparture\x18\x03 \x01(\v2'.gtfs_realtime.TripUpdate.StopTimeEventR\tdeparture\x12l\n" +
-	"\x1adeparture_occupancy_status\x18\a \x01(\x0e2..gtfs_realtime.VehiclePosition.OccupancyStatusR\x18departureOccupancyStatus\x12}\n" +
-	"\x15schedule_relationship\x18\x05 \x01(\x0e2=.gtfs_realtime.TripUpdate.StopTimeUpdate.ScheduleRelationship:\tSCHEDULEDR\x14scheduleRelationship\x12m\n" +
-	"\x14stop_time_properties\x18\x06 \x01(\v2;.gtfs_realtime.TripUpdate.StopTimeUpdate.StopTimePropertiesR\x12stopTimeProperties\x1aN\n" +
+	"\astop_id\x18\x04 \x01(\tR\x06stopId\x126\n" +
+	"\aarrival\x18\x02 \x01(\v2\x1c.pb.TripUpdate.StopTimeEventR\aarrival\x12:\n" +
+	"\tdeparture\x18\x03 \x01(\v2\x1c.pb.TripUpdate.StopTimeEventR\tdeparture\x12a\n" +
+	"\x1adeparture_occupancy_status\x18\a \x01(\x0e2#.pb.VehiclePosition.OccupancyStatusR\x18departureOccupancyStatus\x12r\n" +
+	"\x15schedule_relationship\x18\x05 \x01(\x0e22.pb.TripUpdate.StopTimeUpdate.ScheduleRelationship:\tSCHEDULEDR\x14scheduleRelationship\x12b\n" +
+	"\x14stop_time_properties\x18\x06 \x01(\v20.pb.TripUpdate.StopTimeUpdate.StopTimePropertiesR\x12stopTimeProperties\x1aN\n" +
 	"\x12StopTimeProperties\x12(\n" +
 	"\x10assigned_stop_id\x18\x01 \x01(\tR\x0eassignedStopId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"P\n" +
 	"\x14ScheduleRelationship\x12\r\n" +
@@ -3529,24 +3528,25 @@ const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
 	"start_date\x18\x02 \x01(\tR\tstartDate\x12\x1d\n" +
 	"\n" +
 	"start_time\x18\x03 \x01(\tR\tstartTime\x12\x19\n" +
-	"\bshape_id\x18\x04 \x01(\tR\ashapeId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xa7\v\n" +
-	"\x0fVehiclePosition\x121\n" +
-	"\x04trip\x18\x01 \x01(\v2\x1d.gtfs_realtime.TripDescriptorR\x04trip\x12:\n" +
-	"\avehicle\x18\b \x01(\v2 .gtfs_realtime.VehicleDescriptorR\avehicle\x123\n" +
-	"\bposition\x18\x02 \x01(\v2\x17.gtfs_realtime.PositionR\bposition\x122\n" +
+	"\bshape_id\x18\x04 \x01(\tR\ashapeId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xcf\n" +
+	"\n" +
+	"\x0fVehiclePosition\x12&\n" +
+	"\x04trip\x18\x01 \x01(\v2\x12.pb.TripDescriptorR\x04trip\x12/\n" +
+	"\avehicle\x18\b \x01(\v2\x15.pb.VehicleDescriptorR\avehicle\x12(\n" +
+	"\bposition\x18\x02 \x01(\v2\f.pb.PositionR\bposition\x122\n" +
 	"\x15current_stop_sequence\x18\x03 \x01(\rR\x13currentStopSequence\x12\x17\n" +
-	"\astop_id\x18\a \x01(\tR\x06stopId\x12f\n" +
-	"\x0ecurrent_status\x18\x04 \x01(\x0e20.gtfs_realtime.VehiclePosition.VehicleStopStatus:\rIN_TRANSIT_TOR\rcurrentStatus\x12\x1c\n" +
-	"\ttimestamp\x18\x05 \x01(\x04R\ttimestamp\x12Y\n" +
-	"\x10congestion_level\x18\x06 \x01(\x0e2..gtfs_realtime.VehiclePosition.CongestionLevelR\x0fcongestionLevel\x12Y\n" +
-	"\x10occupancy_status\x18\t \x01(\x0e2..gtfs_realtime.VehiclePosition.OccupancyStatusR\x0foccupancyStatus\x121\n" +
+	"\astop_id\x18\a \x01(\tR\x06stopId\x12[\n" +
+	"\x0ecurrent_status\x18\x04 \x01(\x0e2%.pb.VehiclePosition.VehicleStopStatus:\rIN_TRANSIT_TOR\rcurrentStatus\x12\x1c\n" +
+	"\ttimestamp\x18\x05 \x01(\x04R\ttimestamp\x12N\n" +
+	"\x10congestion_level\x18\x06 \x01(\x0e2#.pb.VehiclePosition.CongestionLevelR\x0fcongestionLevel\x12N\n" +
+	"\x10occupancy_status\x18\t \x01(\x0e2#.pb.VehiclePosition.OccupancyStatusR\x0foccupancyStatus\x121\n" +
 	"\x14occupancy_percentage\x18\n" +
-	" \x01(\rR\x13occupancyPercentage\x12d\n" +
-	"\x16multi_carriage_details\x18\v \x03(\v2..gtfs_realtime.VehiclePosition.CarriageDetailsR\x14multiCarriageDetails\x1a\x99\x02\n" +
+	" \x01(\rR\x13occupancyPercentage\x12Y\n" +
+	"\x16multi_carriage_details\x18\v \x03(\v2#.pb.VehiclePosition.CarriageDetailsR\x14multiCarriageDetails\x1a\x8e\x02\n" +
 	"\x0fCarriageDetails\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
-	"\x05label\x18\x02 \x01(\tR\x05label\x12l\n" +
-	"\x10occupancy_status\x18\x03 \x01(\x0e2..gtfs_realtime.VehiclePosition.OccupancyStatus:\x11NO_DATA_AVAILABLER\x0foccupancyStatus\x125\n" +
+	"\x05label\x18\x02 \x01(\tR\x05label\x12a\n" +
+	"\x10occupancy_status\x18\x03 \x01(\x0e2#.pb.VehiclePosition.OccupancyStatus:\x11NO_DATA_AVAILABLER\x0foccupancyStatus\x125\n" +
 	"\x14occupancy_percentage\x18\x04 \x01(\x05:\x02-1R\x13occupancyPercentage\x12+\n" +
 	"\x11carriage_sequence\x18\x05 \x01(\rR\x10carriageSequence*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"G\n" +
 	"\x11VehicleStopStatus\x12\x0f\n" +
@@ -3570,24 +3570,25 @@ const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
 	"\x04FULL\x10\x05\x12\x1c\n" +
 	"\x18NOT_ACCEPTING_PASSENGERS\x10\x06\x12\x15\n" +
 	"\x11NO_DATA_AVAILABLE\x10\a\x12\x11\n" +
-	"\rNOT_BOARDABLE\x10\b*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xfa\v\n" +
-	"\x05Alert\x12=\n" +
-	"\ractive_period\x18\x01 \x03(\v2\x18.gtfs_realtime.TimeRangeR\factivePeriod\x12F\n" +
-	"\x0finformed_entity\x18\x05 \x03(\v2\x1d.gtfs_realtime.EntitySelectorR\x0einformedEntity\x12?\n" +
-	"\x05cause\x18\x06 \x01(\x0e2\x1a.gtfs_realtime.Alert.Cause:\rUNKNOWN_CAUSER\x05cause\x12C\n" +
-	"\x06effect\x18\a \x01(\x0e2\x1b.gtfs_realtime.Alert.Effect:\x0eUNKNOWN_EFFECTR\x06effect\x121\n" +
-	"\x03url\x18\b \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\x03url\x12@\n" +
+	"\rNOT_BOARDABLE\x10\b*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xe0\n" +
+	"\n" +
+	"\x05Alert\x122\n" +
+	"\ractive_period\x18\x01 \x03(\v2\r.pb.TimeRangeR\factivePeriod\x12;\n" +
+	"\x0finformed_entity\x18\x05 \x03(\v2\x12.pb.EntitySelectorR\x0einformedEntity\x124\n" +
+	"\x05cause\x18\x06 \x01(\x0e2\x0f.pb.Alert.Cause:\rUNKNOWN_CAUSER\x05cause\x128\n" +
+	"\x06effect\x18\a \x01(\x0e2\x10.pb.Alert.Effect:\x0eUNKNOWN_EFFECTR\x06effect\x12&\n" +
+	"\x03url\x18\b \x01(\v2\x14.pb.TranslatedStringR\x03url\x125\n" +
 	"\vheader_text\x18\n" +
-	" \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\n" +
-	"headerText\x12J\n" +
-	"\x10description_text\x18\v \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\x0fdescriptionText\x12G\n" +
-	"\x0ftts_header_text\x18\f \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\rttsHeaderText\x12Q\n" +
-	"\x14tts_description_text\x18\r \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\x12ttsDescriptionText\x12[\n" +
-	"\x0eseverity_level\x18\x0e \x01(\x0e2\".gtfs_realtime.Alert.SeverityLevel:\x10UNKNOWN_SEVERITYR\rseverityLevel\x124\n" +
-	"\x05image\x18\x0f \x01(\v2\x1e.gtfs_realtime.TranslatedImageR\x05image\x12U\n" +
-	"\x16image_alternative_text\x18\x10 \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\x14imageAlternativeText\x12B\n" +
-	"\fcause_detail\x18\x11 \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\vcauseDetail\x12D\n" +
-	"\reffect_detail\x18\x12 \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\feffectDetail\"\xd8\x01\n" +
+	" \x01(\v2\x14.pb.TranslatedStringR\n" +
+	"headerText\x12?\n" +
+	"\x10description_text\x18\v \x01(\v2\x14.pb.TranslatedStringR\x0fdescriptionText\x12<\n" +
+	"\x0ftts_header_text\x18\f \x01(\v2\x14.pb.TranslatedStringR\rttsHeaderText\x12F\n" +
+	"\x14tts_description_text\x18\r \x01(\v2\x14.pb.TranslatedStringR\x12ttsDescriptionText\x12P\n" +
+	"\x0eseverity_level\x18\x0e \x01(\x0e2\x17.pb.Alert.SeverityLevel:\x10UNKNOWN_SEVERITYR\rseverityLevel\x12)\n" +
+	"\x05image\x18\x0f \x01(\v2\x13.pb.TranslatedImageR\x05image\x12J\n" +
+	"\x16image_alternative_text\x18\x10 \x01(\v2\x14.pb.TranslatedStringR\x14imageAlternativeText\x127\n" +
+	"\fcause_detail\x18\x11 \x01(\v2\x14.pb.TranslatedStringR\vcauseDetail\x129\n" +
+	"\reffect_detail\x18\x12 \x01(\v2\x14.pb.TranslatedStringR\feffectDetail\"\xd8\x01\n" +
 	"\x05Cause\x12\x11\n" +
 	"\rUNKNOWN_CAUSE\x10\x01\x12\x0f\n" +
 	"\vOTHER_CAUSE\x10\x02\x12\x15\n" +
@@ -3633,7 +3634,7 @@ const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
 	"\tlongitude\x18\x02 \x02(\x02R\tlongitude\x12\x18\n" +
 	"\abearing\x18\x03 \x01(\x02R\abearing\x12\x1a\n" +
 	"\bodometer\x18\x04 \x01(\x01R\bodometer\x12\x14\n" +
-	"\x05speed\x18\x05 \x01(\x02R\x05speed*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xb7\x05\n" +
+	"\x05speed\x18\x05 \x01(\x02R\x05speed*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xa1\x05\n" +
 	"\x0eTripDescriptor\x12\x17\n" +
 	"\atrip_id\x18\x01 \x01(\tR\x06tripId\x12\x19\n" +
 	"\broute_id\x18\x05 \x01(\tR\arouteId\x12!\n" +
@@ -3641,9 +3642,9 @@ const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
 	"\n" +
 	"start_time\x18\x02 \x01(\tR\tstartTime\x12\x1d\n" +
 	"\n" +
-	"start_date\x18\x03 \x01(\tR\tstartDate\x12g\n" +
-	"\x15schedule_relationship\x18\x04 \x01(\x0e22.gtfs_realtime.TripDescriptor.ScheduleRelationshipR\x14scheduleRelationship\x12W\n" +
-	"\rmodified_trip\x18\a \x01(\v22.gtfs_realtime.TripDescriptor.ModifiedTripSelectorR\fmodifiedTrip\x1a\xb9\x01\n" +
+	"start_date\x18\x03 \x01(\tR\tstartDate\x12\\\n" +
+	"\x15schedule_relationship\x18\x04 \x01(\x0e2'.pb.TripDescriptor.ScheduleRelationshipR\x14scheduleRelationship\x12L\n" +
+	"\rmodified_trip\x18\a \x01(\v2'.pb.TripDescriptor.ModifiedTripSelectorR\fmodifiedTrip\x1a\xb9\x01\n" +
 	"\x14ModifiedTripSelector\x12)\n" +
 	"\x10modifications_id\x18\x01 \x01(\tR\x0fmodificationsId\x12(\n" +
 	"\x10affected_trip_id\x18\x02 \x01(\tR\x0eaffectedTripId\x12\x1d\n" +
@@ -3659,32 +3660,32 @@ const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
 	"\vREPLACEMENT\x10\x05\x1a\x02\b\x01\x12\x0e\n" +
 	"\n" +
 	"DUPLICATED\x10\x06\x12\v\n" +
-	"\aDELETED\x10\a*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xcf\x02\n" +
+	"\aDELETED\x10\a*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xc4\x02\n" +
 	"\x11VehicleDescriptor\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
 	"\x05label\x18\x02 \x01(\tR\x05label\x12#\n" +
-	"\rlicense_plate\x18\x03 \x01(\tR\flicensePlate\x12t\n" +
-	"\x15wheelchair_accessible\x18\x04 \x01(\x0e25.gtfs_realtime.VehicleDescriptor.WheelchairAccessible:\bNO_VALUER\x14wheelchairAccessible\"i\n" +
+	"\rlicense_plate\x18\x03 \x01(\tR\flicensePlate\x12i\n" +
+	"\x15wheelchair_accessible\x18\x04 \x01(\x0e2*.pb.VehicleDescriptor.WheelchairAccessible:\bNO_VALUER\x14wheelchairAccessible\"i\n" +
 	"\x14WheelchairAccessible\x12\f\n" +
 	"\bNO_VALUE\x10\x00\x12\v\n" +
 	"\aUNKNOWN\x10\x01\x12\x19\n" +
 	"\x15WHEELCHAIR_ACCESSIBLE\x10\x02\x12\x1b\n" +
-	"\x17WHEELCHAIR_INACCESSIBLE\x10\x03*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xe6\x01\n" +
+	"\x17WHEELCHAIR_INACCESSIBLE\x10\x03*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xdb\x01\n" +
 	"\x0eEntitySelector\x12\x1b\n" +
 	"\tagency_id\x18\x01 \x01(\tR\bagencyId\x12\x19\n" +
 	"\broute_id\x18\x02 \x01(\tR\arouteId\x12\x1d\n" +
 	"\n" +
-	"route_type\x18\x03 \x01(\x05R\trouteType\x121\n" +
-	"\x04trip\x18\x04 \x01(\v2\x1d.gtfs_realtime.TripDescriptorR\x04trip\x12\x17\n" +
+	"route_type\x18\x03 \x01(\x05R\trouteType\x12&\n" +
+	"\x04trip\x18\x04 \x01(\v2\x12.pb.TripDescriptorR\x04trip\x12\x17\n" +
 	"\astop_id\x18\x05 \x01(\tR\x06stopId\x12!\n" +
-	"\fdirection_id\x18\x06 \x01(\rR\vdirectionId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xc0\x01\n" +
-	"\x10TranslatedString\x12M\n" +
-	"\vtranslation\x18\x01 \x03(\v2+.gtfs_realtime.TranslatedString.TranslationR\vtranslation\x1aM\n" +
+	"\fdirection_id\x18\x06 \x01(\rR\vdirectionId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xb5\x01\n" +
+	"\x10TranslatedString\x12B\n" +
+	"\vtranslation\x18\x01 \x03(\v2 .pb.TranslatedString.TranslationR\vtranslation\x1aM\n" +
 	"\vTranslation\x12\x12\n" +
 	"\x04text\x18\x01 \x02(\tR\x04text\x12\x1a\n" +
-	"\blanguage\x18\x02 \x01(\tR\blanguage*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xe8\x01\n" +
-	"\x0fTranslatedImage\x12V\n" +
-	"\x0flocalized_image\x18\x01 \x03(\v2-.gtfs_realtime.TranslatedImage.LocalizedImageR\x0elocalizedImage\x1am\n" +
+	"\blanguage\x18\x02 \x01(\tR\blanguage*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xdd\x01\n" +
+	"\x0fTranslatedImage\x12K\n" +
+	"\x0flocalized_image\x18\x01 \x03(\v2\".pb.TranslatedImage.LocalizedImageR\x0elocalizedImage\x1am\n" +
 	"\x0eLocalizedImage\x12\x10\n" +
 	"\x03url\x18\x01 \x02(\tR\x03url\x12\x1d\n" +
 	"\n" +
@@ -3692,37 +3693,37 @@ const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
 	"\blanguage\x18\x03 \x01(\tR\blanguage*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"]\n" +
 	"\x05Shape\x12\x19\n" +
 	"\bshape_id\x18\x01 \x01(\tR\ashapeId\x12)\n" +
-	"\x10encoded_polyline\x18\x02 \x01(\tR\x0fencodedPolyline*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\x8d\x06\n" +
+	"\x10encoded_polyline\x18\x02 \x01(\tR\x0fencodedPolyline*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xc0\x05\n" +
 	"\x04Stop\x12\x17\n" +
-	"\astop_id\x18\x01 \x01(\tR\x06stopId\x12<\n" +
-	"\tstop_code\x18\x02 \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\bstopCode\x12<\n" +
-	"\tstop_name\x18\x03 \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\bstopName\x12C\n" +
-	"\rtts_stop_name\x18\x04 \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\vttsStopName\x12<\n" +
-	"\tstop_desc\x18\x05 \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\bstopDesc\x12\x19\n" +
+	"\astop_id\x18\x01 \x01(\tR\x06stopId\x121\n" +
+	"\tstop_code\x18\x02 \x01(\v2\x14.pb.TranslatedStringR\bstopCode\x121\n" +
+	"\tstop_name\x18\x03 \x01(\v2\x14.pb.TranslatedStringR\bstopName\x128\n" +
+	"\rtts_stop_name\x18\x04 \x01(\v2\x14.pb.TranslatedStringR\vttsStopName\x121\n" +
+	"\tstop_desc\x18\x05 \x01(\v2\x14.pb.TranslatedStringR\bstopDesc\x12\x19\n" +
 	"\bstop_lat\x18\x06 \x01(\x02R\astopLat\x12\x19\n" +
 	"\bstop_lon\x18\a \x01(\x02R\astopLon\x12\x17\n" +
-	"\azone_id\x18\b \x01(\tR\x06zoneId\x12:\n" +
-	"\bstop_url\x18\t \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\astopUrl\x12%\n" +
+	"\azone_id\x18\b \x01(\tR\x06zoneId\x12/\n" +
+	"\bstop_url\x18\t \x01(\v2\x14.pb.TranslatedStringR\astopUrl\x12%\n" +
 	"\x0eparent_station\x18\v \x01(\tR\rparentStation\x12#\n" +
-	"\rstop_timezone\x18\f \x01(\tR\fstopTimezone\x12`\n" +
-	"\x13wheelchair_boarding\x18\r \x01(\x0e2&.gtfs_realtime.Stop.WheelchairBoarding:\aUNKNOWNR\x12wheelchairBoarding\x12\x19\n" +
-	"\blevel_id\x18\x0e \x01(\tR\alevelId\x12D\n" +
-	"\rplatform_code\x18\x0f \x01(\v2\x1f.gtfs_realtime.TranslatedStringR\fplatformCode\"C\n" +
+	"\rstop_timezone\x18\f \x01(\tR\fstopTimezone\x12U\n" +
+	"\x13wheelchair_boarding\x18\r \x01(\x0e2\x1b.pb.Stop.WheelchairBoarding:\aUNKNOWNR\x12wheelchairBoarding\x12\x19\n" +
+	"\blevel_id\x18\x0e \x01(\tR\alevelId\x129\n" +
+	"\rplatform_code\x18\x0f \x01(\v2\x14.pb.TranslatedStringR\fplatformCode\"C\n" +
 	"\x12WheelchairBoarding\x12\v\n" +
 	"\aUNKNOWN\x10\x00\x12\r\n" +
 	"\tAVAILABLE\x10\x01\x12\x11\n" +
-	"\rNOT_AVAILABLE\x10\x02*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\x8f\x06\n" +
-	"\x11TripModifications\x12U\n" +
-	"\x0eselected_trips\x18\x01 \x03(\v2..gtfs_realtime.TripModifications.SelectedTripsR\rselectedTrips\x12\x1f\n" +
+	"\rNOT_AVAILABLE\x10\x02*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"\xd8\x05\n" +
+	"\x11TripModifications\x12J\n" +
+	"\x0eselected_trips\x18\x01 \x03(\v2#.pb.TripModifications.SelectedTripsR\rselectedTrips\x12\x1f\n" +
 	"\vstart_times\x18\x02 \x03(\tR\n" +
 	"startTimes\x12#\n" +
-	"\rservice_dates\x18\x03 \x03(\tR\fserviceDates\x12S\n" +
-	"\rmodifications\x18\x04 \x03(\v2-.gtfs_realtime.TripModifications.ModificationR\rmodifications\x1a\xa0\x03\n" +
-	"\fModification\x12K\n" +
-	"\x13start_stop_selector\x18\x01 \x01(\v2\x1b.gtfs_realtime.StopSelectorR\x11startStopSelector\x12G\n" +
-	"\x11end_stop_selector\x18\x02 \x01(\v2\x1b.gtfs_realtime.StopSelectorR\x0fendStopSelector\x12E\n" +
-	"\x1dpropagated_modification_delay\x18\x03 \x01(\x05:\x010R\x1bpropagatedModificationDelay\x12K\n" +
-	"\x11replacement_stops\x18\x04 \x03(\v2\x1e.gtfs_realtime.ReplacementStopR\x10replacementStops\x12(\n" +
+	"\rservice_dates\x18\x03 \x03(\tR\fserviceDates\x12H\n" +
+	"\rmodifications\x18\x04 \x03(\v2\".pb.TripModifications.ModificationR\rmodifications\x1a\xff\x02\n" +
+	"\fModification\x12@\n" +
+	"\x13start_stop_selector\x18\x01 \x01(\v2\x10.pb.StopSelectorR\x11startStopSelector\x12<\n" +
+	"\x11end_stop_selector\x18\x02 \x01(\v2\x10.pb.StopSelectorR\x0fendStopSelector\x12E\n" +
+	"\x1dpropagated_modification_delay\x18\x03 \x01(\x05:\x010R\x1bpropagatedModificationDelay\x12@\n" +
+	"\x11replacement_stops\x18\x04 \x03(\v2\x13.pb.ReplacementStopR\x10replacementStops\x12(\n" +
 	"\x10service_alert_id\x18\x05 \x01(\tR\x0eserviceAlertId\x12,\n" +
 	"\x12last_modified_time\x18\x06 \x01(\x04R\x10lastModifiedTime*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\x1aU\n" +
 	"\rSelectedTrips\x12\x19\n" +
@@ -3733,122 +3734,122 @@ const file_proto_gtfs_gtfs_realtime_proto_rawDesc = "" +
 	"\astop_id\x18\x02 \x01(\tR\x06stopId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90N\"i\n" +
 	"\x0fReplacementStop\x12-\n" +
 	"\x13travel_time_to_stop\x18\x01 \x01(\x05R\x10travelTimeToStop\x12\x17\n" +
-	"\astop_id\x18\x02 \x01(\tR\x06stopId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90NB\x16Z\x14nyct-feed/proto/gtfs"
+	"\astop_id\x18\x02 \x01(\tR\x06stopId*\x06\b\xe8\a\x10\xd0\x0f*\x06\b\xa8F\x10\x90NB\x17Z\x15nyct-feed/internal/pb"
 
 var (
-	file_proto_gtfs_gtfs_realtime_proto_rawDescOnce sync.Once
-	file_proto_gtfs_gtfs_realtime_proto_rawDescData []byte
+	file_internal_pb_gtfs_realtime_proto_rawDescOnce sync.Once
+	file_internal_pb_gtfs_realtime_proto_rawDescData []byte
 )
 
-func file_proto_gtfs_gtfs_realtime_proto_rawDescGZIP() []byte {
-	file_proto_gtfs_gtfs_realtime_proto_rawDescOnce.Do(func() {
-		file_proto_gtfs_gtfs_realtime_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_gtfs_gtfs_realtime_proto_rawDesc), len(file_proto_gtfs_gtfs_realtime_proto_rawDesc)))
+func file_internal_pb_gtfs_realtime_proto_rawDescGZIP() []byte {
+	file_internal_pb_gtfs_realtime_proto_rawDescOnce.Do(func() {
+		file_internal_pb_gtfs_realtime_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_internal_pb_gtfs_realtime_proto_rawDesc), len(file_internal_pb_gtfs_realtime_proto_rawDesc)))
 	})
-	return file_proto_gtfs_gtfs_realtime_proto_rawDescData
+	return file_internal_pb_gtfs_realtime_proto_rawDescData
 }
 
-var file_proto_gtfs_gtfs_realtime_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
-var file_proto_gtfs_gtfs_realtime_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
-var file_proto_gtfs_gtfs_realtime_proto_goTypes = []any{
-	(FeedHeader_Incrementality)(0),                       // 0: gtfs_realtime.FeedHeader.Incrementality
-	(TripUpdate_StopTimeUpdate_ScheduleRelationship)(0),  // 1: gtfs_realtime.TripUpdate.StopTimeUpdate.ScheduleRelationship
-	(VehiclePosition_VehicleStopStatus)(0),               // 2: gtfs_realtime.VehiclePosition.VehicleStopStatus
-	(VehiclePosition_CongestionLevel)(0),                 // 3: gtfs_realtime.VehiclePosition.CongestionLevel
-	(VehiclePosition_OccupancyStatus)(0),                 // 4: gtfs_realtime.VehiclePosition.OccupancyStatus
-	(Alert_Cause)(0),                                     // 5: gtfs_realtime.Alert.Cause
-	(Alert_Effect)(0),                                    // 6: gtfs_realtime.Alert.Effect
-	(Alert_SeverityLevel)(0),                             // 7: gtfs_realtime.Alert.SeverityLevel
-	(TripDescriptor_ScheduleRelationship)(0),             // 8: gtfs_realtime.TripDescriptor.ScheduleRelationship
-	(VehicleDescriptor_WheelchairAccessible)(0),          // 9: gtfs_realtime.VehicleDescriptor.WheelchairAccessible
-	(Stop_WheelchairBoarding)(0),                         // 10: gtfs_realtime.Stop.WheelchairBoarding
-	(*FeedMessage)(nil),                                  // 11: gtfs_realtime.FeedMessage
-	(*FeedHeader)(nil),                                   // 12: gtfs_realtime.FeedHeader
-	(*FeedEntity)(nil),                                   // 13: gtfs_realtime.FeedEntity
-	(*TripUpdate)(nil),                                   // 14: gtfs_realtime.TripUpdate
-	(*VehiclePosition)(nil),                              // 15: gtfs_realtime.VehiclePosition
-	(*Alert)(nil),                                        // 16: gtfs_realtime.Alert
-	(*TimeRange)(nil),                                    // 17: gtfs_realtime.TimeRange
-	(*Position)(nil),                                     // 18: gtfs_realtime.Position
-	(*TripDescriptor)(nil),                               // 19: gtfs_realtime.TripDescriptor
-	(*VehicleDescriptor)(nil),                            // 20: gtfs_realtime.VehicleDescriptor
-	(*EntitySelector)(nil),                               // 21: gtfs_realtime.EntitySelector
-	(*TranslatedString)(nil),                             // 22: gtfs_realtime.TranslatedString
-	(*TranslatedImage)(nil),                              // 23: gtfs_realtime.TranslatedImage
-	(*Shape)(nil),                                        // 24: gtfs_realtime.Shape
-	(*Stop)(nil),                                         // 25: gtfs_realtime.Stop
-	(*TripModifications)(nil),                            // 26: gtfs_realtime.TripModifications
-	(*StopSelector)(nil),                                 // 27: gtfs_realtime.StopSelector
-	(*ReplacementStop)(nil),                              // 28: gtfs_realtime.ReplacementStop
-	(*TripUpdate_StopTimeEvent)(nil),                     // 29: gtfs_realtime.TripUpdate.StopTimeEvent
-	(*TripUpdate_StopTimeUpdate)(nil),                    // 30: gtfs_realtime.TripUpdate.StopTimeUpdate
-	(*TripUpdate_TripProperties)(nil),                    // 31: gtfs_realtime.TripUpdate.TripProperties
-	(*TripUpdate_StopTimeUpdate_StopTimeProperties)(nil), // 32: gtfs_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties
-	(*VehiclePosition_CarriageDetails)(nil),              // 33: gtfs_realtime.VehiclePosition.CarriageDetails
-	(*TripDescriptor_ModifiedTripSelector)(nil),          // 34: gtfs_realtime.TripDescriptor.ModifiedTripSelector
-	(*TranslatedString_Translation)(nil),                 // 35: gtfs_realtime.TranslatedString.Translation
-	(*TranslatedImage_LocalizedImage)(nil),               // 36: gtfs_realtime.TranslatedImage.LocalizedImage
-	(*TripModifications_Modification)(nil),               // 37: gtfs_realtime.TripModifications.Modification
-	(*TripModifications_SelectedTrips)(nil),              // 38: gtfs_realtime.TripModifications.SelectedTrips
+var file_internal_pb_gtfs_realtime_proto_enumTypes = make([]protoimpl.EnumInfo, 11)
+var file_internal_pb_gtfs_realtime_proto_msgTypes = make([]protoimpl.MessageInfo, 28)
+var file_internal_pb_gtfs_realtime_proto_goTypes = []any{
+	(FeedHeader_Incrementality)(0),                       // 0: pb.FeedHeader.Incrementality
+	(TripUpdate_StopTimeUpdate_ScheduleRelationship)(0),  // 1: pb.TripUpdate.StopTimeUpdate.ScheduleRelationship
+	(VehiclePosition_VehicleStopStatus)(0),               // 2: pb.VehiclePosition.VehicleStopStatus
+	(VehiclePosition_CongestionLevel)(0),                 // 3: pb.VehiclePosition.CongestionLevel
+	(VehiclePosition_OccupancyStatus)(0),                 // 4: pb.VehiclePosition.OccupancyStatus
+	(Alert_Cause)(0),                                     // 5: pb.Alert.Cause
+	(Alert_Effect)(0),                                    // 6: pb.Alert.Effect
+	(Alert_SeverityLevel)(0),                             // 7: pb.Alert.SeverityLevel
+	(TripDescriptor_ScheduleRelationship)(0),             // 8: pb.TripDescriptor.ScheduleRelationship
+	(VehicleDescriptor_WheelchairAccessible)(0),          // 9: pb.VehicleDescriptor.WheelchairAccessible
+	(Stop_WheelchairBoarding)(0),                         // 10: pb.Stop.WheelchairBoarding
+	(*FeedMessage)(nil),                                  // 11: pb.FeedMessage
+	(*FeedHeader)(nil),                                   // 12: pb.FeedHeader
+	(*FeedEntity)(nil),                                   // 13: pb.FeedEntity
+	(*TripUpdate)(nil),                                   // 14: pb.TripUpdate
+	(*VehiclePosition)(nil),                              // 15: pb.VehiclePosition
+	(*Alert)(nil),                                        // 16: pb.Alert
+	(*TimeRange)(nil),                                    // 17: pb.TimeRange
+	(*Position)(nil),                                     // 18: pb.Position
+	(*TripDescriptor)(nil),                               // 19: pb.TripDescriptor
+	(*VehicleDescriptor)(nil),                            // 20: pb.VehicleDescriptor
+	(*EntitySelector)(nil),                               // 21: pb.EntitySelector
+	(*TranslatedString)(nil),                             // 22: pb.TranslatedString
+	(*TranslatedImage)(nil),                              // 23: pb.TranslatedImage
+	(*Shape)(nil),                                        // 24: pb.Shape
+	(*Stop)(nil),                                         // 25: pb.Stop
+	(*TripModifications)(nil),                            // 26: pb.TripModifications
+	(*StopSelector)(nil),                                 // 27: pb.StopSelector
+	(*ReplacementStop)(nil),                              // 28: pb.ReplacementStop
+	(*TripUpdate_StopTimeEvent)(nil),                     // 29: pb.TripUpdate.StopTimeEvent
+	(*TripUpdate_StopTimeUpdate)(nil),                    // 30: pb.TripUpdate.StopTimeUpdate
+	(*TripUpdate_TripProperties)(nil),                    // 31: pb.TripUpdate.TripProperties
+	(*TripUpdate_StopTimeUpdate_StopTimeProperties)(nil), // 32: pb.TripUpdate.StopTimeUpdate.StopTimeProperties
+	(*VehiclePosition_CarriageDetails)(nil),              // 33: pb.VehiclePosition.CarriageDetails
+	(*TripDescriptor_ModifiedTripSelector)(nil),          // 34: pb.TripDescriptor.ModifiedTripSelector
+	(*TranslatedString_Translation)(nil),                 // 35: pb.TranslatedString.Translation
+	(*TranslatedImage_LocalizedImage)(nil),               // 36: pb.TranslatedImage.LocalizedImage
+	(*TripModifications_Modification)(nil),               // 37: pb.TripModifications.Modification
+	(*TripModifications_SelectedTrips)(nil),              // 38: pb.TripModifications.SelectedTrips
 }
-var file_proto_gtfs_gtfs_realtime_proto_depIdxs = []int32{
-	12, // 0: gtfs_realtime.FeedMessage.header:type_name -> gtfs_realtime.FeedHeader
-	13, // 1: gtfs_realtime.FeedMessage.entity:type_name -> gtfs_realtime.FeedEntity
-	0,  // 2: gtfs_realtime.FeedHeader.incrementality:type_name -> gtfs_realtime.FeedHeader.Incrementality
-	14, // 3: gtfs_realtime.FeedEntity.trip_update:type_name -> gtfs_realtime.TripUpdate
-	15, // 4: gtfs_realtime.FeedEntity.vehicle:type_name -> gtfs_realtime.VehiclePosition
-	16, // 5: gtfs_realtime.FeedEntity.alert:type_name -> gtfs_realtime.Alert
-	24, // 6: gtfs_realtime.FeedEntity.shape:type_name -> gtfs_realtime.Shape
-	25, // 7: gtfs_realtime.FeedEntity.stop:type_name -> gtfs_realtime.Stop
-	26, // 8: gtfs_realtime.FeedEntity.trip_modifications:type_name -> gtfs_realtime.TripModifications
-	19, // 9: gtfs_realtime.TripUpdate.trip:type_name -> gtfs_realtime.TripDescriptor
-	20, // 10: gtfs_realtime.TripUpdate.vehicle:type_name -> gtfs_realtime.VehicleDescriptor
-	30, // 11: gtfs_realtime.TripUpdate.stop_time_update:type_name -> gtfs_realtime.TripUpdate.StopTimeUpdate
-	31, // 12: gtfs_realtime.TripUpdate.trip_properties:type_name -> gtfs_realtime.TripUpdate.TripProperties
-	19, // 13: gtfs_realtime.VehiclePosition.trip:type_name -> gtfs_realtime.TripDescriptor
-	20, // 14: gtfs_realtime.VehiclePosition.vehicle:type_name -> gtfs_realtime.VehicleDescriptor
-	18, // 15: gtfs_realtime.VehiclePosition.position:type_name -> gtfs_realtime.Position
-	2,  // 16: gtfs_realtime.VehiclePosition.current_status:type_name -> gtfs_realtime.VehiclePosition.VehicleStopStatus
-	3,  // 17: gtfs_realtime.VehiclePosition.congestion_level:type_name -> gtfs_realtime.VehiclePosition.CongestionLevel
-	4,  // 18: gtfs_realtime.VehiclePosition.occupancy_status:type_name -> gtfs_realtime.VehiclePosition.OccupancyStatus
-	33, // 19: gtfs_realtime.VehiclePosition.multi_carriage_details:type_name -> gtfs_realtime.VehiclePosition.CarriageDetails
-	17, // 20: gtfs_realtime.Alert.active_period:type_name -> gtfs_realtime.TimeRange
-	21, // 21: gtfs_realtime.Alert.informed_entity:type_name -> gtfs_realtime.EntitySelector
-	5,  // 22: gtfs_realtime.Alert.cause:type_name -> gtfs_realtime.Alert.Cause
-	6,  // 23: gtfs_realtime.Alert.effect:type_name -> gtfs_realtime.Alert.Effect
-	22, // 24: gtfs_realtime.Alert.url:type_name -> gtfs_realtime.TranslatedString
-	22, // 25: gtfs_realtime.Alert.header_text:type_name -> gtfs_realtime.TranslatedString
-	22, // 26: gtfs_realtime.Alert.description_text:type_name -> gtfs_realtime.TranslatedString
-	22, // 27: gtfs_realtime.Alert.tts_header_text:type_name -> gtfs_realtime.TranslatedString
-	22, // 28: gtfs_realtime.Alert.tts_description_text:type_name -> gtfs_realtime.TranslatedString
-	7,  // 29: gtfs_realtime.Alert.severity_level:type_name -> gtfs_realtime.Alert.SeverityLevel
-	23, // 30: gtfs_realtime.Alert.image:type_name -> gtfs_realtime.TranslatedImage
-	22, // 31: gtfs_realtime.Alert.image_alternative_text:type_name -> gtfs_realtime.TranslatedString
-	22, // 32: gtfs_realtime.Alert.cause_detail:type_name -> gtfs_realtime.TranslatedString
-	22, // 33: gtfs_realtime.Alert.effect_detail:type_name -> gtfs_realtime.TranslatedString
-	8,  // 34: gtfs_realtime.TripDescriptor.schedule_relationship:type_name -> gtfs_realtime.TripDescriptor.ScheduleRelationship
-	34, // 35: gtfs_realtime.TripDescriptor.modified_trip:type_name -> gtfs_realtime.TripDescriptor.ModifiedTripSelector
-	9,  // 36: gtfs_realtime.VehicleDescriptor.wheelchair_accessible:type_name -> gtfs_realtime.VehicleDescriptor.WheelchairAccessible
-	19, // 37: gtfs_realtime.EntitySelector.trip:type_name -> gtfs_realtime.TripDescriptor
-	35, // 38: gtfs_realtime.TranslatedString.translation:type_name -> gtfs_realtime.TranslatedString.Translation
-	36, // 39: gtfs_realtime.TranslatedImage.localized_image:type_name -> gtfs_realtime.TranslatedImage.LocalizedImage
-	22, // 40: gtfs_realtime.Stop.stop_code:type_name -> gtfs_realtime.TranslatedString
-	22, // 41: gtfs_realtime.Stop.stop_name:type_name -> gtfs_realtime.TranslatedString
-	22, // 42: gtfs_realtime.Stop.tts_stop_name:type_name -> gtfs_realtime.TranslatedString
-	22, // 43: gtfs_realtime.Stop.stop_desc:type_name -> gtfs_realtime.TranslatedString
-	22, // 44: gtfs_realtime.Stop.stop_url:type_name -> gtfs_realtime.TranslatedString
-	10, // 45: gtfs_realtime.Stop.wheelchair_boarding:type_name -> gtfs_realtime.Stop.WheelchairBoarding
-	22, // 46: gtfs_realtime.Stop.platform_code:type_name -> gtfs_realtime.TranslatedString
-	38, // 47: gtfs_realtime.TripModifications.selected_trips:type_name -> gtfs_realtime.TripModifications.SelectedTrips
-	37, // 48: gtfs_realtime.TripModifications.modifications:type_name -> gtfs_realtime.TripModifications.Modification
-	29, // 49: gtfs_realtime.TripUpdate.StopTimeUpdate.arrival:type_name -> gtfs_realtime.TripUpdate.StopTimeEvent
-	29, // 50: gtfs_realtime.TripUpdate.StopTimeUpdate.departure:type_name -> gtfs_realtime.TripUpdate.StopTimeEvent
-	4,  // 51: gtfs_realtime.TripUpdate.StopTimeUpdate.departure_occupancy_status:type_name -> gtfs_realtime.VehiclePosition.OccupancyStatus
-	1,  // 52: gtfs_realtime.TripUpdate.StopTimeUpdate.schedule_relationship:type_name -> gtfs_realtime.TripUpdate.StopTimeUpdate.ScheduleRelationship
-	32, // 53: gtfs_realtime.TripUpdate.StopTimeUpdate.stop_time_properties:type_name -> gtfs_realtime.TripUpdate.StopTimeUpdate.StopTimeProperties
-	4,  // 54: gtfs_realtime.VehiclePosition.CarriageDetails.occupancy_status:type_name -> gtfs_realtime.VehiclePosition.OccupancyStatus
-	27, // 55: gtfs_realtime.TripModifications.Modification.start_stop_selector:type_name -> gtfs_realtime.StopSelector
-	27, // 56: gtfs_realtime.TripModifications.Modification.end_stop_selector:type_name -> gtfs_realtime.StopSelector
-	28, // 57: gtfs_realtime.TripModifications.Modification.replacement_stops:type_name -> gtfs_realtime.ReplacementStop
+var file_internal_pb_gtfs_realtime_proto_depIdxs = []int32{
+	12, // 0: pb.FeedMessage.header:type_name -> pb.FeedHeader
+	13, // 1: pb.FeedMessage.entity:type_name -> pb.FeedEntity
+	0,  // 2: pb.FeedHeader.incrementality:type_name -> pb.FeedHeader.Incrementality
+	14, // 3: pb.FeedEntity.trip_update:type_name -> pb.TripUpdate
+	15, // 4: pb.FeedEntity.vehicle:type_name -> pb.VehiclePosition
+	16, // 5: pb.FeedEntity.alert:type_name -> pb.Alert
+	24, // 6: pb.FeedEntity.shape:type_name -> pb.Shape
+	25, // 7: pb.FeedEntity.stop:type_name -> pb.Stop
+	26, // 8: pb.FeedEntity.trip_modifications:type_name -> pb.TripModifications
+	19, // 9: pb.TripUpdate.trip:type_name -> pb.TripDescriptor
+	20, // 10: pb.TripUpdate.vehicle:type_name -> pb.VehicleDescriptor
+	30, // 11: pb.TripUpdate.stop_time_update:type_name -> pb.TripUpdate.StopTimeUpdate
+	31, // 12: pb.TripUpdate.trip_properties:type_name -> pb.TripUpdate.TripProperties
+	19, // 13: pb.VehiclePosition.trip:type_name -> pb.TripDescriptor
+	20, // 14: pb.VehiclePosition.vehicle:type_name -> pb.VehicleDescriptor
+	18, // 15: pb.VehiclePosition.position:type_name -> pb.Position
+	2,  // 16: pb.VehiclePosition.current_status:type_name -> pb.VehiclePosition.VehicleStopStatus
+	3,  // 17: pb.VehiclePosition.congestion_level:type_name -> pb.VehiclePosition.CongestionLevel
+	4,  // 18: pb.VehiclePosition.occupancy_status:type_name -> pb.VehiclePosition.OccupancyStatus
+	33, // 19: pb.VehiclePosition.multi_carriage_details:type_name -> pb.VehiclePosition.CarriageDetails
+	17, // 20: pb.Alert.active_period:type_name -> pb.TimeRange
+	21, // 21: pb.Alert.informed_entity:type_name -> pb.EntitySelector
+	5,  // 22: pb.Alert.cause:type_name -> pb.Alert.Cause
+	6,  // 23: pb.Alert.effect:type_name -> pb.Alert.Effect
+	22, // 24: pb.Alert.url:type_name -> pb.TranslatedString
+	22, // 25: pb.Alert.header_text:type_name -> pb.TranslatedString
+	22, // 26: pb.Alert.description_text:type_name -> pb.TranslatedString
+	22, // 27: pb.Alert.tts_header_text:type_name -> pb.TranslatedString
+	22, // 28: pb.Alert.tts_description_text:type_name -> pb.TranslatedString
+	7,  // 29: pb.Alert.severity_level:type_name -> pb.Alert.SeverityLevel
+	23, // 30: pb.Alert.image:type_name -> pb.TranslatedImage
+	22, // 31: pb.Alert.image_alternative_text:type_name -> pb.TranslatedString
+	22, // 32: pb.Alert.cause_detail:type_name -> pb.TranslatedString
+	22, // 33: pb.Alert.effect_detail:type_name -> pb.TranslatedString
+	8,  // 34: pb.TripDescriptor.schedule_relationship:type_name -> pb.TripDescriptor.ScheduleRelationship
+	34, // 35: pb.TripDescriptor.modified_trip:type_name -> pb.TripDescriptor.ModifiedTripSelector
+	9,  // 36: pb.VehicleDescriptor.wheelchair_accessible:type_name -> pb.VehicleDescriptor.WheelchairAccessible
+	19, // 37: pb.EntitySelector.trip:type_name -> pb.TripDescriptor
+	35, // 38: pb.TranslatedString.translation:type_name -> pb.TranslatedString.Translation
+	36, // 39: pb.TranslatedImage.localized_image:type_name -> pb.TranslatedImage.LocalizedImage
+	22, // 40: pb.Stop.stop_code:type_name -> pb.TranslatedString
+	22, // 41: pb.Stop.stop_name:type_name -> pb.TranslatedString
+	22, // 42: pb.Stop.tts_stop_name:type_name -> pb.TranslatedString
+	22, // 43: pb.Stop.stop_desc:type_name -> pb.TranslatedString
+	22, // 44: pb.Stop.stop_url:type_name -> pb.TranslatedString
+	10, // 45: pb.Stop.wheelchair_boarding:type_name -> pb.Stop.WheelchairBoarding
+	22, // 46: pb.Stop.platform_code:type_name -> pb.TranslatedString
+	38, // 47: pb.TripModifications.selected_trips:type_name -> pb.TripModifications.SelectedTrips
+	37, // 48: pb.TripModifications.modifications:type_name -> pb.TripModifications.Modification
+	29, // 49: pb.TripUpdate.StopTimeUpdate.arrival:type_name -> pb.TripUpdate.StopTimeEvent
+	29, // 50: pb.TripUpdate.StopTimeUpdate.departure:type_name -> pb.TripUpdate.StopTimeEvent
+	4,  // 51: pb.TripUpdate.StopTimeUpdate.departure_occupancy_status:type_name -> pb.VehiclePosition.OccupancyStatus
+	1,  // 52: pb.TripUpdate.StopTimeUpdate.schedule_relationship:type_name -> pb.TripUpdate.StopTimeUpdate.ScheduleRelationship
+	32, // 53: pb.TripUpdate.StopTimeUpdate.stop_time_properties:type_name -> pb.TripUpdate.StopTimeUpdate.StopTimeProperties
+	4,  // 54: pb.VehiclePosition.CarriageDetails.occupancy_status:type_name -> pb.VehiclePosition.OccupancyStatus
+	27, // 55: pb.TripModifications.Modification.start_stop_selector:type_name -> pb.StopSelector
+	27, // 56: pb.TripModifications.Modification.end_stop_selector:type_name -> pb.StopSelector
+	28, // 57: pb.TripModifications.Modification.replacement_stops:type_name -> pb.ReplacementStop
 	58, // [58:58] is the sub-list for method output_type
 	58, // [58:58] is the sub-list for method input_type
 	58, // [58:58] is the sub-list for extension type_name
@@ -3856,27 +3857,27 @@ var file_proto_gtfs_gtfs_realtime_proto_depIdxs = []int32{
 	0,  // [0:58] is the sub-list for field type_name
 }
 
-func init() { file_proto_gtfs_gtfs_realtime_proto_init() }
-func file_proto_gtfs_gtfs_realtime_proto_init() {
-	if File_proto_gtfs_gtfs_realtime_proto != nil {
+func init() { file_internal_pb_gtfs_realtime_proto_init() }
+func file_internal_pb_gtfs_realtime_proto_init() {
+	if File_internal_pb_gtfs_realtime_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_gtfs_gtfs_realtime_proto_rawDesc), len(file_proto_gtfs_gtfs_realtime_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_pb_gtfs_realtime_proto_rawDesc), len(file_internal_pb_gtfs_realtime_proto_rawDesc)),
 			NumEnums:      11,
 			NumMessages:   28,
 			NumExtensions: 0,
 			NumServices:   0,
 		},
-		GoTypes:           file_proto_gtfs_gtfs_realtime_proto_goTypes,
-		DependencyIndexes: file_proto_gtfs_gtfs_realtime_proto_depIdxs,
-		EnumInfos:         file_proto_gtfs_gtfs_realtime_proto_enumTypes,
-		MessageInfos:      file_proto_gtfs_gtfs_realtime_proto_msgTypes,
+		GoTypes:           file_internal_pb_gtfs_realtime_proto_goTypes,
+		DependencyIndexes: file_internal_pb_gtfs_realtime_proto_depIdxs,
+		EnumInfos:         file_internal_pb_gtfs_realtime_proto_enumTypes,
+		MessageInfos:      file_internal_pb_gtfs_realtime_proto_msgTypes,
 	}.Build()
-	File_proto_gtfs_gtfs_realtime_proto = out.File
-	file_proto_gtfs_gtfs_realtime_proto_goTypes = nil
-	file_proto_gtfs_gtfs_realtime_proto_depIdxs = nil
+	File_internal_pb_gtfs_realtime_proto = out.File
+	file_internal_pb_gtfs_realtime_proto_goTypes = nil
+	file_internal_pb_gtfs_realtime_proto_depIdxs = nil
 }

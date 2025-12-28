@@ -1,6 +1,7 @@
 package gtfs
 
 import (
+	"nyct-feed/internal/pb"
 	"slices"
 )
 
@@ -11,7 +12,7 @@ type Departure struct {
 	Times         []int64
 }
 
-func FindDepartures(stopIds []string, feeds []FeedMessage, schedule Schedule) []Departure {
+func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule Schedule) []Departure {
 	stopIdToName := schedule.GetStopIdToName()
 	routeIdToRoute := schedule.GetRouteIdToRoute()
 

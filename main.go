@@ -5,7 +5,7 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 
-	"nyct-feed/pkg/tui"
+	"nyct-feed/internal/tui"
 )
 
 var stopIds = []string{

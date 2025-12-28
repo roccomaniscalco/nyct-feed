@@ -1,7 +1,7 @@
 package routebadge
 
 import (
-	"nyct-feed/pkg/gtfs"
+	"nyct-feed/internal/gtfs"
 
 	"github.com/charmbracelet/lipgloss"
 )

@@ -1,8 +1,8 @@
 package stationlist
 
 import (
-	"nyct-feed/pkg/gtfs"
-	"nyct-feed/pkg/tui/routebadge"
+	"nyct-feed/internal/gtfs"
+	"nyct-feed/internal/tui/routebadge"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/list"

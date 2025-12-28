@@ -1,8 +1,8 @@
 package departuretable
 
 import (
-	"nyct-feed/pkg/gtfs"
-	"nyct-feed/pkg/tui/routebadge"
+	"nyct-feed/internal/gtfs"
+	"nyct-feed/internal/tui/routebadge"
 	"time"
 
 	"github.com/charmbracelet/bubbles/table"

@@ -10,14 +10,13 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v6.33.2
-// source: proto/nyct/gtfs_realtime_nyct.proto
+// source: internal/pb/gtfs_realtime_nyct.proto
 
-package nyct
+package pb
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
-	gtfs "nyct-feed/proto/gtfs"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -67,11 +66,11 @@ func (x NyctTripDescriptor_Direction) String() string {
 }
 
 func (NyctTripDescriptor_Direction) Descriptor() protoreflect.EnumDescriptor {
-	return file_proto_nyct_gtfs_realtime_nyct_proto_enumTypes[0].Descriptor()
+	return file_internal_pb_gtfs_realtime_nyct_proto_enumTypes[0].Descriptor()
 }
 
 func (NyctTripDescriptor_Direction) Type() protoreflect.EnumType {
-	return &file_proto_nyct_gtfs_realtime_nyct_proto_enumTypes[0]
+	return &file_internal_pb_gtfs_realtime_nyct_proto_enumTypes[0]
 }
 
 func (x NyctTripDescriptor_Direction) Number() protoreflect.EnumNumber {
@@ -90,7 +89,7 @@ func (x *NyctTripDescriptor_Direction) UnmarshalJSON(b []byte) error {
 
 // Deprecated: Use NyctTripDescriptor_Direction.Descriptor instead.
 func (NyctTripDescriptor_Direction) EnumDescriptor() ([]byte, []int) {
-	return file_proto_nyct_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{2, 0}
+	return file_internal_pb_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{2, 0}
 }
 
 type TripReplacementPeriod struct {
@@ -99,14 +98,14 @@ type TripReplacementPeriod struct {
 	RouteId *string `protobuf:"bytes,1,opt,name=route_id,json=routeId" json:"route_id,omitempty"`
 	// The start time is omitted, the end time is currently now + 30 minutes for
 	// all routes of the A division
-	ReplacementPeriod *gtfs.TimeRange `protobuf:"bytes,2,opt,name=replacement_period,json=replacementPeriod" json:"replacement_period,omitempty"`
+	ReplacementPeriod *TimeRange `protobuf:"bytes,2,opt,name=replacement_period,json=replacementPeriod" json:"replacement_period,omitempty"`
 	unknownFields     protoimpl.UnknownFields
 	sizeCache         protoimpl.SizeCache
 }
 
 func (x *TripReplacementPeriod) Reset() {
 	*x = TripReplacementPeriod{}
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[0]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -118,7 +117,7 @@ func (x *TripReplacementPeriod) String() string {
 func (*TripReplacementPeriod) ProtoMessage() {}
 
 func (x *TripReplacementPeriod) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[0]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -131,7 +130,7 @@ func (x *TripReplacementPeriod) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TripReplacementPeriod.ProtoReflect.Descriptor instead.
 func (*TripReplacementPeriod) Descriptor() ([]byte, []int) {
-	return file_proto_nyct_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{0}
+	return file_internal_pb_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *TripReplacementPeriod) GetRouteId() string {
@@ -141,7 +140,7 @@ func (x *TripReplacementPeriod) GetRouteId() string {
 	return ""
 }
 
-func (x *TripReplacementPeriod) GetReplacementPeriod() *gtfs.TimeRange {
+func (x *TripReplacementPeriod) GetReplacementPeriod() *TimeRange {
 	if x != nil {
 		return x.ReplacementPeriod
 	}
@@ -169,7 +168,7 @@ type NyctFeedHeader struct {
 
 func (x *NyctFeedHeader) Reset() {
 	*x = NyctFeedHeader{}
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[1]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -181,7 +180,7 @@ func (x *NyctFeedHeader) String() string {
 func (*NyctFeedHeader) ProtoMessage() {}
 
 func (x *NyctFeedHeader) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[1]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -194,7 +193,7 @@ func (x *NyctFeedHeader) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NyctFeedHeader.ProtoReflect.Descriptor instead.
 func (*NyctFeedHeader) Descriptor() ([]byte, []int) {
-	return file_proto_nyct_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{1}
+	return file_internal_pb_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *NyctFeedHeader) GetNyctSubwayVersion() string {
@@ -257,14 +256,14 @@ type NyctTripDescriptor struct {
 	// Times Square Shuttle to Times Square is also southbound.
 	//
 	// EAST and WEST are not used currently.
-	Direction     *NyctTripDescriptor_Direction `protobuf:"varint,3,opt,name=direction,enum=gtfs_realtime_nyct.NyctTripDescriptor_Direction" json:"direction,omitempty"`
+	Direction     *NyctTripDescriptor_Direction `protobuf:"varint,3,opt,name=direction,enum=pb.NyctTripDescriptor_Direction" json:"direction,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *NyctTripDescriptor) Reset() {
 	*x = NyctTripDescriptor{}
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[2]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -276,7 +275,7 @@ func (x *NyctTripDescriptor) String() string {
 func (*NyctTripDescriptor) ProtoMessage() {}
 
 func (x *NyctTripDescriptor) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[2]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -289,7 +288,7 @@ func (x *NyctTripDescriptor) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NyctTripDescriptor.ProtoReflect.Descriptor instead.
 func (*NyctTripDescriptor) Descriptor() ([]byte, []int) {
-	return file_proto_nyct_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{2}
+	return file_internal_pb_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *NyctTripDescriptor) GetTrainId() string {
@@ -352,7 +351,7 @@ type NyctStopTimeUpdate struct {
 
 func (x *NyctStopTimeUpdate) Reset() {
 	*x = NyctStopTimeUpdate{}
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[3]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -364,7 +363,7 @@ func (x *NyctStopTimeUpdate) String() string {
 func (*NyctStopTimeUpdate) ProtoMessage() {}
 
 func (x *NyctStopTimeUpdate) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes[3]
+	mi := &file_internal_pb_gtfs_realtime_nyct_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -377,7 +376,7 @@ func (x *NyctStopTimeUpdate) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use NyctStopTimeUpdate.ProtoReflect.Descriptor instead.
 func (*NyctStopTimeUpdate) Descriptor() ([]byte, []int) {
-	return file_proto_nyct_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{3}
+	return file_internal_pb_gtfs_realtime_nyct_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *NyctStopTimeUpdate) GetScheduledTrack() string {
@@ -394,67 +393,67 @@ func (x *NyctStopTimeUpdate) GetActualTrack() string {
 	return ""
 }
 
-var file_proto_nyct_gtfs_realtime_nyct_proto_extTypes = []protoimpl.ExtensionInfo{
+var file_internal_pb_gtfs_realtime_nyct_proto_extTypes = []protoimpl.ExtensionInfo{
 	{
-		ExtendedType:  (*gtfs.FeedHeader)(nil),
+		ExtendedType:  (*FeedHeader)(nil),
 		ExtensionType: (*NyctFeedHeader)(nil),
 		Field:         1001,
-		Name:          "gtfs_realtime_nyct.nyct_feed_header",
+		Name:          "pb.nyct_feed_header",
 		Tag:           "bytes,1001,opt,name=nyct_feed_header",
-		Filename:      "proto/nyct/gtfs_realtime_nyct.proto",
+		Filename:      "internal/pb/gtfs_realtime_nyct.proto",
 	},
 	{
-		ExtendedType:  (*gtfs.TripDescriptor)(nil),
+		ExtendedType:  (*TripDescriptor)(nil),
 		ExtensionType: (*NyctTripDescriptor)(nil),
 		Field:         1001,
-		Name:          "gtfs_realtime_nyct.nyct_trip_descriptor",
+		Name:          "pb.nyct_trip_descriptor",
 		Tag:           "bytes,1001,opt,name=nyct_trip_descriptor",
-		Filename:      "proto/nyct/gtfs_realtime_nyct.proto",
+		Filename:      "internal/pb/gtfs_realtime_nyct.proto",
 	},
 	{
-		ExtendedType:  (*gtfs.TripUpdate_StopTimeUpdate)(nil),
+		ExtendedType:  (*TripUpdate_StopTimeUpdate)(nil),
 		ExtensionType: (*NyctStopTimeUpdate)(nil),
 		Field:         1001,
-		Name:          "gtfs_realtime_nyct.nyct_stop_time_update",
+		Name:          "pb.nyct_stop_time_update",
 		Tag:           "bytes,1001,opt,name=nyct_stop_time_update",
-		Filename:      "proto/nyct/gtfs_realtime_nyct.proto",
+		Filename:      "internal/pb/gtfs_realtime_nyct.proto",
 	},
 }
 
-// Extension fields to gtfs.FeedHeader.
+// Extension fields to FeedHeader.
 var (
-	// optional gtfs_realtime_nyct.NyctFeedHeader nyct_feed_header = 1001;
-	E_NyctFeedHeader = &file_proto_nyct_gtfs_realtime_nyct_proto_extTypes[0]
+	// optional pb.NyctFeedHeader nyct_feed_header = 1001;
+	E_NyctFeedHeader = &file_internal_pb_gtfs_realtime_nyct_proto_extTypes[0]
 )
 
-// Extension fields to gtfs.TripDescriptor.
+// Extension fields to TripDescriptor.
 var (
-	// optional gtfs_realtime_nyct.NyctTripDescriptor nyct_trip_descriptor = 1001;
-	E_NyctTripDescriptor = &file_proto_nyct_gtfs_realtime_nyct_proto_extTypes[1]
+	// optional pb.NyctTripDescriptor nyct_trip_descriptor = 1001;
+	E_NyctTripDescriptor = &file_internal_pb_gtfs_realtime_nyct_proto_extTypes[1]
 )
 
-// Extension fields to gtfs.TripUpdate_StopTimeUpdate.
+// Extension fields to TripUpdate_StopTimeUpdate.
 var (
-	// optional gtfs_realtime_nyct.NyctStopTimeUpdate nyct_stop_time_update = 1001;
-	E_NyctStopTimeUpdate = &file_proto_nyct_gtfs_realtime_nyct_proto_extTypes[2]
+	// optional pb.NyctStopTimeUpdate nyct_stop_time_update = 1001;
+	E_NyctStopTimeUpdate = &file_internal_pb_gtfs_realtime_nyct_proto_extTypes[2]
 )
 
-var File_proto_nyct_gtfs_realtime_nyct_proto protoreflect.FileDescriptor
+var File_internal_pb_gtfs_realtime_nyct_proto protoreflect.FileDescriptor
 
-const file_proto_nyct_gtfs_realtime_nyct_proto_rawDesc = "" +
+const file_internal_pb_gtfs_realtime_nyct_proto_rawDesc = "" +
 	"\n" +
-	"#proto/nyct/gtfs_realtime_nyct.proto\x12\x12gtfs_realtime_nyct\x1a\x1eproto/gtfs/gtfs_realtime.proto\"{\n" +
+	"$internal/pb/gtfs_realtime_nyct.proto\x12\x02pb\x1a\x1finternal/pb/gtfs_realtime.proto\"p\n" +
 	"\x15TripReplacementPeriod\x12\x19\n" +
-	"\broute_id\x18\x01 \x01(\tR\arouteId\x12G\n" +
-	"\x12replacement_period\x18\x02 \x01(\v2\x18.gtfs_realtime.TimeRangeR\x11replacementPeriod\"\xa3\x01\n" +
+	"\broute_id\x18\x01 \x01(\tR\arouteId\x12<\n" +
+	"\x12replacement_period\x18\x02 \x01(\v2\r.pb.TimeRangeR\x11replacementPeriod\"\x93\x01\n" +
 	"\x0eNyctFeedHeader\x12.\n" +
-	"\x13nyct_subway_version\x18\x01 \x02(\tR\x11nyctSubwayVersion\x12a\n" +
-	"\x17trip_replacement_period\x18\x02 \x03(\v2).gtfs_realtime_nyct.TripReplacementPeriodR\x15tripReplacementPeriod\"\xd7\x01\n" +
+	"\x13nyct_subway_version\x18\x01 \x02(\tR\x11nyctSubwayVersion\x12Q\n" +
+	"\x17trip_replacement_period\x18\x02 \x03(\v2\x19.pb.TripReplacementPeriodR\x15tripReplacementPeriod\"\xc7\x01\n" +
 	"\x12NyctTripDescriptor\x12\x19\n" +
 	"\btrain_id\x18\x01 \x01(\tR\atrainId\x12\x1f\n" +
 	"\vis_assigned\x18\x02 \x01(\bR\n" +
-	"isAssigned\x12N\n" +
-	"\tdirection\x18\x03 \x01(\x0e20.gtfs_realtime_nyct.NyctTripDescriptor.DirectionR\tdirection\"5\n" +
+	"isAssigned\x12>\n" +
+	"\tdirection\x18\x03 \x01(\x0e2 .pb.NyctTripDescriptor.DirectionR\tdirection\"5\n" +
 	"\tDirection\x12\t\n" +
 	"\x05NORTH\x10\x01\x12\b\n" +
 	"\x04EAST\x10\x02\x12\t\n" +
@@ -462,46 +461,46 @@ const file_proto_nyct_gtfs_realtime_nyct_proto_rawDesc = "" +
 	"\x04WEST\x10\x04\"`\n" +
 	"\x12NyctStopTimeUpdate\x12'\n" +
 	"\x0fscheduled_track\x18\x01 \x01(\tR\x0escheduledTrack\x12!\n" +
-	"\factual_track\x18\x02 \x01(\tR\vactualTrack:h\n" +
-	"\x10nyct_feed_header\x12\x19.gtfs_realtime.FeedHeader\x18\xe9\a \x01(\v2\".gtfs_realtime_nyct.NyctFeedHeaderR\x0enyctFeedHeader:x\n" +
-	"\x14nyct_trip_descriptor\x12\x1d.gtfs_realtime.TripDescriptor\x18\xe9\a \x01(\v2&.gtfs_realtime_nyct.NyctTripDescriptorR\x12nyctTripDescriptor:\x84\x01\n" +
-	"\x15nyct_stop_time_update\x12(.gtfs_realtime.TripUpdate.StopTimeUpdate\x18\xe9\a \x01(\v2&.gtfs_realtime_nyct.NyctStopTimeUpdateR\x12nyctStopTimeUpdateB\x16Z\x14nyct-feed/proto/nyct"
+	"\factual_track\x18\x02 \x01(\tR\vactualTrack:M\n" +
+	"\x10nyct_feed_header\x12\x0e.pb.FeedHeader\x18\xe9\a \x01(\v2\x12.pb.NyctFeedHeaderR\x0enyctFeedHeader:]\n" +
+	"\x14nyct_trip_descriptor\x12\x12.pb.TripDescriptor\x18\xe9\a \x01(\v2\x16.pb.NyctTripDescriptorR\x12nyctTripDescriptor:i\n" +
+	"\x15nyct_stop_time_update\x12\x1d.pb.TripUpdate.StopTimeUpdate\x18\xe9\a \x01(\v2\x16.pb.NyctStopTimeUpdateR\x12nyctStopTimeUpdateB\x17Z\x15nyct-feed/internal/pb"
 
 var (
-	file_proto_nyct_gtfs_realtime_nyct_proto_rawDescOnce sync.Once
-	file_proto_nyct_gtfs_realtime_nyct_proto_rawDescData []byte
+	file_internal_pb_gtfs_realtime_nyct_proto_rawDescOnce sync.Once
+	file_internal_pb_gtfs_realtime_nyct_proto_rawDescData []byte
 )
 
-func file_proto_nyct_gtfs_realtime_nyct_proto_rawDescGZIP() []byte {
-	file_proto_nyct_gtfs_realtime_nyct_proto_rawDescOnce.Do(func() {
-		file_proto_nyct_gtfs_realtime_nyct_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_nyct_gtfs_realtime_nyct_proto_rawDesc), len(file_proto_nyct_gtfs_realtime_nyct_proto_rawDesc)))
+func file_internal_pb_gtfs_realtime_nyct_proto_rawDescGZIP() []byte {
+	file_internal_pb_gtfs_realtime_nyct_proto_rawDescOnce.Do(func() {
+		file_internal_pb_gtfs_realtime_nyct_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_internal_pb_gtfs_realtime_nyct_proto_rawDesc), len(file_internal_pb_gtfs_realtime_nyct_proto_rawDesc)))
 	})
-	return file_proto_nyct_gtfs_realtime_nyct_proto_rawDescData
+	return file_internal_pb_gtfs_realtime_nyct_proto_rawDescData
 }
 
-var file_proto_nyct_gtfs_realtime_nyct_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
-var file_proto_nyct_gtfs_realtime_nyct_proto_goTypes = []any{
-	(NyctTripDescriptor_Direction)(0),      // 0: gtfs_realtime_nyct.NyctTripDescriptor.Direction
-	(*TripReplacementPeriod)(nil),          // 1: gtfs_realtime_nyct.TripReplacementPeriod
-	(*NyctFeedHeader)(nil),                 // 2: gtfs_realtime_nyct.NyctFeedHeader
-	(*NyctTripDescriptor)(nil),             // 3: gtfs_realtime_nyct.NyctTripDescriptor
-	(*NyctStopTimeUpdate)(nil),             // 4: gtfs_realtime_nyct.NyctStopTimeUpdate
-	(*gtfs.TimeRange)(nil),                 // 5: gtfs_realtime.TimeRange
-	(*gtfs.FeedHeader)(nil),                // 6: gtfs_realtime.FeedHeader
-	(*gtfs.TripDescriptor)(nil),            // 7: gtfs_realtime.TripDescriptor
-	(*gtfs.TripUpdate_StopTimeUpdate)(nil), // 8: gtfs_realtime.TripUpdate.StopTimeUpdate
+var file_internal_pb_gtfs_realtime_nyct_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_internal_pb_gtfs_realtime_nyct_proto_msgTypes = make([]protoimpl.MessageInfo, 4)
+var file_internal_pb_gtfs_realtime_nyct_proto_goTypes = []any{
+	(NyctTripDescriptor_Direction)(0), // 0: pb.NyctTripDescriptor.Direction
+	(*TripReplacementPeriod)(nil),     // 1: pb.TripReplacementPeriod
+	(*NyctFeedHeader)(nil),            // 2: pb.NyctFeedHeader
+	(*NyctTripDescriptor)(nil),        // 3: pb.NyctTripDescriptor
+	(*NyctStopTimeUpdate)(nil),        // 4: pb.NyctStopTimeUpdate
+	(*TimeRange)(nil),                 // 5: pb.TimeRange
+	(*FeedHeader)(nil),                // 6: pb.FeedHeader
+	(*TripDescriptor)(nil),            // 7: pb.TripDescriptor
+	(*TripUpdate_StopTimeUpdate)(nil), // 8: pb.TripUpdate.StopTimeUpdate
 }
-var file_proto_nyct_gtfs_realtime_nyct_proto_depIdxs = []int32{
-	5, // 0: gtfs_realtime_nyct.TripReplacementPeriod.replacement_period:type_name -> gtfs_realtime.TimeRange
-	1, // 1: gtfs_realtime_nyct.NyctFeedHeader.trip_replacement_period:type_name -> gtfs_realtime_nyct.TripReplacementPeriod
-	0, // 2: gtfs_realtime_nyct.NyctTripDescriptor.direction:type_name -> gtfs_realtime_nyct.NyctTripDescriptor.Direction
-	6, // 3: gtfs_realtime_nyct.nyct_feed_header:extendee -> gtfs_realtime.FeedHeader
-	7, // 4: gtfs_realtime_nyct.nyct_trip_descriptor:extendee -> gtfs_realtime.TripDescriptor
-	8, // 5: gtfs_realtime_nyct.nyct_stop_time_update:extendee -> gtfs_realtime.TripUpdate.StopTimeUpdate
-	2, // 6: gtfs_realtime_nyct.nyct_feed_header:type_name -> gtfs_realtime_nyct.NyctFeedHeader
-	3, // 7: gtfs_realtime_nyct.nyct_trip_descriptor:type_name -> gtfs_realtime_nyct.NyctTripDescriptor
-	4, // 8: gtfs_realtime_nyct.nyct_stop_time_update:type_name -> gtfs_realtime_nyct.NyctStopTimeUpdate
+var file_internal_pb_gtfs_realtime_nyct_proto_depIdxs = []int32{
+	5, // 0: pb.TripReplacementPeriod.replacement_period:type_name -> pb.TimeRange
+	1, // 1: pb.NyctFeedHeader.trip_replacement_period:type_name -> pb.TripReplacementPeriod
+	0, // 2: pb.NyctTripDescriptor.direction:type_name -> pb.NyctTripDescriptor.Direction
+	6, // 3: pb.nyct_feed_header:extendee -> pb.FeedHeader
+	7, // 4: pb.nyct_trip_descriptor:extendee -> pb.TripDescriptor
+	8, // 5: pb.nyct_stop_time_update:extendee -> pb.TripUpdate.StopTimeUpdate
+	2, // 6: pb.nyct_feed_header:type_name -> pb.NyctFeedHeader
+	3, // 7: pb.nyct_trip_descriptor:type_name -> pb.NyctTripDescriptor
+	4, // 8: pb.nyct_stop_time_update:type_name -> pb.NyctStopTimeUpdate
 	9, // [9:9] is the sub-list for method output_type
 	9, // [9:9] is the sub-list for method input_type
 	6, // [6:9] is the sub-list for extension type_name
@@ -509,28 +508,29 @@ var file_proto_nyct_gtfs_realtime_nyct_proto_depIdxs = []int32{
 	0, // [0:3] is the sub-list for field type_name
 }
 
-func init() { file_proto_nyct_gtfs_realtime_nyct_proto_init() }
-func file_proto_nyct_gtfs_realtime_nyct_proto_init() {
-	if File_proto_nyct_gtfs_realtime_nyct_proto != nil {
+func init() { file_internal_pb_gtfs_realtime_nyct_proto_init() }
+func file_internal_pb_gtfs_realtime_nyct_proto_init() {
+	if File_internal_pb_gtfs_realtime_nyct_proto != nil {
 		return
 	}
+	file_internal_pb_gtfs_realtime_proto_init()
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_nyct_gtfs_realtime_nyct_proto_rawDesc), len(file_proto_nyct_gtfs_realtime_nyct_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_internal_pb_gtfs_realtime_nyct_proto_rawDesc), len(file_internal_pb_gtfs_realtime_nyct_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   4,
 			NumExtensions: 3,
 			NumServices:   0,
 		},
-		GoTypes:           file_proto_nyct_gtfs_realtime_nyct_proto_goTypes,
-		DependencyIndexes: file_proto_nyct_gtfs_realtime_nyct_proto_depIdxs,
-		EnumInfos:         file_proto_nyct_gtfs_realtime_nyct_proto_enumTypes,
-		MessageInfos:      file_proto_nyct_gtfs_realtime_nyct_proto_msgTypes,
-		ExtensionInfos:    file_proto_nyct_gtfs_realtime_nyct_proto_extTypes,
+		GoTypes:           file_internal_pb_gtfs_realtime_nyct_proto_goTypes,
+		DependencyIndexes: file_internal_pb_gtfs_realtime_nyct_proto_depIdxs,
+		EnumInfos:         file_internal_pb_gtfs_realtime_nyct_proto_enumTypes,
+		MessageInfos:      file_internal_pb_gtfs_realtime_nyct_proto_msgTypes,
+		ExtensionInfos:    file_internal_pb_gtfs_realtime_nyct_proto_extTypes,
 	}.Build()
-	File_proto_nyct_gtfs_realtime_nyct_proto = out.File
-	file_proto_nyct_gtfs_realtime_nyct_proto_goTypes = nil
-	file_proto_nyct_gtfs_realtime_nyct_proto_depIdxs = nil
+	File_internal_pb_gtfs_realtime_nyct_proto = out.File
+	file_internal_pb_gtfs_realtime_nyct_proto_goTypes = nil
+	file_internal_pb_gtfs_realtime_nyct_proto_depIdxs = nil
 }

@@ -23,8 +23,8 @@
 // https://github.com/google/transit/tree/master/gtfs-realtime
 
 syntax = "proto2";
-package gtfs_realtime;
-option go_package = "nyct-feed/proto/gtfs";
+package pb;
+option go_package = "nyct-feed/internal/pb";
 
 // The contents of a feed message.
 // A feed is a continuous stream of feed messages. Each message in the stream is

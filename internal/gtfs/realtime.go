@@ -11,7 +11,7 @@ import (
 	"google.golang.org/protobuf/encoding/protojson"
 	"google.golang.org/protobuf/proto"
 
-	"nyct-feed/proto/gtfs"
+	"nyct-feed/internal/pb"
 )
 
 var feedUrls = [8]string{
@@ -25,13 +25,9 @@ var feedUrls = [8]string{
 	"https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-si",
 }
 
-type FeedMessage struct {
-	*gtfs.FeedMessage
-}
-
 // Fetch realtime GTFS feeds for all lines concurrently
-func FetchFeeds() []FeedMessage {
-	feeds := make([]FeedMessage, len(feedUrls))
+func FetchFeeds() []*pb.FeedMessage {
+	feeds := make([]*pb.FeedMessage, len(feedUrls))
 	var g errgroup.Group
 
 	for i, feedUrl := range feedUrls {
@@ -43,7 +39,7 @@ func FetchFeeds() []FeedMessage {
 				return err
 			}
 
-			feeds[i] = FeedMessage{feed}
+			feeds[i] = feed
 			return nil
 		})
 	}
@@ -54,7 +50,7 @@ func FetchFeeds() []FeedMessage {
 	return feeds
 }
 
-func fetchFeed(feedUrl string) (*gtfs.FeedMessage, error) {
+func fetchFeed(feedUrl string) (*pb.FeedMessage, error) {
 	resp, err := http.Get(feedUrl)
 	if err != nil {
 		return nil, err
@@ -66,7 +62,7 @@ func fetchFeed(feedUrl string) (*gtfs.FeedMessage, error) {
 		return nil, err
 	}
 
-	feed := &gtfs.FeedMessage{}
+	feed := &pb.FeedMessage{}
 	if err := proto.Unmarshal(body, feed); err != nil {
 		return nil, err
 	}
@@ -75,7 +71,7 @@ func fetchFeed(feedUrl string) (*gtfs.FeedMessage, error) {
 }
 
 // Write feed messages to /out. Helpful for debugging
-func writeFeed(msg *gtfs.FeedMessage) {
+func writeFeed(msg *pb.FeedMessage) {
 	marshallOptions := protojson.MarshalOptions{
 		Indent: "  ",
 	}

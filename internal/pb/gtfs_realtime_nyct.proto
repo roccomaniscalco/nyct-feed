@@ -7,16 +7,16 @@
 //   https://groups.google.com/d/msg/gtfs-realtime/KWJhkXH0kBg/8rlRMxiL-ysJ
 
 syntax = "proto2";
-package gtfs_realtime_nyct;
-import "proto/gtfs/gtfs_realtime.proto";
-option go_package = "nyct-feed/proto/nyct";
+package pb;
+import "internal/pb/gtfs_realtime.proto";
+option go_package = "nyct-feed/internal/pb";
 
 message TripReplacementPeriod {
   // The replacement period is for this route
   optional string route_id = 1;
   // The start time is omitted, the end time is currently now + 30 minutes for
   // all routes of the A division
-  optional gtfs_realtime.TimeRange replacement_period = 2;
+  optional TimeRange replacement_period = 2;
 }
 
 // NYCT Subway extensions for the feed header
@@ -35,7 +35,7 @@ message NyctFeedHeader {
   repeated TripReplacementPeriod trip_replacement_period = 2;
 }
 
-extend gtfs_realtime.FeedHeader {
+extend FeedHeader {
  optional NyctFeedHeader nyct_feed_header = 1001;
 }
 
@@ -96,7 +96,7 @@ message NyctTripDescriptor {
   optional Direction direction = 3;
 }
 
-extend gtfs_realtime.TripDescriptor {
+extend TripDescriptor {
   optional NyctTripDescriptor nyct_trip_descriptor = 1001;
 }
 
@@ -135,6 +135,6 @@ message NyctStopTimeUpdate {
   optional string actual_track = 2;
 }
 
-extend gtfs_realtime.TripUpdate.StopTimeUpdate {
+extend TripUpdate.StopTimeUpdate {
   optional NyctStopTimeUpdate nyct_stop_time_update = 1001;
 }
