@@ -23,7 +23,6 @@ type Schedule struct {
 	StopTimes []StopTime `file:"stop_times.txt"`
 	Trips     []Trip     `file:"trips.txt"`
 	Routes    []Route    `file:"routes.txt"`
-	Shapes    []Shape    `file:"shapes.txt"`
 }
 
 type Stop struct {
@@ -64,13 +63,6 @@ type Route struct {
 	RouteColor     string `csv:"route_color"`
 	RouteTextColor string `csv:"route_text_color"`
 	RouteSortOrder int    `csv:"route_sort_order"`
-}
-
-type Shape struct {
-	ShapeId    string  `csv:"shape_id"`
-	ShapePtSeq int     `csv:"shape_pt_sequence"`
-	ShapePtLat float64 `csv:"shape_pt_lat"`
-	ShapePtLon float64 `csv:"shape_pt_lon"`
 }
 
 // GetStations returns a subset of Stops that are considered to be stations.
@@ -173,8 +165,6 @@ func GetSchedule() Schedule {
 			schedule.Trips = parseCSV(bytes, Trip{})
 		case reflect.TypeOf(Route{}):
 			schedule.Routes = parseCSV(bytes, Route{})
-		case reflect.TypeOf(Shape{}):
-			schedule.Shapes = parseCSV(bytes, Shape{})
 		}
 	}
 
