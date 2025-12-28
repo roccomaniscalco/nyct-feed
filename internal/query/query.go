@@ -52,11 +52,9 @@ type Query[TData any] struct {
 
 type QueryOptions[TData any] struct {
 	QueryChannel    chan Query[TData]
+	QueryFn         func() (TData, error)
 	RefetchInterval time.Duration
-	QueryFn[TData]
 }
-
-type QueryFn[TData any] func() (TData, error)
 
 func CreateQuery[TData any](options QueryOptions[TData]) chan struct{} {
 	var q = Query[TData]{}
