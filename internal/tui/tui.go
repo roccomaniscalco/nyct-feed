@@ -56,19 +56,19 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case gotScheduleQueryMsg:
 		m.scheduleQuery = query.Query[*gtfs.Schedule](msg)
-		m.syncStationsList()
-		m.syncDeparturesTable()
+		m.syncStationList()
+		m.syncDepartureTable()
 		return m, getScheduleQuery(m.scheduleChannel)
 
 	case gotRealtimeQueryMsg:
 		m.realtimeQuery = query.Query[[]*pb.FeedMessage](msg)
-		m.syncDeparturesTable()
+		m.syncDepartureTable()
 		return m, getRealtimeQuery(m.realtimeChannel)
 
 	case stationlist.StationSelectedMsg:
 		stationId := string(msg)
 		m.selectedStationId = stationId
-		m.syncDeparturesTable()
+		m.syncDepartureTable()
 		return m, nil
 	}
 
@@ -103,7 +103,7 @@ func (m *model) View() string {
 	return lipgloss.JoinHorizontal(lipgloss.Left, m.stationList.View(), m.departureTable.View())
 }
 
-func (m *model) syncDeparturesTable() {
+func (m *model) syncDepartureTable() {
 	if m.scheduleQuery.Data != nil && m.scheduleQuery.Data != nil {
 		stationId := m.selectedStationId
 		stopIds := []string{stationId + "N", stationId + "S"}
@@ -112,7 +112,7 @@ func (m *model) syncDeparturesTable() {
 	}
 }
 
-func (m *model) syncStationsList() {
+func (m *model) syncStationList() {
 	if m.scheduleQuery.Data != nil {
 		stations := m.scheduleQuery.Data.Stations
 		m.selectedStationId = stations[0].StopId
