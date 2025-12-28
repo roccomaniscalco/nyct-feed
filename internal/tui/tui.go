@@ -1,20 +1,18 @@
 package tui
 
 import (
-	"time"
-
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 
-	"nyct-feed/internal/pb"
 	"nyct-feed/internal/gtfs"
+	"nyct-feed/internal/pb"
 	"nyct-feed/internal/tui/departuretable"
 	"nyct-feed/internal/tui/splash"
 	"nyct-feed/internal/tui/stationlist"
 )
 
 type model struct {
-	schedule          gtfs.Schedule
+	schedule          *gtfs.Schedule
 	scheduleLoading   bool
 	stations          []gtfs.Stop
 	selectedStationId string
@@ -50,7 +48,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.width, m.height = msg.Width, msg.Height
 		m.departureTable.SetHeight(m.height)
 	case gotScheduleMsg:
-		m.schedule = gtfs.Schedule(msg)
+		m.schedule = msg
 		m.stations = m.schedule.GetStations()
 		m.selectedStationId = m.stations[0].StopId
 		m.stationList = stationlist.NewModel(m.stations, m.schedule.Routes)
@@ -58,7 +56,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.scheduleLoading = false
 		m.syncDeparturesTable()
 	case gotRealtimeMsg:
-		m.realtime = []*pb.FeedMessage(msg)
+		m.realtime = msg
 		m.realtimeLoading = false
 		m.syncDeparturesTable()
 	case stationlist.StationSelectedMsg:
@@ -109,12 +107,11 @@ func (m *model) syncDeparturesTable() {
 	}
 }
 
-type gotScheduleMsg gtfs.Schedule
+type gotScheduleMsg *gtfs.Schedule
 
 func getSchedule() tea.Cmd {
 	return func() tea.Msg {
-		time.Sleep(500 * time.Millisecond)
-		schedule := gtfs.GetSchedule()
+		schedule, _ := gtfs.GetSchedule()
 		return gotScheduleMsg(schedule)
 	}
 }
@@ -123,8 +120,7 @@ type gotRealtimeMsg []*pb.FeedMessage
 
 func getRealtime() tea.Cmd {
 	return func() tea.Msg {
-		time.Sleep(500 * time.Millisecond)
-		feeds := gtfs.FetchFeeds()
+		feeds, _ := gtfs.FetchFeeds()
 		return gotRealtimeMsg(feeds)
 	}
 }
