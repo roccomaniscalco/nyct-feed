@@ -3,6 +3,7 @@ package stationlist
 import (
 	"nyct-feed/internal/gtfs"
 	"nyct-feed/internal/tui/routebadge"
+	"nyct-feed/internal/tui/theme"
 	"strings"
 
 	"github.com/charmbracelet/bubbles/list"
@@ -42,7 +43,7 @@ func NewModel() Model {
 		Padding(0, 1).
 		MarginBottom(1).
 		Border(lipgloss.RoundedBorder()).
-		BorderForeground(lipgloss.AdaptiveColor{Light: "#C2B8C2", Dark: "#4D4D4D"})
+		BorderForeground(theme.Border)
 
 	list.Title = renderKbd("/") + titleStyle.Render("Search Stations")
 	list.Styles.Title = titleStyle
@@ -51,7 +52,7 @@ func NewModel() Model {
 	list.FilterInput.CharLimit = width - list.Styles.TitleBar.GetHorizontalFrameSize() - 1
 	list.FilterInput.Placeholder = "Search Stations"
 	list.FilterInput.TextStyle = lipgloss.NewStyle().
-		Foreground(lipgloss.AdaptiveColor{Light: "#1a1a1a", Dark: "#dddddd"})
+		Foreground(theme.Strong)
 
 	return Model{
 		list: list,
@@ -103,10 +104,10 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	if m.list.SettingFilter() {
 		m.list.Styles.TitleBar = m.list.Styles.TitleBar.
-			BorderForeground(lipgloss.AdaptiveColor{Light: "#F793FF", Dark: "#AD58B4"})
+			BorderForeground(theme.Active)
 	} else {
 		m.list.Styles.TitleBar = m.list.Styles.TitleBar.
-			BorderForeground(lipgloss.AdaptiveColor{Light: "#C2B8C2", Dark: "#4D4D4D"})
+			BorderForeground(theme.Border)
 	}
 
 	if m.list.FilterValue() == "" {
@@ -125,11 +126,11 @@ func (m *Model) View() string {
 func renderKbd(key string) string {
 	style := lipgloss.NewStyle().
 		MarginRight(1).
-		Foreground(lipgloss.AdaptiveColor{Light: "#1a1a1a", Dark: "#dddddd"})
+		Foreground(theme.Strong)
 
 	return style.Render(key)
 }
 
 var titleStyle = lipgloss.NewStyle().
 	UnsetBackground().
-	Foreground(lipgloss.AdaptiveColor{Light: "#A49FA5", Dark: "#777777"})
+	Foreground(theme.Subtle)

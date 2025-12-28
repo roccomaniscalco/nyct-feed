@@ -5,6 +5,7 @@ import (
 	"math"
 	"nyct-feed/internal/gtfs"
 	"nyct-feed/internal/tui/routebadge"
+	"nyct-feed/internal/tui/theme"
 	"slices"
 	"strings"
 	"time"
@@ -14,13 +15,6 @@ import (
 )
 
 var width = 60
-
-var (
-	strong   = lipgloss.AdaptiveColor{Light: "#1a1a1a", Dark: "#dddddd"}
-	subtle   = lipgloss.AdaptiveColor{Light: "#A49FA5", Dark: "#777777"}
-	border   = lipgloss.AdaptiveColor{Light: "#C2B8C2", Dark: "#4D4D4D"}
-	realtime = lipgloss.AdaptiveColor{Light: "#23854c", Dark: "#00dd8c"}
-)
 
 type Model struct {
 	height     int
@@ -56,35 +50,35 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 var baseStyle = lipgloss.NewStyle().
 	Width(width).
 	Border(lipgloss.RoundedBorder()).
-	BorderForeground(border)
+	BorderForeground(theme.Border)
 
 var titleStyle = lipgloss.NewStyle().
 	Width(width).
 	Padding(0, 1).
-	Foreground(strong).
+	Foreground(theme.Strong).
 	Border(lipgloss.NormalBorder(), false, false, true, false).
-	BorderForeground(border)
+	BorderForeground(theme.Border)
 
 var mutedTextStyle = lipgloss.NewStyle().
-	Foreground(subtle)
+	Foreground(theme.Subtle)
 
 var routeHeadingStyle = lipgloss.NewStyle().
 	Width(width).
 	Padding(1, 1, 0, 1).
-	BorderForeground(border)
+	BorderForeground(theme.Border)
 
 var departureRowStyle = lipgloss.NewStyle().
 	Width(width).
 	Padding(0, 1).
-	Foreground(strong)
+	Foreground(theme.Strong)
 var departureInnerWidth = departureRowStyle.GetWidth() - departureRowStyle.GetHorizontalFrameSize()
 
 var (
-	directionStyle   = lipgloss.NewStyle().PaddingRight(1).Foreground(strong)
-	destinationStyle = lipgloss.NewStyle().Foreground(strong)
-	timesStyle       = lipgloss.NewStyle().PaddingRight(1).Foreground(strong)
-	realtimeStyle    = lipgloss.NewStyle().Foreground(realtime)
-	spacingStyle     = lipgloss.NewStyle().Foreground(border)
+	directionStyle   = lipgloss.NewStyle().PaddingRight(1).Foreground(theme.Strong)
+	destinationStyle = lipgloss.NewStyle().Foreground(theme.Strong)
+	timesStyle       = lipgloss.NewStyle().PaddingRight(1).Foreground(theme.Strong)
+	realtimeStyle    = lipgloss.NewStyle().Foreground(theme.Realtime)
+	spacingStyle     = lipgloss.NewStyle().Foreground(theme.Border)
 )
 
 var w = lipgloss.Width
@@ -109,7 +103,7 @@ func (m *Model) View() string {
 				timesStr := timesStyle.Render(getFormattedDepartureTimes(departure.Times, now))
 				realtime := realtimeStyle.Render("•")
 				availableWidth := departureInnerWidth - w(direction) - w(destination) - w(timesStr) - w(realtime)
-				spacing := spacingStyle.Render(strings.Repeat(" ", max(1,availableWidth)))
+				spacing := spacingStyle.Render(strings.Repeat(" ", max(1, availableWidth)))
 
 				departureRow := departureRowStyle.Render(lipgloss.JoinHorizontal(
 					lipgloss.Left,
