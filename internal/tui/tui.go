@@ -9,6 +9,7 @@ import (
 	"nyct-feed/internal/gtfs"
 	"nyct-feed/internal/pb"
 	"nyct-feed/internal/query"
+	"nyct-feed/internal/tui/departurecards"
 	"nyct-feed/internal/tui/departuretable"
 	"nyct-feed/internal/tui/splash"
 	"nyct-feed/internal/tui/stationlist"
@@ -21,6 +22,7 @@ type model struct {
 	realtimeQuery     query.Query[[]*pb.FeedMessage]
 	stationList       stationlist.Model
 	departureTable    departuretable.Model
+	departureCards    departurecards.Model
 	selectedStationId string
 	width             int
 	height            int
@@ -55,6 +57,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.width, m.height = msg.Width, msg.Height
 		m.stationList.SetHeight(m.height)
 		m.departureTable.SetHeight(m.height)
+		m.departureCards.SetHeight(m.height)
 		return m, nil
 
 	case gotScheduleQueryMsg:
@@ -101,7 +104,12 @@ func (m *model) View() string {
 			Align(lipgloss.Center, lipgloss.Center).
 			Render(splash.Model{}.View())
 	}
-	return lipgloss.JoinHorizontal(lipgloss.Left, m.stationList.View(), m.departureTable.View())
+	return lipgloss.JoinHorizontal(
+		lipgloss.Left,
+		m.stationList.View(),
+		m.departureTable.View(),
+		m.departureCards.View(),
+	)
 }
 
 func (m *model) syncDepartureTable() {
