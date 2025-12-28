@@ -35,20 +35,15 @@ func FindDepartures(stopIds []string, feeds []*pb.FeedMessage, schedule *Schedul
 
 	stopIdToName := schedule.StopIdToName
 	departures := []Departure{}
-	for _, route := range schedule.Routes {
-		for tripKey, times := range tripToTimes {
-			routeId, stopId, finalStopId := tripKey[0], tripKey[1], tripKey[2]
-			if route.RouteId == routeId {
-				slices.Sort(times)
-				departures = append(departures, Departure{
-					RouteId:       routeId,
-					StopId:        stopId,
-					FinalStopId:   finalStopId,
-					FinalStopName: stopIdToName[finalStopId],
-					Times:         times,
-				})
-			}
-		}
+	for tripKey, times := range tripToTimes {
+		routeId, stopId, finalStopId := tripKey[0], tripKey[1], tripKey[2]
+		departures = append(departures, Departure{
+			RouteId:       routeId,
+			StopId:        stopId,
+			FinalStopId:   finalStopId,
+			FinalStopName: stopIdToName[finalStopId],
+			Times:         times,
+		})
 	}
 
 	return departures
