@@ -73,7 +73,17 @@ func (m *Model) SetStations(stations []gtfs.Station) {
 		}
 		items = append(items, item{station: station, routeBadges: routeBadges.String()})
 	}
+
+	// Manually set list state to how it was before updating items
+	// TODO: Causes filter cursor to stop blinking
+	filterText := m.list.FilterValue()
+	filterState := m.list.FilterState()
+	index := m.list.Index()
+
 	m.list.SetItems(items)
+	m.list.SetFilterText(filterText)
+	m.list.SetFilterState(filterState)
+	m.list.Select(index)
 }
 
 func (m *Model) Init() tea.Cmd {
