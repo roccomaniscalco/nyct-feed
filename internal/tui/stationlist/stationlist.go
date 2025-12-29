@@ -4,7 +4,6 @@ import (
 	"nyct-feed/internal/gtfs"
 	"nyct-feed/internal/tui/routebadge"
 	"nyct-feed/internal/tui/theme"
-	"strings"
 
 	"github.com/charmbracelet/bubbles/list"
 	tea "github.com/charmbracelet/bubbletea"
@@ -15,14 +14,13 @@ const width = 40
 
 type StationSelectedMsg *gtfs.Station
 
-type item struct {
-	station     gtfs.Station
-	routeBadges string
+type stationItem struct {
+	gtfs.Station
 }
 
-func (i item) Title() string       { return i.station.StopName }
-func (i item) Description() string { return i.routeBadges }
-func (i item) FilterValue() string { return i.station.StopName }
+func (i stationItem) Title() string       { return i.StopName }
+func (i stationItem) Description() string { return routebadge.RenderMany(i.Routes) }
+func (i stationItem) FilterValue() string { return i.StopName }
 
 type Model struct {
 	selectedStationId string
@@ -64,14 +62,9 @@ func (m *Model) SetHeight(height int) {
 }
 
 func (m *Model) SetStations(stations []gtfs.Station) {
-	items := []list.Item{}
-	for _, station := range stations {
-		routeBadges := strings.Builder{}
-		for _, route := range station.Routes {
-			routeBadges.WriteString(routebadge.Render(route))
-			routeBadges.WriteString(" ")
-		}
-		items = append(items, item{station: station, routeBadges: routeBadges.String()})
+	stationItems := make([]list.Item, len(stations))
+	for i, station := range stations {
+		stationItems[i] = stationItem{station}
 	}
 
 	// Manually set list state to how it was before updating items
@@ -80,7 +73,7 @@ func (m *Model) SetStations(stations []gtfs.Station) {
 	filterState := m.list.FilterState()
 	index := m.list.Index()
 
-	m.list.SetItems(items)
+	m.list.SetItems(stationItems)
 	m.list.SetFilterText(filterText)
 	m.list.SetFilterState(filterState)
 	m.list.Select(index)
@@ -101,11 +94,11 @@ func (m *Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	// Emit station selection change
 	if !m.list.SettingFilter() && m.list.SelectedItem() != nil {
-		if item, ok := m.list.SelectedItem().(item); ok {
-			if item.station.StopId != m.selectedStationId {
-				m.selectedStationId = item.station.StopId
+		if item, ok := m.list.SelectedItem().(stationItem); ok {
+			if item.StopId != m.selectedStationId {
+				m.selectedStationId = item.StopId
 				stationSelectedCmd := func() tea.Msg {
-					return StationSelectedMsg(&item.station)
+					return StationSelectedMsg(&item.Station)
 				}
 				cmds = append(cmds, stationSelectedCmd)
 			}
