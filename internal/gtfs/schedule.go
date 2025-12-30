@@ -183,9 +183,8 @@ func GetSchedule() (*Schedule, error) {
 		// Parse and set each item on schedule
 		for i := 0; i < scheduleType.NumField(); i++ {
 			field := scheduleType.Field(i)
-			fileRowType := field.Type.Elem()
 			fileName := field.Tag.Get("file")
-
+			
 			if fileName == file.Name {
 				rc, err := file.Open()
 				if err != nil {
@@ -198,7 +197,7 @@ func GetSchedule() (*Schedule, error) {
 					return nil, fmt.Errorf("failed to read data from zip file %s: %v", file.Name, err)
 				}
 
-				switch fileRowType {
+				switch field.Type.Elem() {
 				case reflect.TypeOf(Stop{}):
 					schedule.Stops = parseCSV(bytes, Stop{})
 				case reflect.TypeOf(StopTime{}):
