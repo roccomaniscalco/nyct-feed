@@ -98,9 +98,14 @@ func (m *Model) View() string {
 
 		for _, departure := range m.departures {
 			if departure.RouteId == route.RouteId {
+				departureTimes := getFormattedDepartureTimes(departure.Times, now)
+				if departureTimes == "No Departures" {
+					continue
+				}
+
+				timesStr := timesStyle.Render(departureTimes)
 				direction := directionStyle.Render("(" + string(departure.StopId[len(departure.StopId)-1]) + ")")
 				destination := destinationStyle.Render(departure.FinalStopName)
-				timesStr := timesStyle.Render(getFormattedDepartureTimes(departure.Times, now))
 				realtime := realtimeStyle.Render("•")
 				availableWidth := departureInnerWidth - w(direction) - w(destination) - w(timesStr) - w(realtime)
 				spacing := spacingStyle.Render(strings.Repeat(" ", max(1, availableWidth)))
@@ -127,6 +132,9 @@ func (m *Model) View() string {
 	)
 }
 
+// getFormattedDepartureTimes returns the two soonest upcoming departures as a string.
+// If there are no upcoming departures "No Departures" is returned.
+// Example: "Now, 8 min"
 func getFormattedDepartureTimes(departureTimes []int64, now time.Time) string {
 	slices.Sort(departureTimes)
 
@@ -143,5 +151,13 @@ func getFormattedDepartureTimes(departureTimes []int64, now time.Time) string {
 		}
 	}
 
-	return fmt.Sprintf("%s min", strings.Join(durations, ", "))
+	if len(durations) == 0 {
+		return "No Departures"
+	} 
+
+	suffix := ""
+	if durations[len(durations) -1] != "Now" {
+		suffix = " min"
+	}
+	return fmt.Sprintf("%s%s", strings.Join(durations, ", "), suffix)
 }
