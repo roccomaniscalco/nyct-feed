@@ -81,15 +81,15 @@ func (s *Schedule) CreateStations() {
 	}
 
 	// Build station ID to route IDs map directly
-	stationIdToRouteIds := make(map[string]map[string]bool)
+	stationIdToRouteIds := make(map[string]map[string]struct{})
 	for _, stopTime := range s.StopTimes {
 		// Shave off the "N" or "S" from StopId to get parent StopId
 		parentStopId := stopTime.StopId[:3]
 		if routeId, exists := tripIdToRouteId[stopTime.TripId]; exists {
 			if stationIdToRouteIds[parentStopId] == nil {
-				stationIdToRouteIds[parentStopId] = make(map[string]bool)
+				stationIdToRouteIds[parentStopId] = make(map[string]struct{})
 			}
-			stationIdToRouteIds[parentStopId][routeId] = true
+			stationIdToRouteIds[parentStopId][routeId] = struct{}{}
 		}
 	}
 
@@ -99,6 +99,7 @@ func (s *Schedule) CreateStations() {
 		if stop.LocationType == 1 {
 			routeIds := stationIdToRouteIds[stop.StopId]
 			routes := []Route{}
+			// Iterating instead of using map to preserve route sort order
 			for _, route := range s.Routes {
 				if _, exists := routeIds[route.RouteId]; exists {
 					routes = append(routes, route)
