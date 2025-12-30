@@ -22,11 +22,14 @@ type Schedule struct {
 	Routes        []Route        `file:"routes.txt"`
 	Calendars     []Calendar     `file:"calendar.txt"`
 	CalendarDates []CalendarDate `file:"calendar_dates.txt"`
+	cache         scheduleCache
+}
 
-	// Derived values
-	RouteIdToRoute map[string]Route
-	StopIdToName   map[string]string
-	Stations       []Station
+// Cached values derived from schedule
+type scheduleCache struct {
+	routeIdToRoute map[string]Route
+	stopIdToName   map[string]string
+	stations       []Station
 }
 
 type Station struct {
@@ -94,7 +97,11 @@ type CalendarDate struct {
 
 // GetStations returns a subset of Stops that are considered to be stations.
 // Each Stop returned includes a set of RouteIds that pass through the station.
-func (s *Schedule) CreateStations() {
+func (s *Schedule) GetStations() []Station {
+	if s.cache.stations != nil {
+		return s.cache.stations
+	}
+
 	// Build trip ID to route ID map
 	tripIdToRouteId := make(map[string]string)
 	for _, trip := range s.Trips {
@@ -130,23 +137,36 @@ func (s *Schedule) CreateStations() {
 		}
 	}
 
-	s.Stations = stations
+	s.cache.stations = stations
+	return stations
 }
 
-func (s *Schedule) CreateStopIdToName() {
+func (s *Schedule) GetStopIdToName() map[string]string {
+	if s.cache.stopIdToName != nil {
+		return s.cache.stopIdToName
+	}
+
 	stopIdToName := make(map[string]string)
 	for _, stop := range s.Stops {
 		stopIdToName[stop.StopId] = stop.StopName
 	}
-	s.StopIdToName = stopIdToName
+
+	s.cache.stopIdToName = stopIdToName
+	return stopIdToName
 }
 
-func (s *Schedule) CreateRouteIdToRoute() {
+func (s *Schedule) GetRouteIdToRoute() map[string]Route {
+	if s.cache.routeIdToRoute != nil {
+		return s.cache.routeIdToRoute
+	}
+
 	routeIdToRoute := make(map[string]Route)
 	for _, route := range s.Routes {
 		routeIdToRoute[route.RouteId] = route
 	}
-	s.RouteIdToRoute = routeIdToRoute
+
+	s.cache.routeIdToRoute = routeIdToRoute
+	return routeIdToRoute
 }
 
 // GetSchedule fetches a GTFS schedule containing all schedule files.
@@ -197,9 +217,9 @@ func GetSchedule() (*Schedule, error) {
 	}
 
 	// Create and store expensive derived values
-	schedule.CreateRouteIdToRoute()
-	schedule.CreateStopIdToName()
-	schedule.CreateStations()
+	schedule.GetRouteIdToRoute()
+	schedule.GetStopIdToName()
+	schedule.GetStations()
 
 	return &schedule, nil
 }

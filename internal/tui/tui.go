@@ -60,7 +60,7 @@ func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case gotScheduleQueryMsg:
 		m.scheduleQuery = query.Query[*gtfs.Schedule](msg)
 		if m.scheduleQuery.Data != nil && m.selectedStation == nil {
-			m.selectedStation = &m.scheduleQuery.Data.Stations[0]
+			m.selectedStation = &m.scheduleQuery.Data.GetStations()[0]
 		}
 		m.syncStationList()
 		m.syncDepartureCards()
@@ -111,7 +111,7 @@ func (m *model) syncDepartureCards() {
 
 func (m *model) syncStationList() {
 	if m.scheduleQuery.Data != nil {
-		stations := m.scheduleQuery.Data.Stations
+		stations := m.scheduleQuery.Data.GetStations()
 		m.stationList.SetStations(stations)
 	}
 }

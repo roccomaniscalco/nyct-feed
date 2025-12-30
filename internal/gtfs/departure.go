@@ -32,7 +32,7 @@ func FindDepartures(stopIds []string, realtime []*pb.FeedMessage, schedule *Sche
 		}
 	}
 
-	stopIdToName := schedule.StopIdToName
+	stopIdToName := schedule.GetStopIdToName()
 	departures := []Departure{}
 	for tripKey, times := range tripToTimes {
 		routeId, stopId, finalStopId := tripKey[0], tripKey[1], tripKey[2]
