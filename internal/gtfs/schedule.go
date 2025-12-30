@@ -16,10 +16,12 @@ import (
 const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_subway.zip"
 
 type Schedule struct {
-	Stops     []Stop     `file:"stops.txt"`
-	StopTimes []StopTime `file:"stop_times.txt"`
-	Trips     []Trip     `file:"trips.txt"`
-	Routes    []Route    `file:"routes.txt"`
+	Stops         []Stop         `file:"stops.txt"`
+	StopTimes     []StopTime     `file:"stop_times.txt"`
+	Trips         []Trip         `file:"trips.txt"`
+	Routes        []Route        `file:"routes.txt"`
+	Calendars     []Calendar     `file:"calendar.txt"`
+	CalendarDates []CalendarDate `file:"calendar_dates.txt"`
 
 	// Derived values
 	RouteIdToRoute map[string]Route
@@ -69,6 +71,25 @@ type Route struct {
 	RouteColor     string `csv:"route_color"`
 	RouteTextColor string `csv:"route_text_color"`
 	RouteSortOrder int    `csv:"route_sort_order"`
+}
+
+type Calendar struct {
+	ServiceId string `csv:"service_id"`
+	Monday    bool   `csv:"monday"`
+	Tuesday   bool   `csv:"tuesday"`
+	Wednesday bool   `csv:"wednesday"`
+	Thursday  bool   `csv:"thursday"`
+	Friday    bool   `csv:"friday"`
+	Saturday  bool   `csv:"saturday"`
+	Sunday    bool   `csv:"sunday"`
+	StartDate string `csv:"start_date"`
+	EndDate   string `csv:"end_date"`
+}
+
+type CalendarDate struct {
+	ServiceId     string `csv:"service_id"`
+	Date          string `csv:"date"`
+	ExceptionType int    `csv:"exception_type"` // 1 = Added, 2 = Cancelled
 }
 
 // GetStations returns a subset of Stops that are considered to be stations.
@@ -166,6 +187,10 @@ func GetSchedule() (*Schedule, error) {
 					schedule.Trips = parseCSV(bytes, Trip{})
 				case reflect.TypeOf(Route{}):
 					schedule.Routes = parseCSV(bytes, Route{})
+				case reflect.TypeOf(Calendar{}):
+					schedule.Calendars = parseCSV(bytes, Calendar{})
+				case reflect.TypeOf(CalendarDate{}):
+					schedule.CalendarDates = parseCSV(bytes, CalendarDate{})
 				}
 			}
 		}
