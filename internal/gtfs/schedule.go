@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_subway.zip"
+const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_supplemented.zip"
 
 type Schedule struct {
 	Stops         []Stop         `file:"stops.txt"`
@@ -42,7 +42,7 @@ type Stop struct {
 	StopName      string  `csv:"stop_name"`
 	StopLat       float64 `csv:"stop_lat"`
 	StopLon       float64 `csv:"stop_lon"`
-	LocationType  int     `csv:"location_type"` // 0 = Platform, 1 = Station
+	LocationType  int64   `csv:"location_type"` // 0 = Platform, 1 = Station
 	ParentStation string  `csv:"parent_station"`
 }
 
@@ -51,7 +51,7 @@ type StopTime struct {
 	StopId        string `csv:"stop_id"`
 	ArrivalTime   string `csv:"arrival_time"`
 	DepartureTime string `csv:"departure_time"`
-	StopSequence  int    `csv:"stop_sequence"`
+	StopSequence  int64  `csv:"stop_sequence"`
 }
 
 type Trip struct {
@@ -59,7 +59,7 @@ type Trip struct {
 	TripId       string `csv:"trip_id"`
 	ServiceId    string `csv:"service_id"`
 	TripHeadsign string `csv:"trip_headsign"`
-	DirectionId  int    `csv:"direction_id"`
+	DirectionId  int64  `csv:"direction_id"`
 	ShapeId      string `csv:"shape_id"`
 }
 
@@ -69,22 +69,22 @@ type Route struct {
 	RouteShortName string `csv:"route_short_name"`
 	RouteLongName  string `csv:"route_long_name"`
 	RouteDesc      string `csv:"route_desc"`
-	RouteType      int    `csv:"route_type"`
+	RouteType      int64  `csv:"route_type"`
 	RouteUrl       string `csv:"route_url"`
 	RouteColor     string `csv:"route_color"`
 	RouteTextColor string `csv:"route_text_color"`
-	RouteSortOrder int    `csv:"route_sort_order"`
+	RouteSortOrder int64  `csv:"route_sort_order"`
 }
 
 type Calendar struct {
 	ServiceId string `csv:"service_id"`
-	Monday    bool   `csv:"monday"`
-	Tuesday   bool   `csv:"tuesday"`
-	Wednesday bool   `csv:"wednesday"`
-	Thursday  bool   `csv:"thursday"`
-	Friday    bool   `csv:"friday"`
-	Saturday  bool   `csv:"saturday"`
-	Sunday    bool   `csv:"sunday"`
+	Monday    int64  `csv:"monday"`
+	Tuesday   int64  `csv:"tuesday"`
+	Wednesday int64  `csv:"wednesday"`
+	Thursday  int64  `csv:"thursday"`
+	Friday    int64  `csv:"friday"`
+	Saturday  int64  `csv:"saturday"`
+	Sunday    int64  `csv:"sunday"`
 	StartDate string `csv:"start_date"`
 	EndDate   string `csv:"end_date"`
 }
@@ -92,7 +92,7 @@ type Calendar struct {
 type CalendarDate struct {
 	ServiceId     string `csv:"service_id"`
 	Date          string `csv:"date"`
-	ExceptionType int    `csv:"exception_type"` // 1 = Added, 2 = Cancelled
+	ExceptionType int64  `csv:"exception_type"` // 1 = Added, 2 = Cancelled
 }
 
 // GetStations returns a subset of Stops that are considered to be stations.
@@ -184,7 +184,7 @@ func GetSchedule() (*Schedule, error) {
 		for i := 0; i < scheduleType.NumField(); i++ {
 			field := scheduleType.Field(i)
 			fileName := field.Tag.Get("file")
-			
+
 			if fileName == file.Name {
 				rc, err := file.Open()
 				if err != nil {
@@ -309,12 +309,12 @@ func parseCSVCellValue(cell string, fieldValue reflect.Value, fieldType reflect.
 		case reflect.String:
 			val := strings.Trim(cell, "\"")
 			fieldValue.SetString(val)
-		case reflect.Int:
-			val, err := strconv.Atoi(cell)
+		case reflect.Int64:
+			val, err := strconv.ParseInt(cell, 10, 64)
 			if err != nil && cell != "" {
 				log.Printf("warning: failed to parse field %s: %v", fieldType.Name, err)
 			}
-			fieldValue.SetInt(int64(val))
+			fieldValue.SetInt(val)
 		case reflect.Bool:
 			val, err := strconv.ParseBool(cell)
 			if err != nil {
