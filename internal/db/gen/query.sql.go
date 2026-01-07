@@ -15,7 +15,7 @@ DELETE FROM calendar_dates
 `
 
 func (q *Queries) DeleteCalendarDates(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, deleteCalendarDates)
+	_, err := q.exec(ctx, q.deleteCalendarDatesStmt, deleteCalendarDates)
 	return err
 }
 
@@ -24,7 +24,7 @@ DELETE FROM calendars
 `
 
 func (q *Queries) DeleteCalendars(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, deleteCalendars)
+	_, err := q.exec(ctx, q.deleteCalendarsStmt, deleteCalendars)
 	return err
 }
 
@@ -33,7 +33,7 @@ DELETE FROM routes
 `
 
 func (q *Queries) DeleteRoutes(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, deleteRoutes)
+	_, err := q.exec(ctx, q.deleteRoutesStmt, deleteRoutes)
 	return err
 }
 
@@ -42,7 +42,7 @@ DELETE FROM stop_times
 `
 
 func (q *Queries) DeleteStopTimes(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, deleteStopTimes)
+	_, err := q.exec(ctx, q.deleteStopTimesStmt, deleteStopTimes)
 	return err
 }
 
@@ -51,7 +51,7 @@ DELETE FROM stops
 `
 
 func (q *Queries) DeleteStops(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, deleteStops)
+	_, err := q.exec(ctx, q.deleteStopsStmt, deleteStops)
 	return err
 }
 
@@ -60,7 +60,7 @@ DELETE FROM trips
 `
 
 func (q *Queries) DeleteTrips(ctx context.Context) error {
-	_, err := q.db.ExecContext(ctx, deleteTrips)
+	_, err := q.exec(ctx, q.deleteTripsStmt, deleteTrips)
 	return err
 }
 
@@ -83,7 +83,7 @@ type InsertCalendarParams struct {
 }
 
 func (q *Queries) InsertCalendar(ctx context.Context, arg InsertCalendarParams) error {
-	_, err := q.db.ExecContext(ctx, insertCalendar,
+	_, err := q.exec(ctx, q.insertCalendarStmt, insertCalendar,
 		arg.ServiceID,
 		arg.Monday,
 		arg.Tuesday,
@@ -110,7 +110,7 @@ type InsertCalendarDateParams struct {
 }
 
 func (q *Queries) InsertCalendarDate(ctx context.Context, arg InsertCalendarDateParams) error {
-	_, err := q.db.ExecContext(ctx, insertCalendarDate, arg.ServiceID, arg.Date, arg.ExceptionType)
+	_, err := q.exec(ctx, q.insertCalendarDateStmt, insertCalendarDate, arg.ServiceID, arg.Date, arg.ExceptionType)
 	return err
 }
 
@@ -133,7 +133,7 @@ type InsertRouteParams struct {
 }
 
 func (q *Queries) InsertRoute(ctx context.Context, arg InsertRouteParams) error {
-	_, err := q.db.ExecContext(ctx, insertRoute,
+	_, err := q.exec(ctx, q.insertRouteStmt, insertRoute,
 		arg.RouteID,
 		arg.AgencyID,
 		arg.RouteShortName,
@@ -163,7 +163,7 @@ type InsertStopParams struct {
 }
 
 func (q *Queries) InsertStop(ctx context.Context, arg InsertStopParams) error {
-	_, err := q.db.ExecContext(ctx, insertStop,
+	_, err := q.exec(ctx, q.insertStopStmt, insertStop,
 		arg.StopID,
 		arg.StopName,
 		arg.StopLat,
@@ -188,7 +188,7 @@ type InsertStopTimeParams struct {
 }
 
 func (q *Queries) InsertStopTime(ctx context.Context, arg InsertStopTimeParams) error {
-	_, err := q.db.ExecContext(ctx, insertStopTime,
+	_, err := q.exec(ctx, q.insertStopTimeStmt, insertStopTime,
 		arg.TripID,
 		arg.StopID,
 		arg.ArrivalTime,
@@ -213,7 +213,7 @@ type InsertTripParams struct {
 }
 
 func (q *Queries) InsertTrip(ctx context.Context, arg InsertTripParams) error {
-	_, err := q.db.ExecContext(ctx, insertTrip,
+	_, err := q.exec(ctx, q.insertTripStmt, insertTrip,
 		arg.TripID,
 		arg.RouteID,
 		arg.ServiceID,

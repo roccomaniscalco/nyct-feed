@@ -7,6 +7,7 @@ package db
 import (
 	"context"
 	"database/sql"
+	"fmt"
 )
 
 type DBTX interface {
@@ -20,12 +21,178 @@ func New(db DBTX) *Queries {
 	return &Queries{db: db}
 }
 
+func Prepare(ctx context.Context, db DBTX) (*Queries, error) {
+	q := Queries{db: db}
+	var err error
+	if q.deleteCalendarDatesStmt, err = db.PrepareContext(ctx, deleteCalendarDates); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteCalendarDates: %w", err)
+	}
+	if q.deleteCalendarsStmt, err = db.PrepareContext(ctx, deleteCalendars); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteCalendars: %w", err)
+	}
+	if q.deleteRoutesStmt, err = db.PrepareContext(ctx, deleteRoutes); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteRoutes: %w", err)
+	}
+	if q.deleteStopTimesStmt, err = db.PrepareContext(ctx, deleteStopTimes); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteStopTimes: %w", err)
+	}
+	if q.deleteStopsStmt, err = db.PrepareContext(ctx, deleteStops); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteStops: %w", err)
+	}
+	if q.deleteTripsStmt, err = db.PrepareContext(ctx, deleteTrips); err != nil {
+		return nil, fmt.Errorf("error preparing query DeleteTrips: %w", err)
+	}
+	if q.insertCalendarStmt, err = db.PrepareContext(ctx, insertCalendar); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertCalendar: %w", err)
+	}
+	if q.insertCalendarDateStmt, err = db.PrepareContext(ctx, insertCalendarDate); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertCalendarDate: %w", err)
+	}
+	if q.insertRouteStmt, err = db.PrepareContext(ctx, insertRoute); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertRoute: %w", err)
+	}
+	if q.insertStopStmt, err = db.PrepareContext(ctx, insertStop); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertStop: %w", err)
+	}
+	if q.insertStopTimeStmt, err = db.PrepareContext(ctx, insertStopTime); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertStopTime: %w", err)
+	}
+	if q.insertTripStmt, err = db.PrepareContext(ctx, insertTrip); err != nil {
+		return nil, fmt.Errorf("error preparing query InsertTrip: %w", err)
+	}
+	return &q, nil
+}
+
+func (q *Queries) Close() error {
+	var err error
+	if q.deleteCalendarDatesStmt != nil {
+		if cerr := q.deleteCalendarDatesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteCalendarDatesStmt: %w", cerr)
+		}
+	}
+	if q.deleteCalendarsStmt != nil {
+		if cerr := q.deleteCalendarsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteCalendarsStmt: %w", cerr)
+		}
+	}
+	if q.deleteRoutesStmt != nil {
+		if cerr := q.deleteRoutesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteRoutesStmt: %w", cerr)
+		}
+	}
+	if q.deleteStopTimesStmt != nil {
+		if cerr := q.deleteStopTimesStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteStopTimesStmt: %w", cerr)
+		}
+	}
+	if q.deleteStopsStmt != nil {
+		if cerr := q.deleteStopsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteStopsStmt: %w", cerr)
+		}
+	}
+	if q.deleteTripsStmt != nil {
+		if cerr := q.deleteTripsStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing deleteTripsStmt: %w", cerr)
+		}
+	}
+	if q.insertCalendarStmt != nil {
+		if cerr := q.insertCalendarStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertCalendarStmt: %w", cerr)
+		}
+	}
+	if q.insertCalendarDateStmt != nil {
+		if cerr := q.insertCalendarDateStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertCalendarDateStmt: %w", cerr)
+		}
+	}
+	if q.insertRouteStmt != nil {
+		if cerr := q.insertRouteStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertRouteStmt: %w", cerr)
+		}
+	}
+	if q.insertStopStmt != nil {
+		if cerr := q.insertStopStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertStopStmt: %w", cerr)
+		}
+	}
+	if q.insertStopTimeStmt != nil {
+		if cerr := q.insertStopTimeStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertStopTimeStmt: %w", cerr)
+		}
+	}
+	if q.insertTripStmt != nil {
+		if cerr := q.insertTripStmt.Close(); cerr != nil {
+			err = fmt.Errorf("error closing insertTripStmt: %w", cerr)
+		}
+	}
+	return err
+}
+
+func (q *Queries) exec(ctx context.Context, stmt *sql.Stmt, query string, args ...interface{}) (sql.Result, error) {
+	switch {
+	case stmt != nil && q.tx != nil:
+		return q.tx.StmtContext(ctx, stmt).ExecContext(ctx, args...)
+	case stmt != nil:
+		return stmt.ExecContext(ctx, args...)
+	default:
+		return q.db.ExecContext(ctx, query, args...)
+	}
+}
+
+func (q *Queries) query(ctx context.Context, stmt *sql.Stmt, query string, args ...interface{}) (*sql.Rows, error) {
+	switch {
+	case stmt != nil && q.tx != nil:
+		return q.tx.StmtContext(ctx, stmt).QueryContext(ctx, args...)
+	case stmt != nil:
+		return stmt.QueryContext(ctx, args...)
+	default:
+		return q.db.QueryContext(ctx, query, args...)
+	}
+}
+
+func (q *Queries) queryRow(ctx context.Context, stmt *sql.Stmt, query string, args ...interface{}) *sql.Row {
+	switch {
+	case stmt != nil && q.tx != nil:
+		return q.tx.StmtContext(ctx, stmt).QueryRowContext(ctx, args...)
+	case stmt != nil:
+		return stmt.QueryRowContext(ctx, args...)
+	default:
+		return q.db.QueryRowContext(ctx, query, args...)
+	}
+}
+
 type Queries struct {
-	db DBTX
+	db                      DBTX
+	tx                      *sql.Tx
+	deleteCalendarDatesStmt *sql.Stmt
+	deleteCalendarsStmt     *sql.Stmt
+	deleteRoutesStmt        *sql.Stmt
+	deleteStopTimesStmt     *sql.Stmt
+	deleteStopsStmt         *sql.Stmt
+	deleteTripsStmt         *sql.Stmt
+	insertCalendarStmt      *sql.Stmt
+	insertCalendarDateStmt  *sql.Stmt
+	insertRouteStmt         *sql.Stmt
+	insertStopStmt          *sql.Stmt
+	insertStopTimeStmt      *sql.Stmt
+	insertTripStmt          *sql.Stmt
 }
 
 func (q *Queries) WithTx(tx *sql.Tx) *Queries {
 	return &Queries{
-		db: tx,
+		db:                      tx,
+		tx:                      tx,
+		deleteCalendarDatesStmt: q.deleteCalendarDatesStmt,
+		deleteCalendarsStmt:     q.deleteCalendarsStmt,
+		deleteRoutesStmt:        q.deleteRoutesStmt,
+		deleteStopTimesStmt:     q.deleteStopTimesStmt,
+		deleteStopsStmt:         q.deleteStopsStmt,
+		deleteTripsStmt:         q.deleteTripsStmt,
+		insertCalendarStmt:      q.insertCalendarStmt,
+		insertCalendarDateStmt:  q.insertCalendarDateStmt,
+		insertRouteStmt:         q.insertRouteStmt,
+		insertStopStmt:          q.insertStopStmt,
+		insertStopTimeStmt:      q.insertStopTimeStmt,
+		insertTripStmt:          q.insertTripStmt,
 	}
 }

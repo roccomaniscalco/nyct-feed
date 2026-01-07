@@ -24,7 +24,6 @@ func Init(ctx context.Context) (*sql.DB, *db.Queries) {
 	pragmas := []string{
 		"PRAGMA journal_mode=OFF",
 		"PRAGMA synchronous=OFF",
-		// "PRAGMA foreign_keys=ON",
 	}
 
 	for _, pragma := range pragmas {
@@ -51,31 +50,36 @@ func StoreSchedule(ctx context.Context, database *sql.DB, queries *db.Queries, s
 	}
 	defer tx.Rollback()
 
-	qtx := queries.WithTx(tx)
+	// Prepare transaction queries
+	txQueries, err := db.Prepare(ctx, tx)
+	if err != nil {
+		return err
+	}
+	defer txQueries.Close()
 
 	// Clear all tables first (in reverse dependency order)
-	if err := qtx.DeleteCalendarDates(ctx); err != nil {
+	if err := txQueries.DeleteCalendarDates(ctx); err != nil {
 		return err
 	}
-	if err := qtx.DeleteStopTimes(ctx); err != nil {
+	if err := txQueries.DeleteStopTimes(ctx); err != nil {
 		return err
 	}
-	if err := qtx.DeleteTrips(ctx); err != nil {
+	if err := txQueries.DeleteTrips(ctx); err != nil {
 		return err
 	}
-	if err := qtx.DeleteCalendars(ctx); err != nil {
+	if err := txQueries.DeleteCalendars(ctx); err != nil {
 		return err
 	}
-	if err := qtx.DeleteRoutes(ctx); err != nil {
+	if err := txQueries.DeleteRoutes(ctx); err != nil {
 		return err
 	}
-	if err := qtx.DeleteStops(ctx); err != nil {
+	if err := txQueries.DeleteStops(ctx); err != nil {
 		return err
 	}
 
 	// Insert stops
 	for _, stop := range s.Stops {
-		err = qtx.InsertStop(ctx, db.InsertStopParams{
+		err = txQueries.InsertStop(ctx, db.InsertStopParams{
 			StopID:        stop.StopId,
 			StopName:      stop.StopName,
 			StopLat:       stop.StopLat,
@@ -90,7 +94,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, queries *db.Queries, s
 
 	// Insert routes
 	for _, route := range s.Routes {
-		err = qtx.InsertRoute(ctx, db.InsertRouteParams{
+		err = txQueries.InsertRoute(ctx, db.InsertRouteParams{
 			RouteID:        route.RouteId,
 			AgencyID:       route.AgencyId,
 			RouteShortName: route.RouteShortName,
@@ -110,7 +114,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, queries *db.Queries, s
 	// Insert calendars
 	for _, calendar := range s.Calendars {
 
-		err = qtx.InsertCalendar(ctx, db.InsertCalendarParams{
+		err = txQueries.InsertCalendar(ctx, db.InsertCalendarParams{
 			ServiceID: calendar.ServiceId,
 			Monday:    calendar.Monday,
 			Tuesday:   calendar.Tuesday,
@@ -130,7 +134,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, queries *db.Queries, s
 	// Insert trips
 	for _, trip := range s.Trips {
 
-		err = qtx.InsertTrip(ctx, db.InsertTripParams{
+		err = txQueries.InsertTrip(ctx, db.InsertTripParams{
 			TripID:       trip.TripId,
 			RouteID:      trip.RouteId,
 			ServiceID:    trip.ServiceId,
@@ -145,7 +149,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, queries *db.Queries, s
 
 	// Insert stop times
 	for _, stopTime := range s.StopTimes {
-		err = qtx.InsertStopTime(ctx, db.InsertStopTimeParams{
+		err = txQueries.InsertStopTime(ctx, db.InsertStopTimeParams{
 			TripID:        stopTime.TripId,
 			StopID:        stopTime.StopId,
 			ArrivalTime:   stopTime.ArrivalTime,
@@ -159,7 +163,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, queries *db.Queries, s
 
 	// Insert calendar dates
 	for _, calendarDate := range s.CalendarDates {
-		err = qtx.InsertCalendarDate(ctx, db.InsertCalendarDateParams{
+		err = txQueries.InsertCalendarDate(ctx, db.InsertCalendarDateParams{
 			ServiceID:     calendarDate.ServiceId,
 			Date:          calendarDate.Date,
 			ExceptionType: calendarDate.ExceptionType,
