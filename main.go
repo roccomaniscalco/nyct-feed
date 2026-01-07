@@ -31,13 +31,13 @@ func main() {
 	ctx := context.Background()
 	log.Println("Process Started")
 
-	database, queries := db.Init(ctx)
+	database := db.Init(ctx)
 	log.Println("DB Initialized")
 
 	schedule,_ := gtfs.GetSchedule()
 	log.Println("Got Schedule")
 
-	db.StoreSchedule(ctx, database, queries, schedule)
+	db.StoreSchedule(ctx, database, schedule)
 	log.Println("Stored Schedule")
 }
 

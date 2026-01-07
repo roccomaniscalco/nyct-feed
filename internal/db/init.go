@@ -15,7 +15,7 @@ import (
 //go:embed schema.sql
 var schema string
 
-func Init(ctx context.Context) (*sql.DB, *db.Queries) {
+func Init(ctx context.Context) *sql.DB {
 	database, err := sql.Open("sqlite", "./nyct.db")
 	if err != nil {
 		log.Fatal(err)
@@ -37,12 +37,10 @@ func Init(ctx context.Context) (*sql.DB, *db.Queries) {
 		log.Fatal(err)
 	}
 
-	queries := db.New(database)
-
-	return database, queries
+	return database
 }
 
-func StoreSchedule(ctx context.Context, database *sql.DB, queries *db.Queries, s *gtfs.Schedule) error {
+func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) error {
 	// Start transaction
 	tx, err := database.BeginTx(ctx, nil)
 	if err != nil {
