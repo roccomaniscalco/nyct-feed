@@ -40,7 +40,7 @@ func Init(ctx context.Context) *sql.DB {
 	return database
 }
 
-func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) error {
+func StoreSchedule(ctx context.Context, database *sql.DB, schedule *gtfs.Schedule) error {
 	// Start transaction
 	tx, err := database.BeginTx(ctx, nil)
 	if err != nil {
@@ -76,7 +76,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) erro
 	}
 
 	// Insert stops
-	for _, stop := range s.Stops {
+	for _, stop := range schedule.Stops {
 		err = txQueries.InsertStop(ctx, db.InsertStopParams{
 			StopID:        stop.StopId,
 			StopName:      stop.StopName,
@@ -91,7 +91,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) erro
 	}
 
 	// Insert routes
-	for _, route := range s.Routes {
+	for _, route := range schedule.Routes {
 		err = txQueries.InsertRoute(ctx, db.InsertRouteParams{
 			RouteID:        route.RouteId,
 			AgencyID:       route.AgencyId,
@@ -110,7 +110,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) erro
 	}
 
 	// Insert calendars
-	for _, calendar := range s.Calendars {
+	for _, calendar := range schedule.Calendars {
 
 		err = txQueries.InsertCalendar(ctx, db.InsertCalendarParams{
 			ServiceID: calendar.ServiceId,
@@ -130,7 +130,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) erro
 	}
 
 	// Insert trips
-	for _, trip := range s.Trips {
+	for _, trip := range schedule.Trips {
 
 		err = txQueries.InsertTrip(ctx, db.InsertTripParams{
 			TripID:       trip.TripId,
@@ -146,7 +146,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) erro
 	}
 
 	// Insert stop times
-	for _, stopTime := range s.StopTimes {
+	for _, stopTime := range schedule.StopTimes {
 		err = txQueries.InsertStopTime(ctx, db.InsertStopTimeParams{
 			TripID:        stopTime.TripId,
 			StopID:        stopTime.StopId,
@@ -160,7 +160,7 @@ func StoreSchedule(ctx context.Context, database *sql.DB, s *gtfs.Schedule) erro
 	}
 
 	// Insert calendar dates
-	for _, calendarDate := range s.CalendarDates {
+	for _, calendarDate := range schedule.CalendarDates {
 		err = txQueries.InsertCalendarDate(ctx, db.InsertCalendarDateParams{
 			ServiceID:     calendarDate.ServiceId,
 			Date:          calendarDate.Date,
