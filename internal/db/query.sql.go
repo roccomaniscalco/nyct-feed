@@ -70,16 +70,16 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `
 
 type InsertCalendarParams struct {
-	ServiceID string
-	Monday    int64
-	Tuesday   int64
-	Wednesday int64
-	Thursday  int64
-	Friday    int64
-	Saturday  int64
-	Sunday    int64
-	StartDate string
-	EndDate   string
+	ServiceID string `json:"service_id"`
+	Monday    int64  `json:"monday"`
+	Tuesday   int64  `json:"tuesday"`
+	Wednesday int64  `json:"wednesday"`
+	Thursday  int64  `json:"thursday"`
+	Friday    int64  `json:"friday"`
+	Saturday  int64  `json:"saturday"`
+	Sunday    int64  `json:"sunday"`
+	StartDate string `json:"start_date"`
+	EndDate   string `json:"end_date"`
 }
 
 func (q *Queries) InsertCalendar(ctx context.Context, arg InsertCalendarParams) error {
@@ -104,9 +104,9 @@ VALUES (?, ?, ?)
 `
 
 type InsertCalendarDateParams struct {
-	ServiceID     string
-	Date          string
-	ExceptionType int64
+	ServiceID     string `json:"service_id"`
+	Date          string `json:"date"`
+	ExceptionType int64  `json:"exception_type"`
 }
 
 func (q *Queries) InsertCalendarDate(ctx context.Context, arg InsertCalendarDateParams) error {
@@ -120,16 +120,16 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 `
 
 type InsertRouteParams struct {
-	RouteID        string
-	AgencyID       string
-	RouteShortName string
-	RouteLongName  string
-	RouteDesc      string
-	RouteType      int64
-	RouteUrl       string
-	RouteColor     string
-	RouteTextColor string
-	RouteSortOrder int64
+	RouteID        string `json:"route_id"`
+	AgencyID       string `json:"agency_id"`
+	RouteShortName string `json:"route_short_name"`
+	RouteLongName  string `json:"route_long_name"`
+	RouteDesc      string `json:"route_desc"`
+	RouteType      int64  `json:"route_type"`
+	RouteUrl       string `json:"route_url"`
+	RouteColor     string `json:"route_color"`
+	RouteTextColor string `json:"route_text_color"`
+	RouteSortOrder int64  `json:"route_sort_order"`
 }
 
 func (q *Queries) InsertRoute(ctx context.Context, arg InsertRouteParams) error {
@@ -154,12 +154,12 @@ VALUES (?, ?, ?, ?, ?, ?)
 `
 
 type InsertStopParams struct {
-	StopID        string
-	StopName      string
-	StopLat       float64
-	StopLon       float64
-	LocationType  int64
-	ParentStation sql.NullString
+	StopID        string         `json:"stop_id"`
+	StopName      string         `json:"stop_name"`
+	StopLat       float64        `json:"stop_lat"`
+	StopLon       float64        `json:"stop_lon"`
+	LocationType  int64          `json:"location_type"`
+	ParentStation sql.NullString `json:"parent_station"`
 }
 
 func (q *Queries) InsertStop(ctx context.Context, arg InsertStopParams) error {
@@ -180,11 +180,11 @@ VALUES (?, ?, ?, ?, ?)
 `
 
 type InsertStopTimeParams struct {
-	TripID        string
-	StopID        string
-	ArrivalTime   string
-	DepartureTime string
-	StopSequence  int64
+	TripID        string `json:"trip_id"`
+	StopID        string `json:"stop_id"`
+	ArrivalTime   string `json:"arrival_time"`
+	DepartureTime string `json:"departure_time"`
+	StopSequence  int64  `json:"stop_sequence"`
 }
 
 func (q *Queries) InsertStopTime(ctx context.Context, arg InsertStopTimeParams) error {
@@ -204,12 +204,12 @@ VALUES (?, ?, ?, ?, ?, ?)
 `
 
 type InsertTripParams struct {
-	TripID       string
-	RouteID      string
-	ServiceID    string
-	TripHeadsign string
-	DirectionID  int64
-	ShapeID      string
+	TripID       string `json:"trip_id"`
+	RouteID      string `json:"route_id"`
+	ServiceID    string `json:"service_id"`
+	TripHeadsign string `json:"trip_headsign"`
+	DirectionID  int64  `json:"direction_id"`
+	ShapeID      string `json:"shape_id"`
 }
 
 func (q *Queries) InsertTrip(ctx context.Context, arg InsertTripParams) error {

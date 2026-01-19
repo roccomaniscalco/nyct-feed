@@ -5,6 +5,7 @@ import (
 	"log"
 	"nyct-feed/internal/db"
 	"nyct-feed/internal/gtfs"
+	"time"
 )
 
 // import (
@@ -34,11 +35,17 @@ func main() {
 	database := db.Init(ctx)
 	log.Println("DB Initialized")
 
-	schedule,_ := gtfs.GetSchedule()
-	log.Println("Got Schedule")
+	client := gtfs.NewClient(gtfs.ClientParams{
+		Ctx:                 ctx,
+		Db:                  database,
+		ScheduleRefreshRate: time.Hour * 2,
+		RealtimeRefreshRate: time.Second * 5,
+	})
 
-	db.StoreSchedule(ctx, database, schedule)
-	log.Println("Stored Schedule")
+	err := client.SyncSchedule()
+	if err != nil {
+		log.Panicf("An error occurred while syncing schedule: %v", err)
+	}
 }
 
 // func main() {

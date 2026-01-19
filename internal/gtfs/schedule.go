@@ -2,18 +2,14 @@ package gtfs
 
 import (
 	"archive/zip"
-	"bytes"
 	"fmt"
 	"io"
 	"log"
-	"net/http"
 	"os"
 	"reflect"
 	"strconv"
 	"strings"
 )
-
-const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_supplemented.zip"
 
 type Schedule struct {
 	Stops         []Stop         `file:"stops.txt"`
@@ -174,7 +170,7 @@ func GetSchedule() (*Schedule, error) {
 	schedule := Schedule{}
 	scheduleType := reflect.TypeOf(schedule)
 
-	scheduleFiles, err := fetchSchedule()
+	scheduleFiles, err := fetchSchedule(scheduleUrl)
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch schedule: %v", err)
 	}
@@ -331,31 +327,6 @@ func parseCSVCellValue(cell string, fieldValue reflect.Value, fieldType reflect.
 			log.Panicf("unsupported CSV field type: %v for field %s", fieldType.Type.Kind(), fieldType.Name)
 		}
 	}
-}
-
-// fetchSchedule requests a GTFS schedule ZIP folder and returns its zip files.
-func fetchSchedule() ([]*zip.File, error) {
-	// Download the ZIP folder
-	resp, err := http.Get(scheduleUrl)
-	if err != nil {
-		return nil, fmt.Errorf("failed to download schedule from %s: %v", scheduleUrl, err)
-	}
-	defer resp.Body.Close()
-
-	// Read the ZIP data into memory
-	zipData, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read ZIP data from response: %v", err)
-	}
-
-	// Create a ZIP reader
-	zipReader, err := zip.NewReader(bytes.NewReader(zipData), int64(len(zipData)))
-	if err != nil {
-		return nil, fmt.Errorf("failed to create ZIP reader: %v", err)
-	}
-
-	// Store each schedule file
-	return zipReader.File, nil
 }
 
 func storeScheduleFile(file *zip.File) {

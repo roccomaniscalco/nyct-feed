@@ -1,5 +1,4 @@
--- Table for Stop struct
--- Maps to: Stop struct in internal/gtfs/schedule.go
+
 CREATE TABLE IF NOT EXISTS stops (
     stop_id TEXT PRIMARY KEY,
     stop_name TEXT NOT NULL,
@@ -9,8 +8,6 @@ CREATE TABLE IF NOT EXISTS stops (
     parent_station TEXT REFERENCES stops(stop_id) -- Null if stop is the parent station
 );
 
--- Table for StopTime struct
--- Maps to: StopTime struct in internal/gtfs/schedule.go
 CREATE TABLE IF NOT EXISTS stop_times (
     trip_id TEXT NOT NULL REFERENCES trips(trip_id),
     stop_id TEXT NOT NULL REFERENCES stops(stop_id),
@@ -20,8 +17,6 @@ CREATE TABLE IF NOT EXISTS stop_times (
     PRIMARY KEY (trip_id, stop_sequence)
 );
 
--- Table for Trip struct
--- Maps to: Trip struct in internal/gtfs/schedule.go
 CREATE TABLE IF NOT EXISTS trips (
     trip_id TEXT PRIMARY KEY,
     route_id TEXT NOT NULL REFERENCES routes(route_id),
@@ -31,8 +26,6 @@ CREATE TABLE IF NOT EXISTS trips (
     shape_id TEXT NOT NULL
 );
 
--- Table for Route struct
--- Maps to: Route struct in internal/gtfs/schedule.go
 CREATE TABLE IF NOT EXISTS routes (
     route_id TEXT PRIMARY KEY,
     agency_id TEXT NOT NULL,
@@ -46,8 +39,6 @@ CREATE TABLE IF NOT EXISTS routes (
     route_sort_order INTEGER NOT NULL
 );
 
--- Table for Calendar struct
--- Maps to: Calendar struct in internal/gtfs/schedule.go
 CREATE TABLE IF NOT EXISTS calendars (
     service_id TEXT PRIMARY KEY,
     monday INTEGER NOT NULL CHECK (monday IN (0, 1)),
@@ -61,8 +52,6 @@ CREATE TABLE IF NOT EXISTS calendars (
     end_date TEXT NOT NULL
 );
 
--- Table for CalendarDate struct
--- Maps to: CalendarDate struct in internal/gtfs/schedule.go
 CREATE TABLE IF NOT EXISTS calendar_dates (
     service_id TEXT NOT NULL REFERENCES calendars(service_id),
     date TEXT NOT NULL,
