@@ -32,20 +32,17 @@ func main() {
 	ctx := context.Background()
 	log.Println("Process Started")
 
-	database := db.Init(ctx)
+	DB := db.Init(ctx)
 	log.Println("DB Initialized")
 
-	client := gtfs.NewClient(gtfs.ClientParams{
+	client := gtfs.Client{
 		Ctx:                 ctx,
-		Db:                  database,
+		DB:                  DB,
 		ScheduleRefreshRate: time.Hour * 2,
 		RealtimeRefreshRate: time.Second * 5,
-	})
-
-	err := client.SyncSchedule()
-	if err != nil {
-		log.Panicf("An error occurred while syncing schedule: %v", err)
 	}
+
+	gtfs.RegisterClient(client)
 }
 
 // func main() {

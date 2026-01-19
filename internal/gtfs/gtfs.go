@@ -17,15 +17,6 @@ import (
 
 const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_supplemented.zip"
 
-type StoreScheduleParams struct {
-	Stops         []db.InsertStopParams
-	StopTimes     []db.InsertStopTimeParams
-	Trips         []db.InsertTripParams
-	Routes        []db.InsertRouteParams
-	Calendars     []db.InsertCalendarParams
-	CalendarDates []db.InsertCalendarDateParams
-}
-
 var realtimeUrls = [8]string{
 	"https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-ace",
 	"https://api-endpoint.mta.info/Dataservice/mtagtfsfeeds/nyct%2Fgtfs-bdfm",
@@ -38,29 +29,26 @@ var realtimeUrls = [8]string{
 }
 
 type Client struct {
-	ctx                 context.Context
-	db                  *sql.DB
-	ScheduleRefreshRate time.Duration
-	RealtimeRefreshRate time.Duration
-}
-
-type ClientParams struct {
 	Ctx                 context.Context
-	Db                  *sql.DB
+	DB                  *sql.DB
 	ScheduleRefreshRate time.Duration
 	RealtimeRefreshRate time.Duration
 }
 
-func NewClient(params ClientParams) *Client {
-	return &Client{
-		ctx:                 params.Ctx,
-		db:                  params.Db,
-		ScheduleRefreshRate: params.ScheduleRefreshRate,
-		RealtimeRefreshRate: params.RealtimeRefreshRate,
-	}
+func RegisterClient(c Client) {
+	c.syncSchedule()
 }
 
-func (c *Client) SyncSchedule() error {
+type schedule struct {
+	Stops         []db.InsertStopParams
+	StopTimes     []db.InsertStopTimeParams
+	Trips         []db.InsertTripParams
+	Routes        []db.InsertRouteParams
+	Calendars     []db.InsertCalendarParams
+	CalendarDates []db.InsertCalendarDateParams
+}
+
+func (c *Client) syncSchedule() error {
 	log.Println("Fetching Schedule...")
 	files, err := fetchSchedule(scheduleUrl)
 	if err != nil {
@@ -74,7 +62,7 @@ func (c *Client) SyncSchedule() error {
 	}
 
 	log.Println("Storing Schedule...")
-	if err := c.storeSchedule(schedule); err != nil {
+	if err := storeSchedule(c.DB, c.Ctx, schedule); err != nil {
 		return fmt.Errorf("failed to store schedule: %v", err)
 	}
 
@@ -82,7 +70,7 @@ func (c *Client) SyncSchedule() error {
 	return nil
 }
 
-// fetchSchedule requests a GTFS schedule ZIP folder and returns its zip files.
+// fetchSchedule requests a GTFS schedule ZIP folder and returns its files.
 func fetchSchedule(url string) ([]*zip.File, error) {
 	// Download the ZIP folder
 	resp, err := http.Get(url)
@@ -107,7 +95,8 @@ func fetchSchedule(url string) ([]*zip.File, error) {
 	return zipReader.File, nil
 }
 
-func parseSchedule(files []*zip.File) (*StoreScheduleParams, error) {
+// parseSchedule parses GTFS files into a struct of CSV data.
+func parseSchedule(files []*zip.File) (*schedule, error) {
 	schedule := StoreScheduleParams{}
 
 	for _, file := range files {
@@ -156,74 +145,75 @@ func parseSchedule(files []*zip.File) (*StoreScheduleParams, error) {
 	return &schedule, nil
 }
 
-func (c *Client) storeSchedule(schedule *StoreScheduleParams) error {
+// storeSchedule wipes all schedule tables and batch uploads the new schedule in a transaction.
+func storeSchedule(DB *sql.DB, ctx context.Context, s *schedule) error {
 	// Start transaction
-	tx, err := c.db.BeginTx(c.ctx, nil)
+	tx, err := DB.BeginTx(ctx, nil)
 	if err != nil {
 		return err
 	}
 	defer tx.Rollback()
 
 	// Prepare transaction queries
-	txQueries, err := db.Prepare(c.ctx, tx)
+	txQueries, err := db.Prepare(ctx, tx)
 	if err != nil {
 		return err
 	}
 	defer txQueries.Close()
 
 	// Clear all tables first (in reverse dependency order)
-	if err := txQueries.DeleteCalendarDates(c.ctx); err != nil {
+	if err := txQueries.DeleteCalendarDates(ctx); err != nil {
 		return err
 	}
-	if err := txQueries.DeleteStopTimes(c.ctx); err != nil {
+	if err := txQueries.DeleteStopTimes(ctx); err != nil {
 		return err
 	}
-	if err := txQueries.DeleteTrips(c.ctx); err != nil {
+	if err := txQueries.DeleteTrips(ctx); err != nil {
 		return err
 	}
-	if err := txQueries.DeleteCalendars(c.ctx); err != nil {
+	if err := txQueries.DeleteCalendars(ctx); err != nil {
 		return err
 	}
-	if err := txQueries.DeleteRoutes(c.ctx); err != nil {
+	if err := txQueries.DeleteRoutes(ctx); err != nil {
 		return err
 	}
-	if err := txQueries.DeleteStops(c.ctx); err != nil {
+	if err := txQueries.DeleteStops(ctx); err != nil {
 		return err
 	}
 
 	// Insert in dependency order
-	for _, stop := range schedule.Stops {
-		err = txQueries.InsertStop(c.ctx, stop)
+	for _, stop := range s.Stops {
+		err = txQueries.InsertStop(ctx, stop)
 		if err != nil {
 			return err
 		}
 	}
-	for _, route := range schedule.Routes {
-		err = txQueries.InsertRoute(c.ctx, route)
+	for _, route := range s.Routes {
+		err = txQueries.InsertRoute(ctx, route)
 		if err != nil {
 			return err
 		}
 	}
-	for _, calendar := range schedule.Calendars {
-		err = txQueries.InsertCalendar(c.ctx, calendar)
+	for _, calendar := range s.Calendars {
+		err = txQueries.InsertCalendar(ctx, calendar)
 		if err != nil {
 			return err
 		}
 	}
-	for _, trip := range schedule.Trips {
-		err = txQueries.InsertTrip(c.ctx, trip)
+	for _, trip := range s.Trips {
+		err = txQueries.InsertTrip(ctx, trip)
 		if err != nil {
 			return err
 		}
 	}
-	for _, stopTime := range schedule.StopTimes {
-		err = txQueries.InsertStopTime(c.ctx, stopTime)
+	for _, stopTime := range s.StopTimes {
+		err = txQueries.InsertStopTime(ctx, stopTime)
 		if err != nil {
 			return err
 		}
 	}
-	for _, calendarDate := range schedule.CalendarDates {
-		err = txQueries.InsertCalendarDate(c.ctx, calendarDate)
+	for _, calendarDate := range s.CalendarDates {
+		err = txQueries.InsertCalendarDate(ctx, calendarDate)
 		if err != nil {
 			return err
 		}
