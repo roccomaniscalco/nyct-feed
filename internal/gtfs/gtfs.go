@@ -191,47 +191,37 @@ func (c *Client) storeSchedule(schedule *StoreScheduleParams) error {
 		return err
 	}
 
-	// Insert stops
+	// Insert in dependency order
 	for _, stop := range schedule.Stops {
 		err = txQueries.InsertStop(c.ctx, stop)
 		if err != nil {
 			return err
 		}
 	}
-
-	// Insert routes
 	for _, route := range schedule.Routes {
 		err = txQueries.InsertRoute(c.ctx, route)
 		if err != nil {
 			return err
 		}
 	}
-
-	// Insert calendars
 	for _, calendar := range schedule.Calendars {
 		err = txQueries.InsertCalendar(c.ctx, calendar)
 		if err != nil {
 			return err
 		}
 	}
-
-	// Insert trips
 	for _, trip := range schedule.Trips {
 		err = txQueries.InsertTrip(c.ctx, trip)
 		if err != nil {
 			return err
 		}
 	}
-
-	// Insert stop times
 	for _, stopTime := range schedule.StopTimes {
 		err = txQueries.InsertStopTime(c.ctx, stopTime)
 		if err != nil {
 			return err
 		}
 	}
-
-	// Insert calendar dates
 	for _, calendarDate := range schedule.CalendarDates {
 		err = txQueries.InsertCalendarDate(c.ctx, calendarDate)
 		if err != nil {
