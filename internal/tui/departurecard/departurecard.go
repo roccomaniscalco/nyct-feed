@@ -132,7 +132,7 @@ func (m *Model) View() string {
 	)
 }
 
-// getFormattedDepartureTimes returns the two soonest upcoming departures as a string.
+// getFormattedDepartureTimes returns the soonest upcoming departures as a string.
 // If there are no upcoming departures "No Departures" is returned.
 // Example: "Now, 8 min"
 func getFormattedDepartureTimes(departureTimes []int64, now time.Time) string {
@@ -140,7 +140,7 @@ func getFormattedDepartureTimes(departureTimes []int64, now time.Time) string {
 
 	durations := []string{}
 	for _, t := range departureTimes {
-		if len(durations) == 2 {
+		if len(durations) == 3 {
 			break
 		}
 		minTilDeparture := math.Round(time.Unix(t, 0).Sub(now).Minutes())

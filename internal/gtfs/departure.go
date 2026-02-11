@@ -2,6 +2,8 @@ package gtfs
 
 import (
 	"nyct-feed/internal/pb"
+	"slices"
+	"strings"
 )
 
 type Departure struct {
@@ -44,6 +46,11 @@ func FindDepartures(stopIds []string, realtime []*pb.FeedMessage, schedule *Sche
 			Times:         times,
 		})
 	}
+
+	// Sort departures by final stop name for consistent ordering
+	slices.SortFunc(departures, func(a, b Departure) int {
+		return strings.Compare(a.FinalStopName, b.FinalStopName)
+	})
 
 	return departures
 }
