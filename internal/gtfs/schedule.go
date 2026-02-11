@@ -13,7 +13,7 @@ import (
 	"strings"
 )
 
-const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_subway.zip"
+const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_supplemented.zip"
 
 type Schedule struct {
 	Stops         []Stop         `file:"stops.txt"`
@@ -103,7 +103,7 @@ func (s *Schedule) GetStations() []Station {
 	}
 
 	// Build trip ID to route ID map
-	tripIdToRouteId := make(map[string]string)
+	tripIdToRouteId := make(map[string]string, len(s.Trips))
 	for _, trip := range s.Trips {
 		tripIdToRouteId[trip.TripId] = trip.RouteId
 	}
@@ -354,7 +354,6 @@ func fetchSchedule() ([]*zip.File, error) {
 		return nil, fmt.Errorf("failed to create ZIP reader: %v", err)
 	}
 
-	// Store each schedule file
 	return zipReader.File, nil
 }
 

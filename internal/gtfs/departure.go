@@ -1,9 +1,11 @@
 package gtfs
 
 import (
+	"log"
 	"nyct-feed/internal/pb"
 	"slices"
 	"strings"
+	"time"
 )
 
 type Departure struct {
@@ -51,6 +53,39 @@ func FindDepartures(stopIds []string, realtime []*pb.FeedMessage, schedule *Sche
 	slices.SortFunc(departures, func(a, b Departure) int {
 		return strings.Compare(a.FinalStopName, b.FinalStopName)
 	})
+
+	return departures
+}
+
+// Find all static departures for a given stop ID within 12hr
+// Exclude cancelled trips, and include added trips
+// 
+// Ex. Find all departures going through Van Cortlandt Park-242 St on Mon Dec 29 starting at 8am
+// Station ID: 101
+// 
+// StopTimes where stopId is 101N or 101S
+// 
+func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
+	now := time.Now().Format("20060102")
+	stopIds := []string{stationId+"N", stationId+"S"}
+
+	departures := []Departure{}
+
+	serviceIds := []string{}
+	for _, calendar := range schedule.Calendars {
+		if calendar.StartDate <= now && calendar.EndDate >= now {
+			serviceIds = append(serviceIds, calendar.ServiceId)
+		}
+	}
+
+	stopTimes := []StopTime{}
+	for _, stopId := range stopIds {
+		for _, stopTime := range schedule.StopTimes {
+			if stopId == stopTime.StopId {
+				stopTimes = append(stopTimes, stopTime)
+			}
+		}
+	}
 
 	return departures
 }
