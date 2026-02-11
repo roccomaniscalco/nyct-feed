@@ -20,7 +20,7 @@ type model struct {
 	scheduleQuery   query.Query[*gtfs.Schedule]
 	realtimeQuery   query.Query[[]*pb.FeedMessage]
 	stationList     stationlist.Model
-	departureCard  departurecard.Model
+	departureCard   departurecard.Model
 	selectedStation *gtfs.Station
 	width           int
 	height          int
@@ -31,7 +31,7 @@ func NewModel() model {
 		scheduleChannel: make(chan query.Query[*gtfs.Schedule]),
 		realtimeChannel: make(chan query.Query[[]*pb.FeedMessage]),
 		stationList:     stationlist.NewModel(),
-		departureCard:  departurecard.NewModel(),
+		departureCard:   departurecard.NewModel(),
 	}
 }
 
