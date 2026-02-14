@@ -34,6 +34,8 @@ var stopIds = []string{
 }
 
 func main() {
+	log.Println("Fetching schedule...")
+
 	schedule, _ := gtfs.GetSchedule()
 	log.Println("Schedule!")
 

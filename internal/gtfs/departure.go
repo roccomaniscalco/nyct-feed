@@ -57,35 +57,101 @@ func FindDepartures(stopIds []string, realtime []*pb.FeedMessage, schedule *Sche
 	return departures
 }
 
-// Find all static departures for a given stop ID within 12hr
-// Exclude cancelled trips, and include added trips
-// 
-// Ex. Find all departures going through Van Cortlandt Park-242 St on Mon Dec 29 starting at 8am
-// Station ID: 101
-// 
-// StopTimes where stopId is 101N or 101S
-// 
+// FindScheduledDepartures returns all scheduled departures for a given station ID.
 func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
-	now := time.Now().Format("20060102")
-	stopIds := []string{stationId+"N", stationId+"S"}
+	now := time.Now()
+	nowDate := now.Format("20060102")
+	nowWeekday := now.Weekday()
 
 	departures := []Departure{}
 
-	serviceIds := []string{}
+	// 1. Get active service IDs
+	serviceIds := map[string]struct{}{}
+
+	// 1.1 Add service ID if date is in range and weekday receives service
 	for _, calendar := range schedule.Calendars {
-		if calendar.StartDate <= now && calendar.EndDate >= now {
-			serviceIds = append(serviceIds, calendar.ServiceId)
+		isDateInService := calendar.StartDate <= nowDate && calendar.EndDate >= nowDate
+		isWeekdayInService := calendar.GetIsWeekdayActive(nowWeekday)
+
+		if isDateInService && isWeekdayInService {
+			serviceIds[calendar.ServiceId] = struct{}{}
 		}
 	}
+	log.Printf("Got calendar: %+v\n", len(schedule.Calendars))
 
+	// 1.2 Add or remove service IDs based on calendar date exceptions
+	for _, calendarDate := range schedule.CalendarDates {
+		if calendarDate.Date == nowDate {
+			if calendarDate.ExceptionType == 1 { // Added service
+				serviceIds[calendarDate.ServiceId] = struct{}{}
+			} else if calendarDate.ExceptionType == 2 { // Cancelled service
+				delete(serviceIds, calendarDate.ServiceId)
+			} else {
+				log.Printf("invalid exception type on calendar date: %v", calendarDate)
+			}
+		}
+	}
+	log.Printf("Got calendar dates: %+v\n", len(schedule.CalendarDates))
+
+	stationIdToRouteIds := schedule.GetStationIdToRouteIds()
+	routeIds := stationIdToRouteIds[stationId]
+	log.Printf("Got route IDs for station %s: %+v\n", stationId, routeIds)
+
+	// 2. Get trip IDs for active service IDs
+	tripIds := map[string]struct{}{}
+	for routeId := range routeIds {
+		for serviceId := range serviceIds {
+			for _, trip := range schedule.Trips {
+
+				serviceIdMatch := trip.ServiceId == serviceId
+				routeIdMatch := trip.RouteId == routeId
+
+				if serviceIdMatch && routeIdMatch {
+					tripIds[trip.TripId] = struct{}{}
+				}
+			}
+		}
+	}
+	log.Printf("Got trips: %+v\n", len(tripIds))
+
+	// 3. Get stop times for active trip IDs
 	stopTimes := []StopTime{}
-	for _, stopId := range stopIds {
+	for tripId := range tripIds {
 		for _, stopTime := range schedule.StopTimes {
-			if stopId == stopTime.StopId {
+			// Shave off the "N" or "S" from StopId to get parent StopId
+			parentStopId := stopTime.StopId[:3]
+
+			isStationMatch := parentStopId == stationId
+			isTripMatch := tripId == stopTime.TripId
+
+			if isStationMatch && isTripMatch {
 				stopTimes = append(stopTimes, stopTime)
 			}
 		}
 	}
+	log.Printf("Got stop times: %+v\n", len(stopTimes))
 
 	return departures
+}
+
+func (c *Calendar) GetIsWeekdayActive(weekday time.Weekday) bool {
+	switch weekday {
+	case time.Monday:
+		return c.Monday
+	case time.Tuesday:
+		return c.Tuesday
+	case time.Wednesday:
+		return c.Wednesday
+	case time.Thursday:
+		return c.Thursday
+	case time.Friday:
+		return c.Friday
+	case time.Saturday:
+		return c.Saturday
+	case time.Sunday:
+		return c.Sunday
+	default:
+		log.Panicln("unreachable code: invalid weekday")
+		return false
+	}
 }
