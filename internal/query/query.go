@@ -1,6 +1,7 @@
 package query
 
 import (
+	"log"
 	"time"
 )
 
@@ -21,6 +22,7 @@ func (s Status) String() string {
 	case Success:
 		return "Success"
 	default:
+		log.Panicf("Unknown Status: %v", s)
 		return "Unknown"
 	}
 }
@@ -39,6 +41,7 @@ func (fs FetchStatus) String() string {
 	case Idle:
 		return "Idle"
 	default:
+		log.Panicf("Unknown FetchStatus: %v", fs)
 		return "Unknown"
 	}
 }

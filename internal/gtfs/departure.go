@@ -67,7 +67,6 @@ func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
 
 	// 1. Get active service IDs
 	serviceIds := map[string]struct{}{}
-
 	// 1.1 Add service ID if date is in range and weekday receives service
 	for _, calendar := range schedule.Calendars {
 		isDateInService := calendar.StartDate <= nowDate && calendar.EndDate >= nowDate
@@ -77,8 +76,6 @@ func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
 			serviceIds[calendar.ServiceId] = struct{}{}
 		}
 	}
-	log.Printf("Got calendar: %+v\n", len(schedule.Calendars))
-
 	// 1.2 Add or remove service IDs based on calendar date exceptions
 	for _, calendarDate := range schedule.CalendarDates {
 		if calendarDate.Date == nowDate {
@@ -91,13 +88,14 @@ func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
 			}
 		}
 	}
-	log.Printf("Got calendar dates: %+v\n", len(schedule.CalendarDates))
+	log.Printf("Got active service IDs: %+v\n", len(serviceIds))
 
+	// 2. Get route IDs for station ID
 	stationIdToRouteIds := schedule.GetStationIdToRouteIds()
 	routeIds := stationIdToRouteIds[stationId]
 	log.Printf("Got route IDs for station %s: %+v\n", stationId, routeIds)
 
-	// 2. Get trip IDs for active service IDs
+	// 3. Get trip IDs for active service IDs and station route IDs
 	tripIds := map[string]struct{}{}
 	for routeId := range routeIds {
 		for serviceId := range serviceIds {
@@ -114,7 +112,7 @@ func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
 	}
 	log.Printf("Got trips: %+v\n", len(tripIds))
 
-	// 3. Get stop times for active trip IDs
+	// 4. Get stop times for active trip IDs
 	stopTimes := []StopTime{}
 	for tripId := range tripIds {
 		for _, stopTime := range schedule.StopTimes {
