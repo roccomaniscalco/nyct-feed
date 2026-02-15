@@ -27,8 +27,8 @@ type Schedule struct {
 
 // Cached values derived from schedule
 type scheduleCache struct {
-	stopIdToName        map[string]string
-	stations            []Station
+	stopIdToName map[string]string
+	stations     []Station
 }
 
 type Station struct {
