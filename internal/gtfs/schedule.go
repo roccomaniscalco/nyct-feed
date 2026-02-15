@@ -27,7 +27,6 @@ type Schedule struct {
 
 // Cached values derived from schedule
 type scheduleCache struct {
-	routeIdToRoute      map[string]Route
 	stopIdToName        map[string]string
 	stations            []Station
 }
@@ -153,20 +152,6 @@ func (s *Schedule) GetStopIdToName() map[string]string {
 
 	s.cache.stopIdToName = stopIdToName
 	return stopIdToName
-}
-
-func (s *Schedule) GetRouteIdToRoute() map[string]Route {
-	if s.cache.routeIdToRoute != nil {
-		return s.cache.routeIdToRoute
-	}
-
-	routeIdToRoute := make(map[string]Route)
-	for _, route := range s.Routes {
-		routeIdToRoute[route.RouteId] = route
-	}
-
-	s.cache.routeIdToRoute = routeIdToRoute
-	return routeIdToRoute
 }
 
 // GetSchedule fetches a GTFS schedule containing all schedule files.
