@@ -7,10 +7,8 @@ import (
 	"io"
 	"log"
 	"net/http"
+	"nyct-feed/internal/csvutil"
 	"os"
-	"reflect"
-	"strconv"
-	"strings"
 )
 
 const scheduleUrl = "https://rrgtfsfeeds.s3.amazonaws.com/gtfs_supplemented.zip"
@@ -156,165 +154,27 @@ func (s *Schedule) GetStopIdToName() map[string]string {
 
 // GetSchedule fetches a GTFS schedule containing all schedule files.
 func GetSchedule() (*Schedule, error) {
-	schedule := Schedule{}
-	scheduleType := reflect.TypeOf(schedule)
-
-	scheduleFiles, err := fetchSchedule()
+	scheduleFiles, err := fetchScheduleFiles()
 	if err != nil {
 		return nil, fmt.Errorf("failed to fetch schedule: %v", err)
 	}
 
+	log.Println("Schedule files fetched")
+
+	schedule := Schedule{}
 	for _, file := range scheduleFiles {
-		// Parse and set each item on schedule
-		for i := 0; i < scheduleType.NumField(); i++ {
-			field := scheduleType.Field(i)
-			fileName := field.Tag.Get("file")
-
-			if fileName == file.Name {
-				rc, err := file.Open()
-				if err != nil {
-					return nil, fmt.Errorf("failed to open zip file %s: %v", file.Name, err)
-				}
-				defer rc.Close()
-
-				bytes, err := io.ReadAll(rc)
-				if err != nil {
-					return nil, fmt.Errorf("failed to read data from zip file %s: %v", file.Name, err)
-				}
-
-				switch field.Type.Elem() {
-				case reflect.TypeOf(Stop{}):
-					schedule.Stops = parseCSV(bytes, Stop{})
-				case reflect.TypeOf(StopTime{}):
-					schedule.StopTimes = parseCSV(bytes, StopTime{})
-				case reflect.TypeOf(Trip{}):
-					schedule.Trips = parseCSV(bytes, Trip{})
-				case reflect.TypeOf(Route{}):
-					schedule.Routes = parseCSV(bytes, Route{})
-				case reflect.TypeOf(Calendar{}):
-					schedule.Calendars = parseCSV(bytes, Calendar{})
-				case reflect.TypeOf(CalendarDate{}):
-					schedule.CalendarDates = parseCSV(bytes, CalendarDate{})
-				}
-			}
+		if err := parseScheduleFile(file, &schedule); err != nil {
+			return nil, fmt.Errorf("failed to parse schedule file %s: %v", file.Name, err)
 		}
 	}
+
+	log.Println("Schedule parsed")
 
 	return &schedule, nil
 }
 
-// parseCSV accepts a CSV as bytes and parses each row into a struct of type R.
-// Each field in R to be parsed must specify a csv tag denoting its column header.
-func parseCSV[R any](bytes []byte, row R) []R {
-	r := reflect.TypeOf(row)
-	rows := []R{}
-
-	// Only accept structs
-	if r.Kind() != reflect.Struct {
-		log.Panicf("row must be of type struct: received %s", r.Kind())
-	}
-
-	lines := strings.Split(string(bytes), "\n")
-	headers := parseCSVLine(lines[0])
-
-	// Map header to column number
-	headerToCol := make(map[string]int)
-	for i, header := range headers {
-		headerToCol[header] = i
-	}
-
-	// Map each CSV line to a new row struct
-	for _, line := range lines[1:] {
-		// Skip blank lines
-		if strings.TrimSpace(line) == "" {
-			continue
-		}
-
-		cells := parseCSVLine(line)
-		newRow := reflect.New(r).Elem()
-
-		// Populate row values from CSV cells
-		for i := 0; i < r.NumField(); i++ {
-			fieldValue := newRow.Field(i)
-			fieldType := newRow.Type().Field(i)
-
-			// Get CSV header from tag or skip
-			header := fieldType.Tag.Get("csv")
-			if header == "" {
-				continue
-			}
-
-			// Set row field to parsed cell value
-			if col, exists := headerToCol[header]; exists && col < len(cells) {
-				cell := cells[col]
-				parseCSVCellValue(cell, fieldValue, fieldType)
-			}
-		}
-
-		rows = append(rows, newRow.Interface().(R))
-	}
-
-	return rows
-}
-
-func parseCSVLine(line string) []string {
-	cells := []string{}
-	chars := strings.Split(line, "")
-	cellStart := 0
-	inQuotes := false
-
-	for i, char := range chars {
-		if char == "\"" {
-			inQuotes = !inQuotes
-		} else if !inQuotes && char == "," {
-			field := strings.Join(chars[cellStart:i], "")
-			cells = append(cells, field)
-			cellStart = i + 1
-		}
-	}
-
-	// Handle the last field (after final comma or whole line if no commas)
-	if cellStart < len(chars) {
-		field := strings.Join(chars[cellStart:], "")
-		cells = append(cells, field)
-	}
-
-	return cells
-}
-
-// Parse cell to the corresponding field type and set field value
-func parseCSVCellValue(cell string, fieldValue reflect.Value, fieldType reflect.StructField) {
-	if fieldValue.CanSet() {
-		switch fieldType.Type.Kind() {
-		case reflect.String:
-			val := strings.Trim(cell, "\"")
-			fieldValue.SetString(val)
-		case reflect.Int:
-			val, err := strconv.Atoi(cell)
-			if err != nil && cell != "" {
-				log.Printf("warning: failed to parse field %s: %v", fieldType.Name, err)
-			}
-			fieldValue.SetInt(int64(val))
-		case reflect.Bool:
-			val, err := strconv.ParseBool(cell)
-			if err != nil {
-				log.Printf("warning: failed to parse field %s: %v", fieldType.Name, err)
-			}
-			fieldValue.SetBool(val)
-		case reflect.Float64:
-			val, err := strconv.ParseFloat(cell, 64)
-			if err != nil {
-				log.Printf("warning: failed to parse field %s: %v", fieldType.Name, err)
-			}
-			fieldValue.SetFloat(val)
-		default:
-			log.Panicf("unsupported CSV field type: %v for field %s", fieldType.Type.Kind(), fieldType.Name)
-		}
-	}
-}
-
-// fetchSchedule requests a GTFS schedule ZIP folder and returns its zip files.
-func fetchSchedule() ([]*zip.File, error) {
+// fetchScheduleFiles requests a GTFS schedule ZIP folder and returns its zip files.
+func fetchScheduleFiles() ([]*zip.File, error) {
 	// Download the ZIP folder
 	resp, err := http.Get(scheduleUrl)
 	if err != nil {
@@ -335,6 +195,44 @@ func fetchSchedule() ([]*zip.File, error) {
 	}
 
 	return zipReader.File, nil
+}
+
+func parseScheduleFile(file *zip.File, schedule *Schedule) error {
+	rc, err := file.Open()
+	if err != nil {
+		return fmt.Errorf("failed to open zip file %s: %v", file.Name, err)
+	}
+	defer rc.Close()
+
+	// Map filename to schedule field and type
+	switch file.Name {
+	case "stops.txt":
+		var err error
+		schedule.Stops, err = csvutil.ReadAllParsed(rc, Stop{})
+		return err
+	case "stop_times.txt":
+		var err error
+		schedule.StopTimes, err = csvutil.ReadAllParsed(rc, StopTime{})
+		return err
+	case "trips.txt":
+		var err error
+		schedule.Trips, err = csvutil.ReadAllParsed(rc, Trip{})
+		return err
+	case "routes.txt":
+		var err error
+		schedule.Routes, err = csvutil.ReadAllParsed(rc, Route{})
+		return err
+	case "calendar.txt":
+		var err error
+		schedule.Calendars, err = csvutil.ReadAllParsed(rc, Calendar{})
+		return err
+	case "calendar_dates.txt":
+		var err error
+		schedule.CalendarDates, err = csvutil.ReadAllParsed(rc, CalendarDate{})
+		return err
+	default:
+		return nil // Skip unknown files
+	}
 }
 
 func storeScheduleFile(file *zip.File) {
