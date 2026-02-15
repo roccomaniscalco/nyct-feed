@@ -159,16 +159,12 @@ func GetSchedule() (*Schedule, error) {
 		return nil, fmt.Errorf("failed to fetch schedule: %v", err)
 	}
 
-	log.Println("Schedule files fetched")
-
 	schedule := Schedule{}
 	for _, file := range scheduleFiles {
 		if err := parseScheduleFile(file, &schedule); err != nil {
 			return nil, fmt.Errorf("failed to parse schedule file %s: %v", file.Name, err)
 		}
 	}
-
-	log.Println("Schedule parsed")
 
 	return &schedule, nil
 }

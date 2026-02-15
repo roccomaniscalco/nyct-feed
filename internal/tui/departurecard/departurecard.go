@@ -92,8 +92,7 @@ func (m *Model) View() string {
 
 	for _, route := range m.station.Routes {
 		badge := routebadge.RenderOne(route)
-		longName := mutedTextStyle.Render(route.RouteLongName)
-		heading := routeHeadingStyle.Render(badge + " " + longName)
+		heading := routeHeadingStyle.Render(badge)
 		content = append(content, heading)
 
 		for _, departure := range m.departures {

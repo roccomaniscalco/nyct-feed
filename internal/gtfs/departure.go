@@ -90,6 +90,8 @@ func getActiveTrips(stationId string, schedule *Schedule) {
 	log.Printf("Got active service IDs: %+v\n", len(serviceIds))
 }
 
+// 1. Need day of the week to determine time.Time of departure
+// 2. Need to apply calendar exceptions to determine active trips
 func FindScheduleDepartures(stopIds []string, schedule *Schedule) []Departure {
 	tripIdToStopTimes := make(map[string][]StopTime)
 	for _, stopTime := range schedule.StopTimes {
