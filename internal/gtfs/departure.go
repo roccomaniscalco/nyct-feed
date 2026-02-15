@@ -13,23 +13,24 @@ type Departure struct {
 	StopId        string
 	FinalStopId   string
 	FinalStopName string
-	Times         []int64
+	Times         []time.Time
 }
 
 func FindDepartures(stopIds []string, realtime []*pb.FeedMessage, schedule *Schedule) []Departure {
-	tripToTimes := map[[3]string][]int64{}
+	tripToTimes := map[[3]string][]time.Time{}
 	for _, stopId := range stopIds {
 		for _, feedMsg := range realtime {
 			for _, feedEntity := range feedMsg.GetEntity() {
 				tripUpdate := feedEntity.GetTripUpdate()
-				stopTimes := tripUpdate.GetStopTimeUpdate()
 				routeId := tripUpdate.GetTrip().GetRouteId()
+				stopTimes := tripUpdate.GetStopTimeUpdate()
 				for _, stopTime := range stopTimes {
 					finalStopId := stopTimes[len(stopTimes)-1].GetStopId()
 					tripKey := [3]string{routeId, stopId, finalStopId}
+					time := time.Unix(stopTime.GetDeparture().GetTime(), 0)
 					// Exclude trips terminating at the target stop
 					if stopTime.GetStopId() == stopId && finalStopId != stopId {
-						tripToTimes[tripKey] = append(tripToTimes[tripKey], stopTime.GetDeparture().GetTime())
+						tripToTimes[tripKey] = append(tripToTimes[tripKey], time)
 					}
 				}
 			}
@@ -57,20 +58,18 @@ func FindDepartures(stopIds []string, realtime []*pb.FeedMessage, schedule *Sche
 	return departures
 }
 
-// FindScheduledDepartures returns all scheduled departures for a given station ID.
-func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
+// TODO: Need to find trips that are in service
+func getActiveTrips(stationId string, schedule *Schedule) {
 	now := time.Now()
 	nowDate := now.Format("20060102")
 	nowWeekday := now.Weekday()
-
-	departures := []Departure{}
 
 	// 1. Get active service IDs
 	serviceIds := map[string]struct{}{}
 	// 1.1 Add service ID if date is in range and weekday receives service
 	for _, calendar := range schedule.Calendars {
 		isDateInService := calendar.StartDate <= nowDate && calendar.EndDate >= nowDate
-		isWeekdayInService := calendar.GetIsWeekdayActive(nowWeekday)
+		isWeekdayInService := calendar.IsWeekdayActive(nowWeekday)
 
 		if isDateInService && isWeekdayInService {
 			serviceIds[calendar.ServiceId] = struct{}{}
@@ -89,50 +88,52 @@ func FindScheduledDepartures(stationId string, schedule *Schedule) []Departure {
 		}
 	}
 	log.Printf("Got active service IDs: %+v\n", len(serviceIds))
+}
 
-	// 2. Get route IDs for station ID
-	stationIdToRouteIds := schedule.GetStationIdToRouteIds()
-	routeIds := stationIdToRouteIds[stationId]
-	log.Printf("Got route IDs for station %s: %+v\n", stationId, routeIds)
+func FindScheduleDepartures(stopIds []string, schedule *Schedule) []Departure {
+	tripIdToStopTimes := make(map[string][]StopTime)
+	for _, stopTime := range schedule.StopTimes {
+		tripIdToStopTimes[stopTime.TripId] = append(tripIdToStopTimes[stopTime.TripId], stopTime)
+	}
 
-	// 3. Get trip IDs for active service IDs and station route IDs
-	tripIds := map[string]struct{}{}
-	for routeId := range routeIds {
-		for serviceId := range serviceIds {
-			for _, trip := range schedule.Trips {
-
-				serviceIdMatch := trip.ServiceId == serviceId
-				routeIdMatch := trip.RouteId == routeId
-
-				if serviceIdMatch && routeIdMatch {
-					tripIds[trip.TripId] = struct{}{}
+	tripToTimes := map[[3]string][]string{}
+	for _, stopId := range stopIds {
+		for _, trip := range schedule.Trips { // TODO: Replace schedule.Trips with active trips
+			routeId := trip.RouteId
+			stopTimes := tripIdToStopTimes[trip.TripId]
+			for _, stopTime := range stopTimes {
+				finalStopId := stopTimes[len(stopTimes)-1].StopId
+				tripKey := [3]string{routeId, stopId, finalStopId}
+				// Exclude trips terminating at the target stop
+				if stopTime.StopId == stopId && finalStopId != stopId {
+					tripToTimes[tripKey] = append(tripToTimes[tripKey], stopTime.DepartureTime)
 				}
 			}
 		}
 	}
-	log.Printf("Got trips: %+v\n", len(tripIds))
 
-	// 4. Get stop times for active trip IDs
-	stopTimes := []StopTime{}
-	for tripId := range tripIds {
-		for _, stopTime := range schedule.StopTimes {
-			// Shave off the "N" or "S" from StopId to get parent StopId
-			parentStopId := stopTime.StopId[:3]
-
-			isStationMatch := parentStopId == stationId
-			isTripMatch := tripId == stopTime.TripId
-
-			if isStationMatch && isTripMatch {
-				stopTimes = append(stopTimes, stopTime)
-			}
-		}
+	stopIdToName := schedule.GetStopIdToName()
+	departures := []Departure{}
+	for tripKey /*,times*/ := range tripToTimes {
+		routeId, stopId, finalStopId := tripKey[0], tripKey[1], tripKey[2]
+		departures = append(departures, Departure{
+			RouteId:       routeId,
+			StopId:        stopId,
+			FinalStopId:   finalStopId,
+			FinalStopName: stopIdToName[finalStopId],
+			// Times:         times,
+		})
 	}
-	log.Printf("Got stop times: %+v\n", len(stopTimes))
+
+	// Sort departures by final stop name for consistent ordering
+	slices.SortFunc(departures, func(a, b Departure) int {
+		return strings.Compare(a.FinalStopName, b.FinalStopName)
+	})
 
 	return departures
 }
 
-func (c *Calendar) GetIsWeekdayActive(weekday time.Weekday) bool {
+func (c *Calendar) IsWeekdayActive(weekday time.Weekday) bool {
 	switch weekday {
 	case time.Monday:
 		return c.Monday

@@ -27,8 +27,6 @@ type Schedule struct {
 
 // Cached values derived from schedule
 type scheduleCache struct {
-	tripIdToRouteId     map[string]string
-	stationIdToRouteIds map[string]map[string]struct{}
 	routeIdToRoute      map[string]Route
 	stopIdToName        map[string]string
 	stations            []Station
@@ -104,7 +102,24 @@ func (s *Schedule) GetStations() []Station {
 		return s.cache.stations
 	}
 
-	stationIdToRouteIds := s.GetStationIdToRouteIds()
+	// Build trip ID to route ID map
+	tripIdToRouteId := make(map[string]string, len(s.Trips))
+	for _, trip := range s.Trips {
+		tripIdToRouteId[trip.TripId] = trip.RouteId
+	}
+
+	// Build station ID to route IDs map directly
+	stationIdToRouteIds := make(map[string]map[string]struct{})
+	for _, stopTime := range s.StopTimes {
+		// Shave off the "N" or "S" from StopId to get parent StopId
+		parentStopId := stopTime.StopId[:3]
+		if routeId, exists := tripIdToRouteId[stopTime.TripId]; exists {
+			if stationIdToRouteIds[parentStopId] == nil {
+				stationIdToRouteIds[parentStopId] = make(map[string]struct{})
+			}
+			stationIdToRouteIds[parentStopId][routeId] = struct{}{}
+		}
+	}
 
 	// Filter and populate stations
 	var stations []Station
@@ -124,42 +139,6 @@ func (s *Schedule) GetStations() []Station {
 
 	s.cache.stations = stations
 	return stations
-}
-
-func (s *Schedule) GetTripIdToRouteId() map[string]string {
-	if s.cache.tripIdToRouteId != nil {
-		return s.cache.tripIdToRouteId
-	}
-
-	tripIdToRouteId := make(map[string]string, len(s.Trips))
-	for _, trip := range s.Trips {
-		tripIdToRouteId[trip.TripId] = trip.RouteId
-	}
-
-	s.cache.tripIdToRouteId = tripIdToRouteId
-	return tripIdToRouteId
-}
-
-func (s *Schedule) GetStationIdToRouteIds() map[string]map[string]struct{} {
-	if s.cache.stationIdToRouteIds != nil {
-		return s.cache.stationIdToRouteIds
-	}
-
-	// Build station ID to route IDs map directly
-	stationIdToRouteIds := make(map[string]map[string]struct{})
-	for _, stopTime := range s.StopTimes {
-		// Shave off the "N" or "S" from StopId to get parent StopId
-		parentStopId := stopTime.StopId[:3]
-		if routeId, exists := s.GetTripIdToRouteId()[stopTime.TripId]; exists {
-			if stationIdToRouteIds[parentStopId] == nil {
-				stationIdToRouteIds[parentStopId] = make(map[string]struct{})
-			}
-			stationIdToRouteIds[parentStopId][routeId] = struct{}{}
-		}
-	}
-
-	s.cache.stationIdToRouteIds = stationIdToRouteIds
-	return stationIdToRouteIds
 }
 
 func (s *Schedule) GetStopIdToName() map[string]string {
@@ -235,11 +214,6 @@ func GetSchedule() (*Schedule, error) {
 			}
 		}
 	}
-
-	// Create and store expensive derived values
-	schedule.GetRouteIdToRoute()
-	schedule.GetStopIdToName()
-	schedule.GetStations()
 
 	return &schedule, nil
 }

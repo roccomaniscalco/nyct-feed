@@ -1,44 +1,51 @@
 package main
 
-// import (
-// 	"log"
-// 	"nyct-feed/internal/tui"
-// 	tea "github.com/charmbracelet/bubbletea"
-// )
-
-// func main() {
-// 	m := tui.NewModel()
-// 	p := tea.NewProgram(&m, tea.WithAltScreen())
-
-// 	// f, err := tea.LogToFile("data/debug.log", "debug")
-// 	// if err != nil {
-// 	// 	log.Fatalln("Error setting up log file:", err)
-// 	// }
-// 	// defer f.Close()
-
-// 	if _, err := p.Run(); err != nil {
-// 		log.Fatalln("Error running program:", err)
-// 	}
-// }
-
 import (
 	"log"
-	"nyct-feed/internal/gtfs"
+	"nyct-feed/internal/tui"
+	tea "github.com/charmbracelet/bubbletea"
 )
 
-var stopIds = []string{
-	"A46N",
-	"A46S",
-	"239N",
-	"239S",
-}
+//  2  7 Avenue Express                                      
+// (S) Flatbush Av-Brooklyn College           3, 10, 15 min •
+// (N) Wakefield-241 St                       6, 10, 15 min •
 
 func main() {
-	log.Println("Fetching schedule...")
+	m := tui.NewModel()
+	p := tea.NewProgram(&m, tea.WithAltScreen())
 
-	schedule, _ := gtfs.GetSchedule()
-	log.Println("Schedule!")
+	f, err := tea.LogToFile("data/debug.log", "debug")
+	if err != nil {
+		log.Fatalln("Error setting up log file:", err)
+	}
+	defer f.Close()
 
-	gtfs.FindScheduledDepartures("A46", schedule)
-	log.Println("done!")
+	if _, err := p.Run(); err != nil {
+		log.Fatalln("Error running program:", err)
+	}
 }
+
+// import (
+// 	"log"
+// 	"nyct-feed/internal/gtfs"
+// )
+
+// var stopIds = []string{
+// 	"A46N",
+// 	"A46S",
+// 	"239N",
+// 	"239S",
+// }
+
+// func main() {
+// 	log.Println("Fetching schedule...")
+
+// 	schedule, _ := gtfs.GetSchedule()
+// 	log.Println("Schedule!")
+
+// 	tripIdToStopTimes := schedule.GetTripIdToStopTimes()
+// 	log.Printf("got tripIdToStopTimes with %d trips\n", len(tripIdToStopTimes))
+
+// 	// gtfs.FindScheduledDepartures("A46", schedule)
+// 	// log.Println("done!")
+// }

@@ -148,7 +148,7 @@ func createRealtimeQuery(realtimeChannel chan query.Query[[]*pb.FeedMessage]) te
 		query.CreateQuery[[]*pb.FeedMessage](query.QueryOptions[[]*pb.FeedMessage]{
 			QueryChannel:    realtimeChannel,
 			QueryFn:         gtfs.GetRealtime,
-			RefetchInterval: time.Second * 10,
+			RefetchInterval: time.Second * 5,
 		})
 		return nil
 	}
